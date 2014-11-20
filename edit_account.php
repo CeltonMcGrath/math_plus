@@ -18,6 +18,7 @@
     // If it has, then the account updating code is run, otherwise the form is displayed 
     if(!empty($_POST)) 
     { 
+	/* Save this code for later. 
         // Make sure the user entered a valid E-Mail address 
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 
         { 
@@ -63,7 +64,7 @@
                 die("This E-Mail address is already in use"); 
             } 
         } 
-         
+        */
         // If the user entered a new password, we need to hash it and generate a fresh salt 
         // for good measure. 
         if(!empty($_POST['password'])) 

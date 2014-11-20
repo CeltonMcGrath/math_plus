@@ -3,32 +3,31 @@
     // First we execute our common code to connection to the database and start the session 
     require("common.php"); 
      
-    // This variable will be used to re-display the user's username to them in the 
+    // This variable will be used to re-display the user's email to them in the 
     // login form if they fail to enter the correct password.  It is initialized here 
     // to an empty value, which will be shown if the user has not submitted the form. 
-    $submitted_username = ''; 
+    $submitted_email = ''; 
      
     // This if statement checks to determine whether the login form has been submitted 
     // If it has, then the login code is run, otherwise the form is displayed 
     if(!empty($_POST)) 
     { 
         // This query retreives the user's information from the database using 
-        // their username. 
+        // their email. 
         $query = " 
             SELECT 
                 id, 
-                username, 
+                email, 
                 password, 
-                salt, 
-                email 
+                salt
             FROM users 
             WHERE 
-                username = :username 
+                email = :email 
         "; 
          
         // The parameter values 
         $query_params = array( 
-            ':username' => $_POST['username'] 
+            ':email' => $_POST['email'] 
         ); 
          
         try 
@@ -49,7 +48,7 @@
         // If we determine that they have entered the right details, then we switch it to true. 
         $login_ok = false; 
          
-        // Retrieve the user data from the database.  If $row is false, then the username 
+        // Retrieve the user data from the database.  If $row is false, then the email 
         // they entered is not registered. 
         $row = $stmt->fetch(); 
         if($row) 
@@ -97,20 +96,20 @@
             // Tell the user they failed 
             print("Login Failed."); 
              
-            // Show them their username again so all they have to do is enter a new 
+            // Show them their email again so all they have to do is enter a new 
             // password.  The use of htmlentities prevents XSS attacks.  You should 
             // always use htmlentities on user submitted values before displaying them 
             // to any users (including the user that submitted them).  For more information: 
             // http://en.wikipedia.org/wiki/XSS_attack 
-            $submitted_username = htmlentities($_POST['username'], ENT_QUOTES, 'UTF-8'); 
+            $submitted_email = htmlentities($_POST['email'], ENT_QUOTES, 'UTF-8'); 
         } 
     } 
      
 ?> 
 <h1>Login</h1> 
 <form action="login.php" method="post"> 
-    Username:<br /> 
-    <input type="text" name="username" value="<?php echo $submitted_username; ?>" /> 
+    Email:<br /> 
+    <input type="text" name="email" value="<?php echo $submitted_email; ?>" /> 
     <br /><br /> 
     Password:<br /> 
     <input type="password" name="password" value="" /> 
