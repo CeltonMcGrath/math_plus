@@ -5,13 +5,13 @@ require('common.php');
 
 $msg='';
 
-if(!empty($_GET['code']) && isset($_GET['code']))
+if(!empty($_GET['activation']) && isset($_GET['activation']))
 {
-	$activation = $_GET['code'];
+	$activation = $_GET['activation'];
 	
 	$query = "
             SELECT
-                uid
+                email
             FROM users
             WHERE
                 activation = :activation
@@ -49,7 +49,7 @@ if(!empty($_GET['code']) && isset($_GET['code']))
 			// It may provide an attacker with helpful information about your code.
 			die("Failed to run query: " . $ex->getMessage());
 		}
-		$msg="Your account is activated"; 
+		$msg="Your account is activated. Click <a href='login.php'>here</a> to login."; 
 		
 	}
 	else

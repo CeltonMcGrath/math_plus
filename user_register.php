@@ -35,35 +35,28 @@
 	
 	function addUser($email, $password, $db) {
 		/*Returns True iff user is successfully added to the database.*/
-				
-		$query = "
-            INSERT INTO users (
-                email,
-                password,
-                salt
-            ) VALUES (
-                :email,
-                :password,
-                :salt
-            )
-        	";
+
+		$query = "INSERT INTO users (email, password, salt,activation) VALUES 
+				(:email, :password, :salt, :activation)";
 		
+		//Hash sensitive values
 		$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
 		
 		$password = hash('sha256', $password . $salt);
+		
+		$activation = hash('sha256', $email.time());
 		
 		for($round = 0; $round < 65536; $round++)
 		{
 			$password = hash('sha256', $password . $salt);
 		}
 		
-		// Here we prepare our tokens for insertion into the SQL query.  We do not
-		// store the original password; only the hashed version of it.  We do store
-		// the salt (in its plaintext form; this is not a security risk).
+		//Prepare parameter array
 		$query_params = array(
-		':email' => $email,
-		':password' => $password,
-		':salt' => $salt
+			':email' => $email,
+			':password' => $password,
+			':salt' => $salt,
+			':activation' => $activation
 		);
 		
 		try
@@ -76,6 +69,9 @@
 		{
 			return False;
 		}
+		
+		include 'send_mail.php';
+		send_activation_email($email, $activation);
 		
 		return True;
 	}

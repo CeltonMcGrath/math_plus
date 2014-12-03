@@ -1,8 +1,16 @@
 <?php
 	/*Code from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14*/
+
+	function send_activation_email($email, $activation) 
+	{
+		http://localhost:8888/math_plus/
+		$body = "<a href=http://localhost:8888/math_plus/activation/".$activation.">cats</a>";
+		Send_Mail($email, "Math+ registration activation", $body);
+	}
+	
 	function Send_Mail($to, $subject, $body)
 	{
-		require 'class.phpmailer.php';
+		require 'PHPMailer/PHPMailerAutoload.php';
 		$from       = "mcgrathcelton@gmail.com";
 		$mail       = new PHPMailer();
 		$mail->IsSMTP(true);            // use SMTP

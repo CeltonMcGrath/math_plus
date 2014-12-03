@@ -1,0 +1,5 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteRule ^user_activation/([a-zA-Z0-9_-]+)$ user_activation.php?activation=$1
+RewriteRule ^user_activation/([a-zA-Z0-9_-]+)/$ user_activation.php?activation=$1

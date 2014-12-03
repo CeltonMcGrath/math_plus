@@ -3,7 +3,7 @@
     // First we execute our common code to connection to the database and start the session 
     require("common.php"); 
     
-    include 'register_user.php';
+    include 'user_register.php';
 
     // This if statement checks to determine whether the registration form has been submitted 
     // If it has, then the registration code is run, otherwise the form is displayed 
@@ -51,7 +51,7 @@
         		if (addUser($_POST['email'], $_POST['password'], $db))
         		{
         			$successPhrase = "Registration a success. An activation link has been sent to your email.
-        					 You must activitate via this link. Please check your spam/junk folders.";
+        					 You must activitate your account via this link. Please check your spam/junk folders.";
         		}
         		else
         		{
@@ -59,7 +59,6 @@
         		}
         		
         	}
-        	 
         }	 
         else 
         {
