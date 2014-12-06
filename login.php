@@ -2,12 +2,23 @@
 
     // First we execute our common code to connection to the database and start the session 
     require("common.php"); 
-     
-    // This variable will be used to re-display the user's email to them in the 
-    // login form if they fail to enter the correct password.  It is initialized here 
-    // to an empty value, which will be shown if the user has not submitted the form. 
-    $submitted_email = ''; 
-     
+        
+    // At the top of the page we check to see whether the user is logged in or not
+    if(!empty($_SESSION['user']))
+    {
+    	// If they are not, we redirect them to the splash page.
+    	header("Location: splash.php");
+    	 
+    	// Remember that this die statement is absolutely critical.  Without it,
+    	// people can view your members-only content without logging in.
+    	die("Redirecting to splash.php");
+    }
+    
+    // This variable will be used to re-display the user's email to them in the
+    // login form if they fail to enter the correct password.  It is initialized here
+    // to an empty value, which will be shown if the user has not submitted the form.
+    $submitted_email = '';
+    
     // This if statement checks to determine whether the login form has been submitted 
     // If it has, then the login code is run, otherwise the form is displayed 
     if(!empty($_POST)) 
@@ -16,10 +27,11 @@
         // their email. 
         $query = " 
             SELECT 
-                id, 
+                user_id, 
                 email, 
                 password, 
-                salt
+                salt,
+        		status
             FROM users 
             WHERE 
                 email = :email 
@@ -62,7 +74,7 @@
                 $check_password = hash('sha256', $check_password . $row['salt']); 
             } 
              
-            if($check_password === $row['password']) 
+            if($check_password === $row['password'] && $row['status'] == 1) 
             { 
                 // If they do, then we flip this to true 
                 $login_ok = true; 
@@ -80,6 +92,7 @@
             // sensitive values first. 
             unset($row['salt']); 
             unset($row['password']); 
+            unset($row['status']);
              
             // This stores the user's data into the session at the index 'user'. 
             // We will check this index on the private members-only page to determine whether 
@@ -88,8 +101,8 @@
             $_SESSION['user'] = $row; 
              
             // Redirect the user to the private members-only page. 
-            header("Location: private.php"); 
-            die("Redirecting to: private.php"); 
+            header("Location: splash.php"); 
+            die("Redirecting to: splash.php"); 
         } 
         else 
         { 
@@ -106,14 +119,38 @@
     } 
      
 ?> 
-<h1>Login</h1> 
-<form action="login.php" method="post"> 
-    Email:<br /> 
-    <input type="text" name="email" value="<?php echo $submitted_email; ?>" /> 
-    <br /><br /> 
-    Password:<br /> 
-    <input type="password" name="password" value="" /> 
-    <br /><br /> 
-    <input type="submit" value="Login" /> 
-</form> 
-<a href="register.php">Register</a>
+
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/login.css" />
+	</head>
+	
+	
+	<body>
+		<section class="container">
+			<div class="login">
+				<h1>Login</h1> 
+				
+				<form action="login.php" method="post"> 
+				    Email:<br /> 
+				    <input type="text" name="email" value="<?php echo $submitted_email; ?>" /> 
+				    <br /><br /> 
+				    Password:<br /> 
+				    <input type="password" name="password" value="" /> 
+				    <br /><br /> 
+				    <p class="submit"><input type="submit" value="Login" /></p>
+				</form> 
+				
+			</div>
+			<div class="login-extra">
+				<a href="user_registration/register.php">Register</a>
+			</div>
+		</section>
+	</body>
+</html>
+
+
+
+
+
+

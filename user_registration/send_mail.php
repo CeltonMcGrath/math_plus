@@ -4,7 +4,7 @@
 	function send_activation_email($email, $activation) 
 	{
 		http://localhost:8888/math_plus/
-		$body = "<a href=http://localhost:8888/math_plus/activation/".$activation.">cats</a>";
+		$body = "<a href=http://localhost:8888/math_plus/user_registration/user_activation/".$activation.">cats</a>";
 		Send_Mail($email, "Math+ registration activation", $body);
 	}
 	
@@ -16,7 +16,7 @@
 		$mail->IsSMTP(true);            // use SMTP
 		$mail->IsHTML(true);
 		
-		$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+		$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
 		$mail->SMTPAuth = true; // authentication enabled
 		$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
 		
@@ -31,11 +31,11 @@
 		$mail->AddAddress($address, $to);
 		if(!$mail->Send())
 	    {
-	    	echo "Mailer Error: " . $mail->ErrorInfo;
+	    	return False;
 	    }
 		else
 	    {
-	    	echo "Message has been sent";
+	    	return True;
 	    }
 	}
 ?>

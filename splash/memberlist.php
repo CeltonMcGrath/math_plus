@@ -55,4 +55,4 @@
         </tr> 
     <?php endforeach; ?> 
 </table> 
-<a href="private.php">Go Back</a><br />
+<a href="splash.php">Go Back</a><br />

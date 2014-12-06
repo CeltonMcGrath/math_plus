@@ -1,7 +1,7 @@
 <?php
 /*Code adapted from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14 for PDO connection.*/
 
-require('common.php');
+require('../common.php');
 
 $msg='';
 
@@ -49,7 +49,7 @@ if(!empty($_GET['activation']) && isset($_GET['activation']))
 			// It may provide an attacker with helpful information about your code.
 			die("Failed to run query: " . $ex->getMessage());
 		}
-		$msg="Your account is activated. Click <a href='login.php'>here</a> to login."; 
+		$msg="Your account is activated. Click <a href='../login.php'>here</a> to login."; 
 		
 	}
 	else
