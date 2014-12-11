@@ -1,23 +1,11 @@
 <?php 
-
-    // First we execute our common code to connection to the database and start the session 
     require("common.php"); 
-        
-    // At the top of the page we check to see whether the user is logged in or not
-    if(!empty($_SESSION['user']))
-    {
-    	// If they are not, we redirect them to the splash page.
-    	header("Location: splash.php");
-    	 
-    	// Remember that this die statement is absolutely critical.  Without it,
-    	// people can view your members-only content without logging in.
-    	die("Redirecting to splash.php");
-    }
     
     // This variable will be used to re-display the user's email to them in the
     // login form if they fail to enter the correct password.  It is initialized here
     // to an empty value, which will be shown if the user has not submitted the form.
     $submitted_email = '';
+    $login_error = '';
     
     // This if statement checks to determine whether the login form has been submitted 
     // If it has, then the login code is run, otherwise the form is displayed 
@@ -107,7 +95,7 @@
         else 
         { 
             // Tell the user they failed 
-            print("Login Failed."); 
+            $login_error = "Incorrect username/password.";
              
             // Show them their email again so all they have to do is enter a new 
             // password.  The use of htmlentities prevents XSS attacks.  You should 
@@ -124,13 +112,12 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/login.css" />
 	</head>
-	
-	
 	<body>
 		<section class="container">
 			<div class="login">
 				<h1>Login</h1> 
-				
+				<span class="error"><?php echo $login_error;?></span>
+				<br />
 				<form action="login.php" method="post"> 
 				    Email:<br /> 
 				    <input type="text" name="email" value="<?php echo $submitted_email; ?>" /> 
@@ -139,11 +126,11 @@
 				    <input type="password" name="password" value="" /> 
 				    <br /><br /> 
 				    <p class="submit"><input type="submit" value="Login" /></p>
-				</form> 
-				
+				</form> 				
 			</div>
 			<div class="login-extra">
 				<a href="user_registration/register.php">Register</a>
+				<a href="user_registration/forgot_password.php">Forgot password</a>
 			</div>
 		</section>
 	</body>

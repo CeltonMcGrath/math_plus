@@ -1,4 +1,5 @@
 <?php
+
     // First we execute our common code to connection to the database and start the session 
     require("../common.php");   
     include 'user_register.php';
@@ -68,46 +69,41 @@
     	$emailEntry = $emailErr = $email2Err = $passwordErr = $password2Err = "";
     	$successPhrase = "";
     	$errorPhrase = "";
-    }   
+    }
+    
+     
 ?> 
 
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="../css/login.css" />
+			<link rel="stylesheet" type="text/css" href="../../css/login.css" />
 	</head>
 	<body>
-		<section class="container">
-			<div class="login">
-				<h1>Register</h1> 
-				<br />
-				<form action="register.php" method="post"> 
-					<span class="success"><?php echo $successPhrase?></span>
-					<br><br />
-					<span class="error">*Required fields</span>
-					<span class="error"><?php $errorPhrase?></span>
-					<br><br />				
-				    Email:<br /> 
-				    <input type="text" name="email" value="<?php echo $emailEntry;?>" /> 
-				    <span class="error">* <?php echo $emailErr;?></span>
-				    <br /><br /> 
-				    Re-enter your email:<br /> 
-				    <input type="text" name="email2" value="" /> 
-				    <span class="error">* <?php echo $email2Err;?></span>
-				    <br /><br /> 
-				    Password:<br /> 
-				    <input type="password" name="password" value="" /> 
-				    <span class="error">* <?php echo $passwordErr;?></span>
-				    <br /><br /> 
-				    Re-enter password:<br /> 
-				    <input type="password" name="password2" value="" /> 
-				    <span class="error">* <?php echo $password2Err;?></span>
-				    <br /><br />
-				    <input type="submit" value="Register" /> 
-				</form>				
-			</div>
-			<div class="login-extra">
-				<a href="../login.php">Return to login</a>
-			</div>
-		</section>
+		<h1>Register</h1> 
+		<form action="register.php" method="post"> 
+			<span class="success"><?php echo $successPhrase?></span>
+			<br><br />
+			<span class="error">*Required fields</span>
+			<span class="error"><?php $errorPhrase?></span>
+			<br><br />
+			
+		    Email:<br /> 
+		    <input type="text" name="email" value="<?php echo $emailEntry;?>" /> 
+		    <span class="error">* <?php echo $emailErr;?></span>
+		    <br /><br /> 
+		    Re-enter your email:<br /> 
+		    <input type="text" name="email2" value="" /> 
+		    <span class="error">* <?php echo $email2Err;?></span>
+		    <br /><br /> 
+		    Password:<br /> 
+		    <input type="password" name="password" value="" /> 
+		    <span class="error">* <?php echo $passwordErr;?></span>
+		    <br /><br /> 
+		    Re-enter password:<br /> 
+		    <input type="password" name="password2" value="" /> 
+		    <span class="error">* <?php echo $password2Err;?></span>
+		    <br /><br />
+		    <input type="submit" value="Register" /> 
+		</form>
 	</body>
 </html>
