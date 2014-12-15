@@ -4,6 +4,9 @@
     $password = "root"; 
     $host = "localhost"; 
     $dbname = "login_system"; 
+    
+    $private_dir = "/math_plus/private/";
+    $public_dir = "/math_plus/public/";
 
     // Communicate with the database via UTF-8 
     $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'); 
@@ -57,29 +60,16 @@
      
     session_start(); 
     
-    // At the top of the page we check to see whether the user is logged in or not
-    if(empty($_SESSION['user']) && $_SERVER['REQUEST_URI']!="/math_plus/login.php" 
-    		&& $_SERVER['REQUEST_URI']!="/math_plus/user_registration/register.php")
+    // If the user is not logged in and is trying to access private user area, redirect to login.
+    if(empty($_SESSION['user']) && substr($_SERVER['REQUEST_URI'], 0, strlen($private_dir))==$private_dir)
     {
-    	// If they are not, we redirect them to the login page.
-    	header("Location: login.php");
+    	header("Location: ".$public_dir."login.php");
     	die("Redirecting to login page.");
     }
-    elseif (!empty($_SESSION['user']) && $_SERVER['REQUEST_URI']=="/math_plus/login.php") 
+    // If the user is logged in and is trying to access login, logout or forgot password page, redirect to splash.
+    elseif (!empty($_SESSION['user']) && substr($_SERVER['REQUEST_URI'], 0, strlen($public_dir))==$public_dir) 
     {
-    	// If they are not, we redirect them to the splash page.
-    	header("Location: splash.php");
-    	 
-    	// Remember that this die statement is absolutely critical.  Without it,
-    	// people can view your members-only content without logging in.
-    	die("Redirecting to the homepage.");
-    }
-    elseif (!empty($_SESSION['user']) && $_SERVER['REQUEST_URI']=="/math_plus/user_registration/register.php") {
-    	// If they are not, we redirect them to the splash page.
-    	header("Location: ../splash.php");
-    	
-    	// Remember that this die statement is absolutely critical.  Without it,
-    	// people can view your members-only content without logging in.
+    	header("Location: ".$private_dir."splash.php");
     	die("Redirecting to the homepage.");
     }
 

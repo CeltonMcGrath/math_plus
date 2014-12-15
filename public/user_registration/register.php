@@ -1,6 +1,6 @@
 <?php
     // First we execute our common code to connection to the database and start the session 
-    require("../common.php");   
+    require("../../common.php");   
     include 'user_register.php';
 
     // This if statement checks to determine whether the registration form has been submitted 
@@ -73,7 +73,7 @@
 
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="../css/login.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/login.css" />
 	</head>
 	<body>
 		<section class="container">

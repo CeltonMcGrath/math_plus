@@ -28,10 +28,10 @@
 	</head>
 	<nav>
 		<ul>
-			<li><a href="/math_plus/splash.php">Home</a></li> 
-			<li><a href="/math_plus/faq.php">FAQ</a></li>
-			<li><a href="/math_plus/edit_account.php">Account</a></li>
-			<li><a href="/math_plus/logout.php">Logout</a></li>
+			<li><a href="/math_plus/private/splash.php">Home</a></li> 
+			<li><a href="/math_plus/private/faq.php">FAQ</a></li>
+			<li><a href="/math_plus/private/edit_account.php">Account</a></li>
+			<li><a href="/math_plus/private/logout.php">Logout</a></li>
 		</ul>
 	</nav>
 </html>

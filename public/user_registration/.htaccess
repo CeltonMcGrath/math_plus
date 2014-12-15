@@ -1,0 +1,5 @@
+php_flag display_errors 1
+
+Options +FollowSymLinks
+RewriteEngine on
+RewriteRule ^user_activation/([^/]+) user_activation.php?activation=$1

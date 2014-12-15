@@ -3,8 +3,8 @@
 
 	function send_activation_email($email, $activation) 
 	{
-		http://localhost:8888/math_plus/
-		$body = "<a href=http://localhost:8888/math_plus/user_registration/user_activation/".$activation.">cats</a>";
+		$link = "http://localhost:8888/math_plus/public/user_registration/user_activation/".$activation;
+		$body = "Thanks for registering with Math+. Please click <a href=".$link.">here</a> to activate your account.";
 		Send_Mail($email, "Math+ registration activation", $body);
 	}
 	

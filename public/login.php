@@ -1,5 +1,5 @@
 <?php 
-    require("common.php"); 
+    require("../common.php"); 
     
     // This variable will be used to re-display the user's email to them in the
     // login form if they fail to enter the correct password.  It is initialized here
@@ -89,8 +89,8 @@
             $_SESSION['user'] = $row; 
              
             // Redirect the user to the private members-only page. 
-            header("Location: splash.php"); 
-            die("Redirecting to: splash.php"); 
+            header("Location: ../private/splash.php"); 
+            die("Logging in..."); 
         } 
         else 
         { 
@@ -110,7 +110,7 @@
 
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="css/login.css" />
+		<link rel="stylesheet" type="text/css" href="../css/login.css" />
 	</head>
 	<body>
 		<section class="container">
@@ -130,7 +130,7 @@
 			</div>
 			<div class="login-extra">
 				<a href="user_registration/register.php">Register</a>
-				<a href="user_registration/forgot_password.php">Forgot password</a>
+				<a href="forgot_password.php">Forgot password</a>
 			</div>
 		</section>
 	</body>
