@@ -1,29 +1,59 @@
 <?php 
-
-    // First we execute our common code to connection to the database and start the session 
     require("../common.php"); 
-     
-    // At the top of the page we check to see whether the user is logged in or not 
-    if(empty($_SESSION['user'])) 
-    { 
-        // If they are not, we redirect them to the login page. 
-        header("Location: login.php"); 
-         
-        // Remember that this die statement is absolutely critical.  Without it, 
-        // people can view your members-only content without logging in. 
-        die("Redirecting to login.php"); 
-    } 
-     
+    include '../template/header.php';
+    include '../public/user_registration/user_register.php';
+    
+    $success = "";
+    $error = "";
+    
     // This if statement checks to determine whether the edit form has been submitted 
-    // If it has, then the account updating code is run, otherwise the form is displayed 
-    if(!empty($_POST)) 
-    { 
+    if(!empty($_POST)) { 
+    	if ($_POST['update']=='email') {
+    		/* Update user's email */
+
+    		// Check for valid email
+    		if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    			$error = "Update unsuccessful: please enter valid email.";
+    		} 
+    		elseif ($_POST['email']!=$_POST['email2']) {
+    			$error = "Update unsuccessful: emails do not match.";
+    		}
+    		elseif (userexists($_POST['email'])) {
+    			$error = "Update unsuccessful: user already exists in system.";
+    		} 
+    		else {
+    			if (True) {
+    				$success = "Update successful. An activation link has been 
+    						sent to your email. Your account will be inactive
+    						until your activate via this link. 
+    						(Please check your junk/spam email folders.)";
+    			}
+    			else {
+    				$error = "Update unsuccessful. Please try again or contact
+    						the system administrator.";
+    			}
+    		}
+    		// Make sure the user entered a valid E-Mail address
+    		if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+    		{
+    			$emailErr = "Valid email is required";
+    			$valid_id = false;
+    		}
+    		
+    		//Ensure that the user has entered matching email
+    		if ($_POST['email'] != $_POST['email2'])
+    		{
+    			$email2Err = "Email does not match.";
+    			$valid_id = false;
+    		}
+    		
+    	}
+    	else {
+    		/* Update user's password */
+    	}
+    }
 	/* Save this code for later. 
-        // Make sure the user entered a valid E-Mail address 
-        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 
-        { 
-            die("Invalid E-Mail Address"); 
-        } 
+        
          
         // If the user is changing their E-Mail address, we need to make sure that 
         // the new value does not conflict with a value that is already in the system. 
@@ -64,7 +94,7 @@
                 die("This E-Mail address is already in use"); 
             } 
         } 
-        */
+        
         // If the user entered a new password, we need to hash it and generate a fresh salt 
         // for good measure. 
         if(!empty($_POST['password'])) 
@@ -147,20 +177,44 @@
         // is critical.  The rest of your PHP script will continue to execute and 
         // will be sent to the user if you do not die or exit. 
         die("Redirecting to splash.php"); 
-    } 
-     
+    } */     
 ?> 
-<h1>Edit Account</h1> 
-<form action="edit_account.php" method="post"> 
-    Username:<br /> 
-    <b><?php echo htmlentities($_SESSION['user']['username'], ENT_QUOTES, 'UTF-8'); ?></b> 
-    <br /><br /> 
-    E-Mail Address:<br /> 
-    <input type="text" name="email" value="<?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>" /> 
-    <br /><br /> 
-    Password:<br /> 
-    <input type="password" name="password" value="" /><br /> 
-    <i>(leave blank if you do not want to change your password)</i> 
-    <br /><br /> 
-    <input type="submit" value="Update Account" /> 
-</form>
+
+<html>
+	<body>
+		<h1>Edit Account</h1> 
+		
+		<h2>Update email address</h2>
+		<span class="success"><?php echo $success?></span>
+		<span class="error"><?php echo $error?></span>  
+		<form action="edit_account.php" method="post"> 
+			<input type="hidden" name="update" value="email" />
+		    Current email: <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
+		    <br /> <br />  
+		    New email:<br /> 
+		    <input type="text" name="email" value="" />
+		    <br /><br /> 
+		    Re-enter new email:<br /> 
+		    <input type="text" name="email2" value="" />
+		    <br /><br /> 
+		    <input type="submit" value="Update email" /> 
+		</form>
+		
+		<h2>Update password</h2>
+		<span class="success"><?php echo $success?></span>
+		<span class="error"><?php echo $error?></span>
+		<form action="edit_account.php" method="post"> 
+			<input type="hidden" name="update" value="password" />
+		    Current password:<br /> 
+		    <input type="password" name="password" value="" />
+		    <br /><br /> 
+		    New Password:<br /> 
+		    <input type="password" name="password" value="" /> 
+			<br /><br /> 
+		    Re-enter new Password:<br /> 
+		    <input type="password" name="password" value="" />
+		    <br /><br /> 
+		    <input type="submit" value="Update password" /> 
+		</form>
+	</body>
+</html>

@@ -1,5 +1,5 @@
 <?php
-	// This if statement checks to determine whether the add new guardian form as been submitted.
+	// This if statement checks to determine whether the add new student form as been submitted.
     if(!empty($_POST))
     {
     	  	
@@ -37,7 +37,7 @@
     	}
     	else {
     		$student_id = $_POST['student_id'];
-    		if(isset($_POST['delete'])) {
+    		if($_POST['delete'] != 'no') {
     			$query = "DELETE FROM students
     				  WHERE student_id = :student_id";
     			 

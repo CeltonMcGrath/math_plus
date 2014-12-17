@@ -27,7 +27,7 @@
          
         // The parameter values 
         $query_params = array( 
-            ':email' => $_POST['email'] 
+            ':email' => $_POST['email']
         ); 
          
         try 
@@ -95,7 +95,7 @@
         else 
         { 
             // Tell the user they failed 
-            $login_error = "Incorrect username/password.";
+            $login_error = "Incorrect username and/or password.";
              
             // Show them their email again so all they have to do is enter a new 
             // password.  The use of htmlentities prevents XSS attacks.  You should 
@@ -117,7 +117,7 @@
 			<div class="login">
 				<h1>Login</h1> 
 				<span class="error"><?php echo $login_error;?></span>
-				<br />
+				<br /><br />
 				<form action="login.php" method="post"> 
 				    Email:<br /> 
 				    <input type="text" name="email" value="<?php echo $submitted_email; ?>" /> 

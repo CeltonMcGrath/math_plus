@@ -1,14 +1,22 @@
 <?php
 	/*Code from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14*/
 
-	function send_activation_email($email, $activation) 
-	{
+	function sendActivationEmail($email, $activation) {
+		/* Returns true iff activation email successfully sent.*/
 		$link = "http://localhost:8888/math_plus/public/user_registration/user_activation/".$activation;
+		$subject = "Math+ registration activation";
 		$body = "Thanks for registering with Math+. Please click <a href=".$link.">here</a> to activate your account.";
-		Send_Mail($email, "Math+ registration activation", $body);
+		return sendMail($email, $subject, $body);
 	}
 	
-	function Send_Mail($to, $subject, $body)
+	function sendTemporaryPassword($email, $password) {
+		/* Returns true iff temporary password email successfully sent.*/
+		$subject = "Math+ registration - temporary password";
+		$body = $password;
+		return sendMail($email, $subject, $body);
+	}
+	
+	function sendMail($to, $subject, $body)
 	{
 		require 'PHPMailer/PHPMailerAutoload.php';
 		$from       = "mcgrathcelton@gmail.com";

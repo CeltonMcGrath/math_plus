@@ -61,34 +61,34 @@
 		        $rows = $stmt->fetchAll();
 		        
 				foreach($rows as $row): ?> 
-					<div class="contact">
-	    				<input type="checkbox" id="<?php echo $row['student_id']?>" />
-	    				<label for="<?php echo $row['student_id']?>"><?php echo $row['last_name']?>, <?php echo $row['first_name']?></label>
-	    				<article>
-	    					<form action="students.php" method="post"> 
-	    						<input type="hidden" name="student_id" value="<?php echo $row['student_id']?>" />
-							    Preferred name:<input type="text" name="preferred_name" value="<?php echo $row['preferred_name']?>"/> 
-							    <br />
-							    Grade:<input type="text" name="grade" value="<?php echo $row['grade']?>"/> 
-							    <br />
-							    Allergies:<input type="text" name="allergies" value="<?php echo $row['allergies']?>"/> 
-							    <br />
-							    Medical:<input type="text" name="medical" value="<?php echo $row['medical']?>"/>
-							    <br /> 
-							    Photo permission: 
-						    	<input type="radio" name="photo_permission" value="yes" checked>Yes
-						   		<input type="radio" name="photo_permission" value="no">No
-						    	<br />
-						    	<br />
-							    Delete: <input type="radio" name="delete" value="yes"/> Yes
-							    <input type="radio" name="delete" value="no" checked/> No         
-							    <br />
-							    <input type="submit" value="Submit Changes" />
-						</form>
-	    				</article>
-	    			</div>					
-			    <?php endforeach; ?>
-			</section>
+				<div class="contact">
+    				<input type="checkbox" id="<?php echo $row['student_id']?>" />
+    				<label for="<?php echo $row['student_id']?>"><?php echo $row['last_name']?>, <?php echo $row['first_name']?></label>
+    				<article>
+    					<form action="students.php" method="post"> 
+    						<input type="hidden" name="student_id" value="<?php echo $row['student_id']?>" />
+				    Preferred name:<input type="text" name="preferred_name" value="<?php echo $row['preferred_name']?>"/> 
+				    <br />
+				    Grade:<input type="text" name="grade" value="<?php echo $row['grade']?>"/> 
+				    <br />
+				    Allergies:<input type="text" name="allergies" value="<?php echo $row['allergies']?>"/> 
+				    <br />
+				    Medical:<input type="text" name="medical" value="<?php echo $row['medical']?>"/>
+						    <br /> 
+						    Photo permission: 
+					    	<input type="radio" name="photo_permission" value="yes" checked>Yes
+					   		<input type="radio" name="photo_permission" value="no">No
+					    	<br />
+					    	<br />
+						    Delete: <input type="radio" name="delete" value="yes"/> Yes
+						    <input type="radio" name="delete" value="no" checked/> No         
+						    <br />
+						    <input type="submit" value="Submit Changes" />
+					</form>
+    				</article>
+    			</div>					
+		    <?php endforeach; ?>
+		</section>
 	</body>
 </html>
 
