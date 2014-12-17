@@ -1,11 +1,20 @@
 <?php
 	/*Code from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14*/
 
-	function sendActivationEmail($email, $activation) {
+	function sendActivationEmail($email, $activation, $reason) {
 		/* Returns true iff activation email successfully sent.*/
 		$link = "http://localhost:8888/math_plus/public/user_registration/user_activation/".$activation;
-		$subject = "Math+ registration activation";
-		$body = "Thanks for registering with Math+. Please click <a href=".$link.">here</a> to activate your account.";
+		if ($reason == "new user") {
+			$subject = "Math+ registration activation";
+			$body = "Thanks for registering with Math+. 
+					Please click <a href=".$link.">here</a> to activate your account.";
+		}
+		elseif ($reason == "update") {
+			$subject = "Math+ updated email";
+			$body = "You've successfully updated your email for your Math+ account.
+					Please click <a href=".$link.">here</a> to activate your new email.";
+		}
+		
 		return sendMail($email, $subject, $body);
 	}
 	
@@ -16,8 +25,9 @@
 		return sendMail($email, $subject, $body);
 	}
 	
-	function sendMail($to, $subject, $body)
-	{
+	function sendMail($to, $subject, $body) {
+		/* Returns true iff email is successfully sent.*/
+		
 		require 'PHPMailer/PHPMailerAutoload.php';
 		$from       = "mcgrathcelton@gmail.com";
 		$mail       = new PHPMailer();
@@ -37,13 +47,7 @@
 		$mail->MsgHTML($body);
 		$address = $to;
 		$mail->AddAddress($address, $to);
-		if(!$mail->Send())
-	    {
-	    	return False;
-	    }
-		else
-	    {
-	    	return True;
-	    }
+		
+		return ($mail->Send());   
 	}
 ?>

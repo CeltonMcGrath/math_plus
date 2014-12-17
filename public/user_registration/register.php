@@ -3,72 +3,48 @@
     require("../../common.php");   
     include 'user_register.php';
 
-    // This if statement checks to determine whether the registration form has been submitted 
-    // If it has, then the registration code is run, otherwise the form is displayed 
-    if(!empty($_POST)) 
-    { 
-    	$valid_id = true; 
-    	 
-        // Make sure the user entered a valid E-Mail address 
-        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 
-        { 
+    $emailEntry = $emailErr = $email2Err = $passwordErr = $password2Err = "";
+    $successPhrase = "";
+    $errorPhrase = "";
+    
+    // Check if the form has been submitted. If so, attempt to register the user.
+    if(!empty($_POST)) { 
+    	$emailEntry = $_POST['email'];
+    	
+        // Check for valid e-mail address 
+        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
             $emailErr = "Valid email is required";
-            $valid_id = false;
-        }  
-        
-        //Ensure that the user has entered matching email
-        if ($_POST['email'] != $_POST['email2'])
-        {
-        	$email2Err = "Email does not match.";
-        	$valid_id = false;
-        }
-         
-        // Ensure that the user has entered a non-empty password 
-        if(empty($_POST['password'])) 
-        { 
-            $passwordErr = "Password is required"; 
-            $valid_id = false;
         } 
-        
-        // Ensure that the user has entered the second password correctly
-        if($_POST['password'] != $_POST['password2'])
-        {
-        	$password2Err = "Passwords do not match.";
-        	$valid_id = false;
+        // Check for matching e-mail address
+        elseif ($_POST['email'] != $_POST['email2']) {
+        	$email2Err = "Email does not match.";
         }
-        
-        // If user already exists, display error. Otherwise, register user.
-        if($valid_id)
-        {
-        	if (userExists($_POST['email'], $db))
-        	{
-        		$errorPhrase = "This email is already in use.";
+        // Check for non-empty password
+        elseif(empty($_POST['password']))  { 
+            $passwordErr = "Password is required"; 
+        } 
+        // Check for valid password
+        elseif(false) {
+        	
+        }
+        // Check for matching password
+        elseif($_POST['password'] != $_POST['password2']) {
+        	$password2Err = "Passwords do not match.";
+        }
+        // Check for uniqueness of email 
+        elseif (userExists($_POST['email'], $db)) {
+        	$errorPhrase = "This email is already in use.";
+        }
+        else {
+        	if (addUser($_POST['email'], $_POST['password'], $db)) {
+        		$successPhrase = "Registration a success. An activation link has been sent to your email.
+        				 You must activitate your account via this link. Please check your spam/junk folders.";
         	}
-        	else
-        	{
-        		if (addUser($_POST['email'], $_POST['password'], $db))
-        		{
-        			$successPhrase = "Registration a success. An activation link has been sent to your email.
-        					 You must activitate your account via this link. Please check your spam/junk folders.";
-        		}
-        		else
-        		{
-        			$errorPhrase = "Registration failed.";
-        		}
-        		
+        	else {
+        		$errorPhrase = "Registration failed. Please try again or contact administrator.";
         	}
         }	 
-        else 
-        {
-        	$emailEntry = $_POST['email'];
-        }
-       
-    } 
-    else {
-    	$emailEntry = $emailErr = $email2Err = $passwordErr = $password2Err = "";
-    	$successPhrase = "";
-    	$errorPhrase = "";
-    }   
+    }  
 ?> 
 
 <html>
@@ -84,14 +60,14 @@
 					<span class="success"><?php echo $successPhrase?></span>
 					<br><br />
 					<span class="error">*Required fields</span>
-					<span class="error"><?php $errorPhrase?></span>
+					<span class="error"><?php echo $errorPhrase?></span>
 					<br><br />				
 				    Email:<br /> 
-				    <input type="text" name="email" value="<?php echo $emailEntry;?>" /> 
+				    <input type="email" name="email" value="<?php echo $emailEntry;?>" /> 
 				    <span class="error">* <?php echo $emailErr;?></span>
 				    <br /><br /> 
 				    Re-enter your email:<br /> 
-				    <input type="text" name="email2" value="" /> 
+				    <input type="email" name="email2" value="" /> 
 				    <span class="error">* <?php echo $email2Err;?></span>
 				    <br /><br /> 
 				    Password:<br /> 
