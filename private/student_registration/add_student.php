@@ -1,18 +1,7 @@
 <?php
 	// This if statement checks to determine whether the add new student form as been submitted.
     if(!empty($_POST))
-    {
-    	  	
-    	//     	//Validate user input
-    	//     	if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-    		//     	{
-    	//     		$emailErr = "Valid email is required";
-    	//     		$valid_id = false;
-    	//     	}
-    	//     	else {
-    	//     		$email  = $_POST['email'];
-    	//     	}
-    	   
+    {    	   
     	if ($_POST['student_id']==0) {
     		$user_id = $_SESSION['user']['user_id'];
     		$first_name = $_POST['first_name'];

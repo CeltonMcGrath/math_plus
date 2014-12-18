@@ -48,14 +48,12 @@
 		            ':user_id' => $_SESSION['user']['user_id']
 		        ); 
 		         
-		        try 
-		        { 
+		        try { 
 		            // Execute the query against the database 
 		            $stmt = $db->prepare($query); 
 		            $result = $stmt->execute($query_params); 
 		        } 
-		        catch(PDOException $ex) 
-		        {   
+		        catch(PDOException $ex) {   
 		            die("Failed to run query: " . $ex->getMessage()); 
 		        } 
 		        $rows = $stmt->fetchAll();
@@ -67,24 +65,57 @@
     				<article>
     					<form action="students.php" method="post"> 
     						<input type="hidden" name="student_id" value="<?php echo $row['student_id']?>" />
-				    Preferred name:<input type="text" name="preferred_name" value="<?php echo $row['preferred_name']?>"/> 
-				    <br />
-				    Grade:<input type="text" name="grade" value="<?php echo $row['grade']?>"/> 
-				    <br />
-				    Allergies:<input type="text" name="allergies" value="<?php echo $row['allergies']?>"/> 
-				    <br />
-				    Medical:<input type="text" name="medical" value="<?php echo $row['medical']?>"/>
+						    Preferred name:<input type="text" name="preferred_name" value="<?php echo $row['preferred_name']?>"/> 
+						    <br />
+						    Grade:<input type="text" name="grade" value="<?php echo $row['grade']?>"/> 
+						    <br />
+						    Allergies:<input type="text" name="allergies" value="<?php echo $row['allergies']?>"/> 
+						    <br />
+						    Medical:<input type="text" name="medical" value="<?php echo $row['medical']?>"/>
 						    <br /> 
 						    Photo permission: 
 					    	<input type="radio" name="photo_permission" value="yes" checked>Yes
 					   		<input type="radio" name="photo_permission" value="no">No
 					    	<br />
+					    	
 					    	<br />
-						    Delete: <input type="radio" name="delete" value="yes"/> Yes
+						    Delete student: <input type="radio" name="delete" value="yes"/> Yes
 						    <input type="radio" name="delete" value="no" checked/> No         
 						    <br />
 						    <input type="submit" value="Submit Changes" />
-					</form>
+						</form>
+						<br />
+						<form action="programs.php" method="post">
+							<input type="hidden" name="student_id" value="<?php echo $row['student_id']?>" />
+							Upcoming programs: <ul>
+								<?php // Generate list of upcoming programs student is registered in.
+								// Query the db for guardian contacts associated with current user
+								$query2 = "SELECT programs.program_name, programs.start_date, programs.end_date, 
+											students_programs.status 
+											FROM students_programs INNER JOIN programs
+											on students_programs.program_id = programs.program_id
+				    						WHERE student_id = :student_id"; 
+				         
+						        $query_params2 = array( 
+						            ':student_id' => $row['student_id']
+						        ); 
+						         
+						        try { 
+						            // Execute the query against the database 
+						            $stmt2 = $db->prepare($query2); 
+						            $result2 = $stmt2->execute($query_params2); 
+						        } 
+						        catch(PDOException $ex) {   
+						            die("Failed to run query: " . $ex->getMessage()); 
+						        } 
+						        $rows2 = $stmt2->fetchAll();
+						        
+								foreach($rows2 as $row2): 
+									echo "<li>".row2['program_name']."</li>";
+								endforeach; ?>
+							</ul> <br />
+					    	<input type="submit" value="Add or view programs" />
+					    </form>
     				</article>
     			</div>					
 		    <?php endforeach; ?>
