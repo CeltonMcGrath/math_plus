@@ -1,6 +1,8 @@
 <?php 
     require("../common.php"); 
+    include '../template/head.php';
     include '../template/header.php';
+    include '../template/footer.php';
     include '../public/user_registration/user_register.php';
     include '../public/user_registration/user_maintenance.php';
     
@@ -66,17 +68,6 @@
     	}
     }   
 ?> 
-
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Math+ Registration</title>
-		<style type="text/css">
-			@import url(/math_plus/css/style.css);
-			@import url(/math_plus/css/main.css);
-		</style>
-		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-	</head>
 	<body>
 		<h1>Edit Account</h1> 
 		

@@ -1,5 +1,6 @@
 <?php 
     require("../../common.php");
+    
     include 'Guardian.php';   
     // Check if form has been submitted
     if(!empty($_POST)) {
@@ -22,20 +23,10 @@
     	}
     }
     
+    include '../../template/head.php';
     include '../../template/header.php';
+    include '../../template/footer.php';
 ?> 
-
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Math+ Registration</title>
-		<style type="text/css">
- 			@import url(/math_plus/css/style.css);
- 			@import url(/math_plus/css/main.css);
-			@import url(/math_plus/css/contacts.css);
-		</style>
-		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-	</head>
 	<body>
 		<h1>Guardians</h1>
 			<section id="accordion">

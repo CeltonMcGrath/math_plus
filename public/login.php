@@ -73,7 +73,7 @@
 			@import url(/math_plus/css/style.css);
 			@import url(/math_plus/css/main.css);
 		</style>
-		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/math_plus/css/favicon.ico" type="image/x-icon">
 	</head>
 	
 	<body>
