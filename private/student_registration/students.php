@@ -19,7 +19,7 @@
 		<h1>Students</h1>
 			<section id="accordion">
 				<div class="contact">
-    				<input type="checkbox" id="check-0" />
+    				<input class="accordion" type="checkbox" id="check-0" />
     				<label for="check-0">Add new student</label>
     				<article>
     					<form action="students.php" method="post"> 
@@ -67,8 +67,10 @@
 		        
 				foreach($rows as $row): ?> 
 				<div class="contact">
-    				<input type="checkbox" id="<?php echo $row['student_id']?>" />
-    				<label for="<?php echo $row['student_id']?>"><?php echo $row['last_name']?>, <?php echo $row['first_name']?></label>
+    				<input class="accordion" type="checkbox" id="<?php echo $row['student_id']?>" />
+    				<label for="<?php echo $row['student_id']?>">
+    					<?php echo $row['last_name']?>, <?php echo $row['first_name']?>
+    				</label>
     				<article>
     					<form action="students.php" method="post"> 
     						<input type="hidden" name="student_id" value="<?php echo $row['student_id']?>" />

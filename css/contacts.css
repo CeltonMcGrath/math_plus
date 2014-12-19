@@ -8,7 +8,7 @@
 		list-style-type: none;
 	}
 	
-	#accordion input[type="checkbox"] {
+	#accordion input.accordion[type="checkbox"] {
 		display: none;
 	}
 	
