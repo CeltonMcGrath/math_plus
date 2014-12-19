@@ -6,7 +6,14 @@
 
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="../../css/contacts.css" />
+		<meta charset="utf-8">
+		<title>Math+ Registration</title>
+		<style type="text/css">
+ 			@import url(/math_plus/css/style.css);
+ 			@import url(/math_plus/css/main.css);
+			@import url(/math_plus/css/contacts.css);
+		</style>
+		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 	</head>
 	<body>
 		<h1>Guardians</h1>

@@ -33,7 +33,13 @@
 
 <html>
 	<head>
-			<link rel="stylesheet" type="text/css" href="../css/login.css" />
+		<meta charset="utf-8">
+		<title>Math+ Registration</title>
+		<style type="text/css">
+			@import url(/math_plus/css/style.css);
+			@import url(/math_plus/css/main.css);
+		</style>
+		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 	</head>
 	<body>
 		<section class="container">
