@@ -24,31 +24,6 @@ header h1 {
 	align-content: right;
 }
 
-/* Main content box. Change background here */
-#content{
-	background:url('../home/main/mainbg.jpg') no-repeat #000;
-	background-size: 2200px;
-}
-
-#welcome{
-	font-family:Novecento-Normal, "Segoe UI", "Helvetica Neue";
-	margin:0px 50px 0px 50px;
-	font-size:35px;
-	color:#ddd;
-	visibility:hidden;
-}
-
-#sigma{
-	border:none;
-	display:block;
-}
-
-#look{
-	font-family:Novecento-Normal, "Segoe UI", "Helvetica Neue";
-	font-size:20px;
-	color:#fff;
-}
-
 /* Mini and large screen settings */
 @media (max-width:1104px){
 	#section container, contact {

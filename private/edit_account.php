@@ -2,7 +2,6 @@
     require("../common.php"); 
     include '../template/head.php';
     include '../template/header.php';
-    include '../template/footer.php';
     include '../public/user_registration/user_register.php';
     include '../public/user_registration/user_maintenance.php';
     
@@ -70,40 +69,43 @@
 ?> 
 	<body>
 		<h1>Edit Account</h1> 
-		
-		<h2>Update email address</h2> 
-		<form action="edit_account.php" method="post"> 
-			<input type="hidden" name="update" value="email" />
-		    Current email: <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
-		    <br /> <br />  
-		    <span class="success"><?php echo $emailSuccess?></span>
-			<span class="error"><?php echo $emailErr?></span> 
-			<br /> <br /> 
-		    New email:<br /> 
-		    <input type="email" name="email" value="" />
-		    <br /><br /> 
-		    Re-enter new email:<br /> 
-		    <input type="email" name="email2" value="" />
-		    <br /><br /> 
-		    <input type="submit" value="Update email" /> 
-		</form>
-		
-		<h2>Update password</h2>
-		<span class="success"><?php echo $passwordSuccess?></span>
-		<span class="error"><?php echo $passwordErr?></span>
-		<br /><br />
-		<form action="edit_account.php" method="post"> 
-			<input type="hidden" name="update" value="password" />
-		    Current password:<br /> 
-		    <input type="password" name="oldPassword" value="" />
-		    <br /><br /> 
-		    New Password:<br /> 
-		    <input type="password" name="newPassword" value="" /> 
-			<br /><br /> 
-		    Re-enter new Password:<br /> 
-		    <input type="password" name="newPassword2" value="" />
-		    <br /><br /> 
-		    <input type="submit" value="Update password" /> 
-		</form>
+		<div class="contact">
+			<h2>Update email address</h2>
+			<form action="edit_account.php" method="post"> 
+				<input type="hidden" name="update" value="email" />
+			    Current email: <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
+			    <br /> <br />  
+			    <span class="success"><?php echo $emailSuccess?></span>
+				<span class="error"><?php echo $emailErr?></span> 
+				<br /> <br /> 
+			    New email:<br /> 
+			    <input type="email" name="email" value="" />
+			    <br /><br /> 
+			    Re-enter new email:<br /> 
+			    <input type="email" name="email2" value="" />
+			    <br /><br /> 
+			    <input type="submit" value="Update email" /> 
+			</form>
+		</div>
+		<div class="contact">
+			<h2>Update password</h2>
+			<span class="success"><?php echo $passwordSuccess?></span>
+			<span class="error"><?php echo $passwordErr?></span>
+			<br /><br />
+			<form action="edit_account.php" method="post"> 
+				<input type="hidden" name="update" value="password" />
+			    Current password:<br /> 
+			    <input type="password" name="oldPassword" value="" />
+			    <br /><br /> 
+			    New Password:<br /> 
+			    <input type="password" name="newPassword" value="" /> 
+				<br /><br /> 
+			    Re-enter new Password:<br /> 
+			    <input type="password" name="newPassword2" value="" />
+			    <br /><br /> 
+			    <input type="submit" value="Update password" /> 
+			</form>
+		</div>
 	</body>
+    <?php include '../template/footer.php';?>
 </html>

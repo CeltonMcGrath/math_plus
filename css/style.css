@@ -15,7 +15,7 @@
 }
 
 /* Global font + settings*/
-* {
+*{
 	font-family: 'Novecento-Book', "Segoe UI", "Helvetica Neue";
 	margin: 0px;
 	padding: 0px;
@@ -23,10 +23,11 @@
 }
 
 /* Header */ 
-#header {
-	min-width:667px;
-	width:100%;
+header {
+	position:absolute;
+    top:0px;
 	height:170px;
+	width:100%;
 	background-color:#fff;
 }
 
@@ -40,18 +41,13 @@
 	margin:15px 50px 15px 50px;
 }
 
-#title{
-	float:left;
-	padding-top:30px;
-	padding-left:40px;
-	font-size:55px;
-	color:#002A5C;
-}
-
+/* Navigation */ 
 #navbar{
-	clear:both;
-	background-color:#999999;
+	position: absolute;
+	top: 170px;
 	height:40px;
+	width: 100%;
+	background-color:#999999;
 }
 
 #nav_tabs{
@@ -71,216 +67,39 @@
 	color:#3B5998;
 }
 
+/* Main content */
+.splash {
+    position: absolute;
+    height: 100%;  
+    background:#3b3b3b;
+    text-align:center;
+    color:#FFF;
+    
+}
+
+section {
+	position: absolute;
+	top: 210px;
+	width: 100%;
+	margin-bottom: 60px; /* for footer */
+}
+
+
+
 /* Footer */
-#footer {
-	position:absolute;
+footer {
+	position: fixed;
+	bottom: 0px;
+	height: 40px;
+	width: 100%;
 	letter-spacing:1px;
 	background-color:#999;
-	width:100%;
+ 	z-index: 10;
 }
 
 footer p {
 	padding:10px 10px 50px 0px;
 	float:right;
-}
-
-/* Section below header */
-#main{
-	width:100%;
-	margin-left:auto;
-	margin-right:auto;
-	clear:both;
-	position:absolute;
-	min-height:800px;
-}
-
-
-/* Menu related */
-#menu{
-	height:100%;
-	background-color:#222222;
-	width:250px;
-	float:left;
-	position:absolute;
-	bottom:0;
-	overflow:hidden;
-}
-
-.menu_tabs{
-	margin-top:20px;
-	list-style:none;
-}
-
-ul.menu_tabs li {
-    text-indent:0;
-    padding:0;
-    margin:0 !important;
-}
-
-ul.menu_tabs a {
-	font-family:Novecento-Normal, "Segoe UI", "Helvetica Neue";
-	line-height:25px;
-	font-size:18px;
-	margin-left:30px;
-	display:block;
-	height:40px;
-	color:#fff;
-	text-decoration:none;
-}
-
-ul.menu_tabs a:hover {
-	color:#7BA4D9;
-}
-
-#menubrochure {
-	background:#192c4d;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-	height:50px;
-	padding:5px 10px 5px 10px;
-	margin:20px;
-	margin-top:5px;
-}
-
-#follow {
-	font-family:Novecento-Normal, "Segoe UI", "Helvetica Neue";
-	color:#999999;
-	margin:10px 0 0 45px;
-	display:block;
-	min-width:100px; 
-	width:auto !important; 
-	width:100px;
-	font-size:30px;
-}
-
-.social{
-	float:left;
-	width:50px;
-	height:50px;
-	display:block;
-}
-
-#twitter {
-	margin-left:25px;
-	background:url('social.png') no-repeat;
-	background-position: 0px -50px;
-}
-
-#twitter:hover {
-	background:url('social.png') no-repeat;
-	background-position: -50px -50px;
-}
-
-#facebook {
-	background:url('social.png') no-repeat;
-	background-position: 0px 0px;
-}
-
-#facebook:hover {
-	background:url('social.png') no-repeat;
-	background-position: -50px 0px;
-}
-
-/* Main content box */
-#content{
-	margin-left:250px;
-	min-height:880px;
-	overflow:hidden;
-	position:relative;
-}
-
-
-
-
-.subtitle{
-	font-family:Novecento-Normal, "Segoe UI", "Helvetica Neue";
-	font-size:40px;
-	line-height:30px;
-	margin-left:20px;
-	margin-top:10px;
-	position:relative;
-	z-index:11;
-}
-
-.subtitle a{
-	color:#fff;
-}
-
-.subtitle a:visited{
-	color:#fff;
-}
-
-.subtitle2{
-	clear:both;
-	font-family:Novecento-Normal, "Segoe UI", "Helvetica Neue";
-	font-size:45px;
-	line-height:45px;
-	margin-left:20px;
-	padding-top:20px;
-	position:relative;
-	z-index:11;
-}
-
-.subgroup{
-	margin-top:15px;
-	width:106%;
-	overflow:auto;
-	height:300px;
-	position:relative;
-	z-index:11;
-}
-
-.item{
-	font-size:22px;
-	line-height:25px;
-	margin:5px 20px 15px 20px;
-	color:#fff;
-	position:relative;
-	z-index:11;
-}
-
-.item a{
-	color:#fff;
-}
-
-.item a:visited{
-	color:#fff;
-}
-
-.item a:hover{
-	color:#ccc;
-}
-
-
-/* Other Global Objects */
-/* Images*/
-img{
-	border-style:solid;
-    border-width:5px;
-}
-	
-#menupic{
-	width:200px;
-	margin:10px auto;
-	border-style:none;
-	display: block;
-}
-
-/* Video */
-video{
-	margin:0 auto;
-	display:block;
-	float: right;
-	border-style:solid;
-    border-width:5px;
-}
-
-/* Black bar. Usualy on top of update boxes */
-.bar{
-	clear:both;
-	background-color:#000;
-	height:3px;
 }
 
 /* Link colors */

@@ -1,24 +1,31 @@
 <?php  
-    require("../../common.php");
-    include '../../template/header.php';
-?> 
+    require("../../common.php");     
     
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Math+ Registration</title>
-		<style type="text/css">
- 			@import url(/math_plus/css/style.css);
- 			@import url(/math_plus/css/main.css);
-			@import url(/math_plus/css/contacts.css);
-		</style>
-		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-	</head>
+    if (empty($_POST)) { 
+    	//Redirect to students.php
+    	header("Location: students.php");
+    	die("Redirecting to students page.");
+    	
+    }
+    include 'Student.php';
+    include '../../template/head.php';
+    include '../../template/header.php';
+    
+    $student = new Student($_POST['student_id'], $db);
+    ?>
+
 	<body>
-		<h1>Programs</h1>
-		
-		
+		<h1>Select programs for 
+			<?php echo $student->first_name." ".$student->last_name?>
+		</h1>
+		<section id="accordion"> 
+			<?php 
+			//Get programs for student
+    		$student->displayAllPrograms()
+    		?>
+		</section>
 	</body>
+	<?php include '../../template/footer.php';?>
 </html>	
 
 

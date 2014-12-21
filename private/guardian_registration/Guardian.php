@@ -42,9 +42,12 @@ class Guardian {
    		$l_name, $tel_1, $tel_2, $em, $db) {
    	    /*Creates guardian contact in database.*/
    		
-   		$query = "INSERT INTO guardians (user_id, first_name, last_name, phone_1, phone_2, email) 
-	   			VALUES
-				(:user_id, :first_name, :last_name, :phone_1, :phone_2, :email)";
+   		$query = "INSERT INTO guardians 
+   				(user_id, first_name, last_name, phone_1, phone_2, email) 
+	   			VALUES(
+   					:user_id, :first_name, :last_name, 
+   					:phone_1, :phone_2, :email
+   				)";
 	   	 
 	   	$query_params = array(
 	   			':user_id' => $u_id,
@@ -61,65 +64,74 @@ class Guardian {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex) {
-	   		False;
-	   	}
-	   	
-	   	return True;
-   }
-   
-   public static function updateGuardian($g_id, $tel_1, $tel_2, $em, $db) {
-   		/*Updates guardian data and returns true iff success. */
-	   	$query = "UPDATE guardians
-	    		SET phone_1 = :phone_1, phone_2 = :phone_2, email = :email
-	    		WHERE guardian_id = :guardian_id";
-	   	
-	   	$query_params = array(
-	   			':phone_1' => $tel_1,
-	   			':phone_2' => $tel_2,
-	   			':email' => $em,
-	   			':guardian_id' => $g_id
-	   	);
-	   	
-	   	try {
-	   		// Execute the query against the database
-	   		$stmt = $db->prepare($query);
-	   		$result = $stmt->execute($query_params);
-	   	}
-	   	catch(PDOException $ex) {
 	   		return False;
 	   	}
 	   	return True;
    }
-
+   
    public function displayGuardianForm() {
-   		/* Display html form with student data. */
-   		echo "		
+   	/* Display html form with student data. */
+   	echo "
    		<div class='contact'>
-   			<input class='accordion' type='checkbox' id=".$this->guardian_id." />
-   			<label for=".$this->guardian_id.">".$this->last_name.", ".$this->first_name."</label>
+   			<input class='accordion' type='checkbox' id='$this->guardian_id'
+   					/>
+   			<label for=".$this->guardian_id.">
+   					".$this->last_name.", ".$this->first_name."
+   			</label>
    			<article>
    		    	<form action='guardians.php' method='post'/>
-   		    		<input type='hidden' name='guardian_id' value=".$this->guardian_id." /> 
-   					Primary phone: <input type='tel' name='phone_1' value=".$this->phone_1."/>
+   		    		<input type='hidden' name='guardian_id'
+   							value='$this->guardian_id'/>
+   					Primary phone: <input type='tel' name='phone_1'
+   							value='$this->phone_1'/>
    					<br />
-   					Secondary phone: <input type='tel' name='phone_2' value=".$this->phone_2."/> 
+   					Secondary phone: <input type='tel' name='phone_2'
+   							value='$this->phone_2'/>
    					<br />
-   					Email: <input type='text' name='email' value=".$this->email."/>
-   					<br /> 
-   					Delete: 
-   					<input type='radio' name='delete' value='yes'/> Yes
-   					<input type='radio' name='delete' value='no' checked/> No				    
+   					Email: <input type='text' name='email'
+   							value='$this->email'/>
    					<br />
-   					<input type='submit' value='Submit changes' name='update' />
+   					Delete:
+   					<input type='radio' name='delete'
+   							value='yes'/> Yes
+   					<input type='radio' name='delete' value='no' checked/> No
+   					<br />
+   					<input type='submit' value='Submit changes'
+   							name='update' />
    				</form>
    		    </article>
    		 </div>";
    }
+   
+	public static function updateGuardian($g_id, $tel_1, $tel_2, $em, $db) {
+		/* Updates guardian data and returns true iff success. */
+		$query = "UPDATE guardians
+	    		SET phone_1 = :phone_1, phone_2 = :phone_2, email = :email
+	    		WHERE guardian_id = :guardian_id";
+		
+		$query_params = array (
+				':phone_1' => $tel_1,
+				':phone_2' => $tel_2,
+				':email' => $em,
+				':guardian_id' => $g_id 
+		);
+		
+		try {
+			// Execute the query against the database
+			$stmt = $db->prepare ( $query );
+			$result = $stmt->execute ( $query_params );
+		} catch ( PDOException $ex ) {
+			return False;
+		}
+		return True;
+	}
+
+
       	
    public static function deleteGuardian($g_id, $db) {
    		/* Deletes guardian from database.*/
 	   	$query = "DELETE FROM guardians
-	    		WHERE guardian_id = :g_id";
+	    		WHERE guardian_id = :guardian_id";
 	   	
 	   	$query_params = array(':guardian_id' => $g_id);
 	   	
@@ -129,7 +141,8 @@ class Guardian {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex)	{
-	   		error_log("You messed up!", 3, "logs/php_error.log");
+	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
 	   	}
 	   	return True;
    }

@@ -67,8 +67,7 @@
     	die("Redirecting to login page.");
     }
     // If the user is logged in and is trying to access login, logout or forgot password page, redirect to splash.
-    elseif (!empty($_SESSION['user']) && substr($_SERVER['REQUEST_URI'], 0, strlen($public_dir))==$public_dir) 
-    {
+    elseif (!empty($_SESSION['user']) && substr($_SERVER['REQUEST_URI'], 0, strlen($public_dir))==$public_dir) {
     	header("Location: ".$private_dir."splash.php");
     	die("Redirecting to the homepage.");
     }

@@ -13,7 +13,7 @@
     	}
     	else {
     		/* Update or delete guardian contact */
-    		if(isset($_POST['delete'])) {
+    		if(($_POST['delete'])=="yes") {
     			Guardian::deleteGuardian($_POST['guardian_id'], $db);
     		}
     		else {
@@ -22,10 +22,8 @@
     		}
     	}
     }
-    
     include '../../template/head.php';
     include '../../template/header.php';
-    include '../../template/footer.php';
 ?> 
 	<body>
 		<h1>Guardians</h1>
@@ -33,8 +31,10 @@
 			<?php 
 			Guardian::displayEmptyGuardianForm();
 			// Generate accordian-style contact list
-				// Query the db for guardian contacts associated with current user
-				$query = "SELECT guardian_id FROM guardians WHERE user_id = :user_id"; 
+				// Query the db for guardian contacts 
+				// associated with current user
+				$query = "SELECT guardian_id FROM guardians 
+    				WHERE user_id = :user_id"; 
 		        $query_params = array( 
 		            ':user_id' => $_SESSION['user']['user_id']
 		        ); 
@@ -55,5 +55,6 @@
 			    endforeach; ?>
 			</section>
 	</body>
+	<?php include '../../template/footer.php';?>
 </html>
 
