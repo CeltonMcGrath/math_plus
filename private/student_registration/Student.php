@@ -265,7 +265,7 @@ class Student {
  		$query_params = array(':student_id' => $this->student_id);   	
 	   	try	{
 	   		// Execute the query against the database
-	   		$stmt = $db->prepare($query);
+	   		$stmt = $this->database->prepare($query);
 	   		$result = $stmt->execute($query_params);
 	   	} catch(PDOException $ex) {
 	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
@@ -279,7 +279,7 @@ class Student {
  			<div class='contact'>
  				<input class='accordion' type='checkbox' 
  					id='".$program_id."'/>";
- 				if (this->studentInProgram()) {
+ 				if (studentInProgram()) {
  					echo "<label for='".$program_id."'>
  					".$program_name." (Status: ".$status.")
  					</label>";
@@ -305,7 +305,7 @@ class Student {
  		
  	}
  	
- 	private function studentInProgram {
+ 	private function studentInProgram() {
  		return True;
  	}
  	
