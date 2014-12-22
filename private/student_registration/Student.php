@@ -253,7 +253,8 @@ class Student {
  		} catch(PDOException $ex) {
  			die('Failed to run query: ' . $ex->getMessage());
  		}
- 		
+ 		echo "<section id='content'>
+
  		$rows = $stmt->fetchAll();
  		
  		foreach($rows as $row):
