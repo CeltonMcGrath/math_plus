@@ -27,7 +27,7 @@
     	}    
     }
 ?>
-	<body>
+	<section id="content">
 		<h1>Students</h1>
 			<section id="accordion">
 				<?php Student::displayEmptyStudentForm ();
@@ -51,11 +51,11 @@
 				$rows = $stmt->fetchAll ();
 				
 				foreach ( $rows as $row ) :
-					$student = new Student ( $row ['student_id'], $db );
+					$student = new Student ($row ['student_id'], $db );
 					$student->displayStudentInfo();
 				endforeach; ?>
 			</section>
-	</body>
+	</section>
 <?php include '../../template/footer.php';?>
 </html>
 

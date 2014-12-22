@@ -25,7 +25,7 @@
     include '../../template/head.php';
     include '../../template/header.php';
 ?> 
-	<body>
+	<section id="contact">
 		<h1>Guardians</h1>
 			<section id="accordion">
 			<?php 
@@ -54,7 +54,7 @@
 					$guardian->displayGuardianForm();					
 			    endforeach; ?>
 			</section>
-	</body>
+	</section>
 	<?php include '../../template/footer.php';?>
 </html>
 

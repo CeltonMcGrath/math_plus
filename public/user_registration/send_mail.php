@@ -3,7 +3,7 @@
 
 	function sendActivationEmail($email, $activation, $reason) {
 		/* Returns true iff activation email successfully sent.*/
-		$link = "http://localhost:8888/math_plus/public/user_registration/user_activation/".$activation;
+		$link = "http://54.174.128.163/math_plus/public/user_registration/user_activation.php?activation=".$activation;
 		if ($reason == "new user") {
 			$subject = "Math+ registration activation";
 			$body = "Thanks for registering with Math+. 

@@ -14,17 +14,17 @@
     $student = new Student($_POST['student_id'], $db);
     ?>
 
-	<body>
+	<section id=content>
 		<h1>Select programs for 
-			<?php echo $student->first_name." ".$student->last_name?>
+			<?php $student->printName()?>
 		</h1>
 		<section id="accordion"> 
 			<?php 
 			//Get programs for student
-    		$student->displayAllPrograms()
+    			$student->displayAllPrograms();
     		?>
 		</section>
-	</body>
+	</section>
 	<?php include '../../template/footer.php';?>
 </html>	
 

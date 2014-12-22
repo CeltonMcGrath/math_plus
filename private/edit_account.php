@@ -67,7 +67,7 @@
     	}
     }   
 ?> 
-	<body>
+	<section id="content">
 		<h1>Edit Account</h1> 
 		<div class="contact">
 			<h2>Update email address</h2>
@@ -106,6 +106,6 @@
 			    <input type="submit" value="Update password" /> 
 			</form>
 		</div>
-	</body>
+	</section>
     <?php include '../template/footer.php';?>
 </html>

@@ -1,7 +1,7 @@
 <?php
 class Student {
 	
-   private $student_id;
+   public $student_id;
    private $user_id;
    private $first_name;
    private $last_name;
@@ -81,7 +81,11 @@ class Student {
 	   	}
 	   	return True;
    }
-   
+  
+   public function printName() {
+   	echo $this->first_name." ".$this->last_name;
+   }
+ 
    public function displayStudentInfo() {
     	echo "
 	    	<div class='contact'>
@@ -235,17 +239,17 @@ class Student {
  		</form>";
  	}  
  	
- 	private function displayPastProgramList() {
+ 	public function displayAllPrograms() {
  		//Select all upcoming programs
- 		$query1 = 'SELECT *
+ 		$query = 'SELECT *
 	   			FROM
  					programs
 	   			WHERE
- 					NOW() < programs.registration_date';
+ 					NOW() < programs.registration_deadline';
  		try {
  			// Execute the query against the database
  			$stmt = $this->database->prepare($query);
- 			$result = $stmt->execute($query_params);
+ 			$result = $stmt->execute();
  		} catch(PDOException $ex) {
  			die('Failed to run query: ' . $ex->getMessage());
  		}
@@ -253,7 +257,7 @@ class Student {
  		$rows = $stmt->fetchAll();
  		
  		foreach($rows as $row):
- 			
+ 				
  		endforeach;
  	}
 
@@ -307,7 +311,7 @@ class Student {
 	   	return True;
    }
    
-   public function displayAllPrograms() {
+   public function displayPastProgramList() {
    		return True;
    }
 
