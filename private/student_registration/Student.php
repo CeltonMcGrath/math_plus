@@ -233,9 +233,9 @@ class Student {
  		endforeach;
  		echo "</ul>							
  		<form action='programs.php' method='post'>
- 		<input type='hidden' name='student_id' 
- 			value=".$this->student_id."/>
- 		<input type='submit' value='Add or view programs' />
+ 			<input type='hidden' name='student_id' 
+ 				value=".$this->student_id."/>
+ 			<input type='submit' value='Add or view programs' />
  		</form>";
  	}  
  	
@@ -251,17 +251,64 @@ class Student {
  			$stmt = $this->database->prepare($query);
  			$result = $stmt->execute();
  		} catch(PDOException $ex) {
- 			die('Failed to run query: ' . $ex->getMessage());
- 		}
- 		echo "<section id='content'>
-
- 		$rows = $stmt->fetchAll();
+ 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+ 		}	
+ 		$programRows = $stmt->fetchAll();
  		
- 		foreach($rows as $row):
- 				
+ 		//Select programs student is already registered in
+ 		$query = 'SELECT program_id
+	   			FROM
+ 					students_programs 
+	   			WHERE
+ 					students_programs.student_id = :student_id';
+ 		$query_params = array(':student_id' => $this->student_id);   	
+	   	try	{
+	   		// Execute the query against the database
+	   		$stmt = $db->prepare($query);
+	   		$result = $stmt->execute($query_params);
+	   	} catch(PDOException $ex) {
+	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+	   	}
+	   	$studentPrograms = $stmt->fetchAll();
+ 		
+ 		
+ 		foreach($programRows as $programRow):
+ 			echo "	
+ 			<div class='contact'>
+ 				<input class='accordion' type='checkbox' 
+ 					id='".$program_id."'/>";
+ 				if (this->studentInProgram()) {
+ 					echo "<label for='".$program_id."'>
+ 					".$program_name." (Status: ".$status.")
+ 					</label>";
+ 				}
+ 				else {
+ 					echo "<label for='".$program_id."'>
+ 						<input class='regular' type='checkbox'/>
+ 						".$program_name.", (".$numspots."
+ 						spots remaining) Fee: ".$cost."
+ 					</label>";
+ 				}
+ 			echo "<article>
+ 					<ul>
+ 					<li>Grade levels:</li>
+ 					<li>Start date:</li>
+ 					<li>End date:</li>
+ 					<li>Registration deadline:</li>
+ 					<li>Description:</li>
+ 					</ul>
+ 				</article>
+ 			</div>";
  		endforeach;
+ 		
  	}
-
+ 	
+ 	private function studentInProgram {
+ 		return True;
+ 	}
+ 	
 	public static function updateStudent($s_id, $p_name, 
     				$gr, $all, $med, $leave_perm, $photo_perm, $db) {
 		/* Updates guardian data and returns true iff success. */

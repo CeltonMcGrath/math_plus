@@ -25,7 +25,7 @@
     include '../../template/head.php';
     include '../../template/header.php';
 ?> 
-	<section id="contact">
+	<section class="contact">
 		<h1>Guardians</h1>
 			<section id="accordion">
 			<?php 

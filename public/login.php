@@ -82,14 +82,15 @@
 				<h1>Login</h1> 
 				<span class="error"><?php echo $login_error;?></span>
 				<br /><br />
-				<form action="login.php" method="post"> 
+				<form action="login.php" method="post">
 				    Email:<br /> 
-				    <input type="email" name="email" value="<?php echo $submitted_email; ?>" /> 
+				    <input type="email" name="email" 
+				    	value="<?php echo $submitted_email; ?>" />
 				    <br /><br /> 
 				    Password:<br /> 
 				    <input type="password" name="password" value="" /> 
 				    <br /><br /> 
-				    <p class="submit"><input type="submit" value="Login" /></p>
+				    <input type="submit" value="Login" />
 				</form> 				
 			</div>
 			<div class="login-extra">

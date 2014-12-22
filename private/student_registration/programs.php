@@ -14,15 +14,17 @@
     $student = new Student($_POST['student_id'], $db);
     ?>
 
-	<section id=content>
+	<section id='content'>
 		<h1>Select programs for 
 			<?php $student->printName()?>
 		</h1>
-		<section id="accordion"> 
-			<?php 
-			//Get programs for student
-    			$student->displayAllPrograms();
-    		?>
+		<section id='accordion'> 
+			<form action='confirm.php' method='post'>
+				<input type='hidden' name='student_id' 
+ 					value=".$this->student_id."/>
+				<?php $student->displayAllPrograms(); ?>
+    			<input type='submit' value='Add programs' />
+    		</form>
 		</section>
 	</section>
 	<?php include '../../template/footer.php';?>
