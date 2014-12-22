@@ -275,11 +275,12 @@ class Student {
  		
  		
  		foreach($programRows as $programRow):
+ 			$program_id = $programRow['program_id'];
  			echo "	
  			<div class='contact'>
  				<input class='accordion' type='checkbox' 
  					id='".$program_id."'/>";
- 				if (studentInProgram()) {
+ 				if (studentInProgram($program_id, $studentPrograms)) {
  					echo "<label for='".$program_id."'>
  					".$program_name." (Status: ".$status.")
  					</label>";
@@ -287,17 +288,19 @@ class Student {
  				else {
  					echo "<label for='".$program_id."'>
  						<input class='regular' type='checkbox'/>
- 						".$program_name.", (".$numspots."
- 						spots remaining) Fee: ".$cost."
+ 						".$program_name.", (".remainingSpots($program_id)."
+ 						spots remaining) Fee: ".$programRow['cost']."
  					</label>";
  				}
  			echo "<article>
  					<ul>
- 					<li>Grade levels:</li>
- 					<li>Start date:</li>
- 					<li>End date:</li>
- 					<li>Registration deadline:</li>
- 					<li>Description:</li>
+ 						<li>Start date: ".$programRow['start_date']."</li>
+ 						<li>End date: ".$programRow['end_date']."</li>
+ 						<li>Registration deadline: 
+ 								".$programRow['registration_deadline']."
+ 						</li>
+ 						<li>Grade levels: ".$programRow['grades']."</li>
+ 						<li>Description: ".$programRow['description']."</li>
  					</ul>
  				</article>
  			</div>";
@@ -305,8 +308,12 @@ class Student {
  		
  	}
  	
- 	private function studentInProgram() {
+ 	private function studentInProgram($program_id, $studentsRows) {
  		return True;
+ 	}
+ 	
+ 	private function remainingSpots($program_id) {
+ 		return 0;
  	}
  	
 	public static function updateStudent($s_id, $p_name, 
