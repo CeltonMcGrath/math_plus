@@ -69,43 +69,54 @@
 ?> 
 	<section class="content">
 		<h1>Edit Account</h1> 
-		<div class="contact">
-			<h2>Update email address</h2>
-			<form action="edit_account.php" method="post"> 
-				<input type="hidden" name="update" value="email" />
-			    Current email: <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
-			    <br /> <br />  
-			    <span class="success"><?php echo $emailSuccess?></span>
-				<span class="error"><?php echo $emailErr?></span> 
-				<br /> <br /> 
-			    New email:<br /> 
-			    <input type="email" name="email" value="" />
-			    <br /><br /> 
-			    Re-enter new email:<br /> 
-			    <input type="email" name="email2" value="" />
-			    <br /><br /> 
-			    <input type="submit" value="Update email" /> 
-			</form>
-		</div>
-		<div class="contact">
-			<h2>Update password</h2>
-			<span class="success"><?php echo $passwordSuccess?></span>
-			<span class="error"><?php echo $passwordErr?></span>
-			<br /><br />
-			<form action="edit_account.php" method="post"> 
-				<input type="hidden" name="update" value="password" />
-			    Current password:<br /> 
-			    <input type="password" name="oldPassword" value="" />
-			    <br /><br /> 
-			    New Password:<br /> 
-			    <input type="password" name="newPassword" value="" /> 
-				<br /><br /> 
-			    Re-enter new Password:<br /> 
-			    <input type="password" name="newPassword2" value="" />
-			    <br /><br /> 
-			    <input type="submit" value="Update password" /> 
-			</form>
-		</div>
+		<section id="accordion">
+			<div class="contact">
+				<input class='accordion' type='checkbox' id='email'/>
+   				<label for="email">Update email address</label>
+   				<article>
+					<form action="edit_account.php" method="post"> 
+						<input type="hidden" name="update" value="email" />
+					    Current email: <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
+					    <br /> <br />  
+					    <span class="success"><?php echo $emailSuccess?></span>
+						<span class="error"><?php echo $emailErr?></span> 
+						<br /> <br /> 
+					    New email:<br /> 
+					    <input type="email" name="email" value="" />
+					    <br /><br /> 
+					    Re-enter new email:<br /> 
+					    <input type="email" name="email2" value="" />
+					    <br /><br /> 
+					    <input type="submit" value="Update email" /> 
+					</form>
+				</article>
+			</div>
+		</section>
+		<section id="accordion">
+			<div class="contact">
+				<input class='accordion' type='checkbox' id='password'/>
+   				<label for="password">Update password</label>
+   				<article>
+					<form action="edit_account.php" method="post"> 
+						<span class="success"><?php echo $passwordSuccess?>
+							</span>
+						<span class="error"><?php echo $passwordErr?>
+							</span>
+						<input type="hidden" name="update" value="password" />
+					    Current password:<br /> 
+					    <input type="password" name="oldPassword" value="" />
+					    <br /><br /> 
+					    New Password:<br /> 
+					    <input type="password" name="newPassword" value="" /> 
+						<br /><br /> 
+					    Re-enter new Password:<br /> 
+					    <input type="password" name="newPassword2" value="" />
+					    <br /><br /> 
+					    <input type="submit" value="Update password" /> 
+					</form>
+				</article>
+			</div>
+		</section>
 	</section>
     <?php include '../template/footer.php';?>
 </html>
