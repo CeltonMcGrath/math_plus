@@ -40,7 +40,7 @@
         $cart_items = 0;
         foreach ($_SESSION["cart_programs"] as $cart_itm) {
            $student = new Student($cart_itm['student_id'], $db);
-           $total += student->programCartDisplay($cart_itm['program_id']);
+           $total += $student->programCartDisplay($cart_itm['program_id']);
         }
         echo '</ul>';
         echo '<span class="check-out-txt">';

@@ -115,11 +115,11 @@ class Student {
    
 	private function displayStudentForm() {
 		/* Displays student form for students.php*/
-   		if ($this->photo_permission=="yes") {
+   		if ($this->photo_permission) {
    			$photo_check = 'checked';
    		}
 
-		if ($this->permission_to_leave=="yes") {
+		if ($this->permission_to_leave) {
    			$leave_check = 'checked';
    		}
    		
@@ -140,7 +140,7 @@ class Student {
    					<br /> 
 					Permission to leave: 
 					<input class='regular 'type='checkbox' 
- 						name='permission_to_leave' ".$photo_check."/>
+ 						name='permission_to_leave' ".$leave_check."/>
    					<br /><br />
    					Photo permission: 
    					<input class='regular 'type='checkbox' 

@@ -10,8 +10,8 @@
     		Student::createStudent($_SESSION['user']['user_id'],
     				$_POST['first_name'], $_POST['last_name'],
     				$_POST['preferred_name'], $_POST['grade'], $_POST['allergies'],
-    				$_POST['medical'], $_POST['permission_to_leave'],
-    				$_POST['photo_permission'], $db);
+    				$_POST['medical'], isset($_POST['permission_to_leave']),
+    				isset($_POST['photo_permission']), $db);
     	}
     	else {
     		$student_id = $_POST['student_id'];
@@ -21,8 +21,8 @@
     		else {
     			Student::updateStudent($student_id, $_POST['preferred_name'], 
     				$_POST['grade'], $_POST['allergies'],
-    				$_POST['medical'], $_POST['permission_to_leave'],
-    				$_POST['photo_permission'], $db);
+    				$_POST['medical'], isset($_POST['permission_to_leave']),
+    				isset($_POST['photo_permission']), $db);
     		}
     	}    
     }
@@ -33,7 +33,7 @@
 				<?php Student::displayEmptyStudentForm ();
 				// Generate accordian-style contact list
 				
-				// Query the db for guardian contacts associated with current user
+				// Query the db for student contacts associated with current user
 				$query = "SELECT student_id FROM students 
 						WHERE user_id = :user_id";
 				
@@ -50,8 +50,8 @@
 				}
 				$rows = $stmt->fetchAll ();
 				
-				foreach ( $rows as $row ) :
-					$student = new Student ($row ['student_id'], $db );
+				foreach ($rows as $row) :
+					$student = new Student ($row['student_id'], $db);
 					$student->displayStudentInfo();
 				endforeach; ?>
 			</section>

@@ -19,7 +19,7 @@
 			<?php $student->printName()?>
 		</h1>
 		<section id='accordion'> 
-			<form action='cart.php' method='post'>
+			<form action='/math_plus/private/cart.php' method='post'>
 				<input type='hidden' name='student_id' 
  					value=".$this->student_id."/>
 				<?php $student->displayAllPrograms(); ?>
