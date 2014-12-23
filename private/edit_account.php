@@ -27,7 +27,7 @@
     			if (updateEmail($_SESSION['user']['user_id'], 
     					$_POST['email'], $db)) {
     						
-    				$success = "Email successfully updated successful. 
+    				$success = "Email successfully updateded.
     						An activation link has been sent to your email. 
     						Please close your browser and your account will be
     						 inactive until your activate via this link. 
@@ -68,10 +68,10 @@
     	}
     	else {
     		/* Updates user's listserv settings. */
-    		if (updateListserv($_SESSION['user']['user_id']), 
-    				isset($POST_['listserv']), $db) {
+    		if (updateListserv($_SESSION['user']['user_id'], 
+    				isset($_POST['listserv']), $db)) {
     					
-    					$success = "Mailing list settings successfuly updated."
+    					$success = "Mailing list settings successfuly updated.";
     				}
     	}
     }   
