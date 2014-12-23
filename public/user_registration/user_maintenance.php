@@ -59,6 +59,8 @@
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
 			return False;
 		}
 
@@ -66,7 +68,7 @@
 	}
 	
 	function updateEmail ($user_id, $email, $db) {
-		/* Returns true iff users email is successfully updated and 
+		/* Returns true iff users email is updated and 
 		 * activation email sent.*/
 		
 		// Generate new activation key
@@ -84,9 +86,9 @@
 		try {
 			$stmt = $db->prepare($query);
 			$result = $stmt->execute($query_params);
-		}
-		catch(PDOException $ex)
-		{
+		}	catch(PDOException $ex) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
 			return False;
 		}
 		
@@ -98,6 +100,26 @@
 	function correctPassword() {
 		/* Returns true iff password is correct. */
 		
+		return True;
+	}
+	
+	function updateListserv($user_id, $listserv, $db) {
+		/* Returns true iff users listserv setting updated in database. */
+		$query = "UPDATE users
+				SET listserv = :listserv
+				WHERE user_id = :user_id";
+		$query_params = array(
+				':listserv' => $listserv,
+				':user_id' => $user_id
+		);
+		try {
+			$stmt = $db->prepare($query);
+			$result = $stmt->execute($query_params);
+		} catch(PDOException $ex) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+			return False;
+		}
 		return True;
 	}
 

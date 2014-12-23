@@ -21,11 +21,12 @@
         }
         // Check for non-empty password
         elseif(empty($_POST['password']))  { 
-            $passwordErr = "Password is required"; 
+            $passwordErr = "Password is required."; 
         } 
         // Check for valid password
-        elseif(false) {
-        	
+        elseif (!validPassword($_POST['password'])) {
+        	$passwordErr = "Pass must contain at least 8 characters, contain 
+        			only letters, numbers or ...";
         }
         // Check for matching password
         elseif($_POST['password'] != $_POST['password2']) {
@@ -36,12 +37,16 @@
         	$errorPhrase = "This email is already in use.";
         }
         else {
-        	if (addUser($_POST['email'], $_POST['password'], $db)) {
-        		$successPhrase = "Registration a success. An activation link has been sent to your email.
-        				 You must activitate your account via this link. Please check your spam/junk folders.";
+        	if (addUser($_POST['email'], $_POST['password'], 
+        			isset($_POST['listserv']), $db)) {
+        		$successPhrase = "Registration a success. 
+        				An activation link has been sent to your email.
+        				 You must activitate your account via this link. 
+        				Please check your spam/junk folders.";
         	}
         	else {
-        		$errorPhrase = "Registration failed. Please try again or contact administrator.";
+        		$errorPhrase = "Registration failed. 
+        				Please try again or contact administrator.";
         	}
         }	 
     }  
@@ -58,7 +63,7 @@
 		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 	</head>
 	
-	<body>
+	<section class="content">
 		<section class="container">
 			<div class="login">
 				<h1>Register</h1> 
@@ -85,6 +90,12 @@
 				    <input type="password" name="password2" value="" /> 
 				    <span class="error">* <?php echo $password2Err;?></span>
 				    <br /><br />
+				    Would you like receive email notifications about upcoming
+				    programs?
+				    <br />
+				    <input type="checkbox" class="regular" 
+				    	name="listserv" checked>Yes
+				    <br /><br />
 				    <input type="submit" value="Register" /> 
 				</form>				
 			</div>
@@ -92,5 +103,5 @@
 				<a href="../login.php">Return to login</a>
 			</div>
 		</section>
-	</body>
+	</section>
 </html>

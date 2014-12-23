@@ -10,7 +10,8 @@
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex) {
-			// Do nothing
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
 		}
 		
 		$row = $stmt->fetch();
@@ -23,10 +24,10 @@
 		}
 	}
 	
-	function addUser($email, $password, $db) {
+	function addUser($email, $password, $listserv, $db) {
 		/*Returns True iff user is successfully added to the database 
 		 * and activation email successfully sent.*/
-
+		
 		//Hash password
 		$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
 		$password = hash('sha256', $password . $salt);
@@ -37,13 +38,17 @@
 			$password = hash('sha256', $password . $salt);
 		}
 		
-		$query = "INSERT INTO users (email, password, salt,activation) VALUES
-				(:email, :password, :salt, :activation)";		
+		$query = "INSERT INTO users 
+					(email, password, salt, activation, listserv) 
+				VALUES
+					(:email, :password, :salt, :activation, :listserv)";
+				
 		$query_params = array(
 			':email' => $email,
 			':password' => $password,
 			':salt' => $salt,
-			':activation' => $activation
+			':activation' => $activation,
+			':listserv' => $listserv
 		);
 		
 		try {
@@ -51,6 +56,8 @@
 			$result = $stmt->execute($query_params);
 		} 
 		catch(PDOException $ex) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
 			return False;
 		}
 		
@@ -58,7 +65,8 @@
 		return sendActivationEmail($email, $activation, "new user");
 	}
 	
-
-
+	function validPassword($password) {
+		return True;
+	}
 ?> 
 

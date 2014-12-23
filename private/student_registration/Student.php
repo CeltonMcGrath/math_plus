@@ -31,7 +31,8 @@ class Student {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex) {
-	   		return False;
+	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
 	   	}
 	   	$row = $stmt->fetch();
 	   	
@@ -227,7 +228,8 @@ class Student {
  			$stmt = $this->database->prepare($query);
  			$result = $stmt->execute($query_params);
  		} catch(PDOException $ex) {
- 			die('Failed to run query: ' . $ex->getMessage());
+ 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
  		}
  		$rows = $stmt->fetchAll();
  			

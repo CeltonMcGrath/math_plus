@@ -7,7 +7,7 @@
     
     $passwordSuccess = $passwordErr = $emailSuccess = $emailErr = "";
     
-    // This if statement checks to determine whether the edit form has been submitted 
+    // Check if update form has been submitted, and what update form.
     if(!empty($_POST)) { 
     	if ($_POST['update']=='email') {
     		/* Update user's email */
@@ -24,13 +24,14 @@
     			$emailErr = "Update unsuccessful: user already exists in system.";
     		} 
     		else {
-    			if (updateEmail($_SESSION['user']['user_id'], $_POST['email'], $db)) {
-    				$emailSuccess = "Update successful. An activation link has been 
-    						sent to your email. Please close your browser and 
-    						your account will be inactive until your activate 
-    						via this link. 
+    			if (updateEmail($_SESSION['user']['user_id'], 
+    					$_POST['email'], $db)) {
+    						
+    				$success = "Email successfully updated successful. 
+    						An activation link has been sent to your email. 
+    						Please close your browser and your account will be
+    						 inactive until your activate via this link. 
     						(Please check your junk/spam email folders.)";
-    				
     				$_SESSION['user'] = null;
     			}
     			else {
@@ -39,25 +40,25 @@
     			}
     		}
     	}
-    	else {
+    	elseif ($_POST['update']=='password') {
     		/* Update user's password*/
     		// Check for valid current password
     		if (false) {
     			
     		}
     		//  Check for valid format of proposed password
-    		if (false) {
-    			$passwordError = "Update unsuccessful: invalid password.";
+    		if (!validPassword($_POST['newPassword'])) {
+    			$passwordError = "Invalid password.";
     		}
     		// Check for matching passwords
     		elseif ($_POST['newPassword'] != $_POST['newPassword2']) {
-    			$passwordError = "Update unsuccessful: passwords do not match.";
+    			$passwordError = "Passwords do not match.";
     		} 
     		// Attempt password update
     		else {
     			if (updatePassword($_SESSION['user']['user_id'], $_POST['newPassword'], $db)) {
-    				$passwordSuccess = "Update successful. Use your new password for your 
-    					next login.";
+    				$success = "Password successfully updated. 
+    						Use your new password for your next login.";
     			}
     			else {
     				$passwordError = "Update unsuccessful. Please try again or contact
@@ -65,10 +66,19 @@
     			}
     		}
     	}
+    	else {
+    		/* Updates user's listserv settings. */
+    		if (updateListserv($_SESSION['user']['user_id']), 
+    				isset($POST_['listserv']), $db) {
+    					
+    					$success = "Mailing list settings successfuly updated."
+    				}
+    	}
     }   
 ?> 
 	<section class="content">
-		<h1>Edit Account</h1> 
+		<h1>Edit Account</h1>
+		<span class="success"><?php echo $success?></span>
 		<section id="accordion">
 			<div class="contact">
 				<input class='accordion' type='checkbox' id='email'/>
@@ -76,9 +86,8 @@
    				<article>
 					<form action="edit_account.php" method="post"> 
 						<input type="hidden" name="update" value="email" />
-					    Current email: <?php echo htmlentities($_SESSION['user']['email'], ENT_QUOTES, 'UTF-8'); ?>
+					    Current email: <?php echo $_SESSION['user']['email']?>
 					    <br /> <br />  
-					    <span class="success"><?php echo $emailSuccess?></span>
 						<span class="error"><?php echo $emailErr?></span> 
 						<br /> <br /> 
 					    New email:<br /> 
@@ -98,8 +107,6 @@
    				<label for="password">Update password</label>
    				<article>
 					<form action="edit_account.php" method="post"> 
-						<span class="success"><?php echo $passwordSuccess?>
-							</span>
 						<span class="error"><?php echo $passwordErr?>
 							</span>
 						<input type="hidden" name="update" value="password" />
@@ -113,6 +120,25 @@
 					    <input type="password" name="newPassword2" value="" />
 					    <br /><br /> 
 					    <input type="submit" value="Update password" /> 
+					</form>
+				</article>
+			</div>
+		</section>
+		<section id="accordion">
+			<div class="contact">
+				<input class='accordion' type='checkbox' id='listserv'/>
+   				<label for="listserv">Update mailing list settings</label>
+   				<article>
+					<form action="edit_account.php" method="post"> 
+						<input type="hidden" name="update" value="listserv" />
+						Would you like receive email notifications about 
+						upcoming programs?
+				    	<br />
+				    	<input type="checkbox" class="regular" 
+				    		name="listserv" checked>Yes
+					    <br /><br /> 
+					    <input type="submit" 
+					    	value="Update mailing list settings" /> 
 					</form>
 				</article>
 			</div>
