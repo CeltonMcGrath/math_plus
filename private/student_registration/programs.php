@@ -19,11 +19,11 @@
 			<?php $student->printName()?>
 		</h1>
 		<section id='accordion'> 
-			<form action='confirm.php' method='post'>
+			<form action='cart.php' method='post'>
 				<input type='hidden' name='student_id' 
  					value=".$this->student_id."/>
 				<?php $student->displayAllPrograms(); ?>
-    			<input type='submit' value='Add programs' />
+    			<input type='submit' value='Add programs to cart' />
     		</form>
 		</section>
 	</section>

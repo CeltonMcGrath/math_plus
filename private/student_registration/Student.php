@@ -100,7 +100,12 @@ class Student {
 		   			$this->displayFutureProgramList();
 		   			echo "<br />";
 		   			$this->displayPastProgramList();
-		   		echo "</article>
+		   		echo "<form action='programs.php' method='post'>
+ 						<input type='hidden' name='student_id' 
+ 							value=".$this->student_id."/>
+ 						<input type='submit' value='Add or view programs' />
+ 					</form>
+ 				</article>
 	   		</div>";
    }
    
@@ -198,7 +203,7 @@ class Student {
     			</div>";
    }
    
- 	private function displayFutureProgramList() {
+    private function displayFutureProgramList() {
  		// Generate list of upcoming programs student is registered in.
  		echo "Upcoming programs: <ul>";
  		// Query the db for guardian contacts associated with current user
@@ -231,12 +236,7 @@ class Student {
  				(".$row['programs.start_date']."-".$row['programs.end_date'].")
  				(Status: ".$row['students_programs.status'].")</li>";
  		endforeach;
- 		echo "</ul>							
- 		<form action='programs.php' method='post'>
- 			<input type='hidden' name='student_id' 
- 				value=".$this->student_id."/>
- 			<input type='submit' value='Add or view programs' />
- 		</form>";
+ 		echo "</ul>";
  	}  
  	
  	public function displayAllPrograms() {
@@ -287,7 +287,8 @@ class Student {
  				}
  				else {
  					echo "<label for='".$program_id."'>
- 						<input class='regular' type='checkbox'/>
+ 						<input class='regular' name='program_group[]' 
+ 							value='".$program_id."' type='checkbox'/>
  						".$programRow['program_name'].", (".$this->remainingSpots($program_id)."
  						spots remaining) Fee: ".$programRow['cost']."
  					</label>";
@@ -368,6 +369,30 @@ class Student {
    
    public function displayPastProgramList() {
    		return True;
+   }
+   
+   public function programCartDisplay {
+	   	/*$product_code = $cart_itm["code"];
+	   	$results = $mysqli->query("SELECT product_name,product_desc, price FROM products WHERE product_code='$product_code' LIMIT 1");
+	   	$obj = $results->fetch_object();
+	   	
+	   	echo '<li class="cart-itm">';
+	   	echo '<span class="remove-itm"><a href="cart_update.php?removep='.$cart_itm["code"].'&return_url='.$current_url.'">&times;</a></span>';
+	   	echo '<div class="p-price">'.$currency.$obj->price.'</div>';
+	   	echo '<div class="product-info">';
+	   	echo '<h3>'.$obj->product_name.' (Code :'.$product_code.')</h3> ';
+	   	echo '<div class="p-qty">Qty : '.$cart_itm["qty"].'</div>';
+	   	echo '<div>'.$obj->product_desc.'</div>';
+	   	echo '</div>';
+	   	echo '</li>';
+	   	$subtotal = ($cart_itm["price"]*$cart_itm["qty"]);
+	   	$total = ($total + $subtotal);
+	   	
+	   	echo '<input type="hidden" name="item_name['.$cart_items.']" value="'.$obj->product_name.'" />';
+	   	echo '<input type="hidden" name="item_code['.$cart_items.']" value="'.$product_code.'" />';
+	   	echo '<input type="hidden" name="item_desc['.$cart_items.']" value="'.$obj->product_desc.'" />';
+	   	echo '<input type="hidden" name="item_qty['.$cart_items.']" value="'.$cart_itm["qty"].'" />';
+	   	$cart_items ++;*/
    }
 
 }
