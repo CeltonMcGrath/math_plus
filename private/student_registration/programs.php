@@ -14,7 +14,7 @@
     $student = new Student($_POST['student_id'], $db);
     ?>
 
-	<section id='content'>
+	<section class='content'>
 		<h1>Select programs for 
 			<?php $student->printName()?>
 		</h1>

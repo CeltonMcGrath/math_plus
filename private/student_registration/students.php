@@ -27,7 +27,7 @@
     	}    
     }
 ?>
-	<section id="content">
+	<section class="content">
 		<h1>Students</h1>
 			<section id="accordion">
 				<?php Student::displayEmptyStudentForm ();

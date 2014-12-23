@@ -67,7 +67,7 @@
     	}
     }   
 ?> 
-	<section id="content">
+	<section class="content">
 		<h1>Edit Account</h1> 
 		<div class="contact">
 			<h2>Update email address</h2>

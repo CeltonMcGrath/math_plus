@@ -257,7 +257,7 @@ class Student {
  		$programRows = $stmt->fetchAll();
  		
  		//Select programs student is already registered in
- 		$query = 'SELECT program_id
+ 		$query = 'SELECT program_id, status
 	   			FROM
  					students_programs 
 	   			WHERE
@@ -280,15 +280,15 @@ class Student {
  			<div class='contact'>
  				<input class='accordion' type='checkbox' 
  					id='".$program_id."'/>";
- 				if (studentInProgram($program_id, $studentPrograms)) {
+ 				if ($this->studentInProgram($program_id, $studentPrograms)) {
  					echo "<label for='".$program_id."'>
- 					".$program_name." (Status: ".$status.")
+ 					".$programRow['program_name']." (Status: ".$status.")
  					</label>";
  				}
  				else {
  					echo "<label for='".$program_id."'>
  						<input class='regular' type='checkbox'/>
- 						".$program_name.", (".remainingSpots($program_id)."
+ 						".$programRow['program_name'].", (".$this->remainingSpots($program_id)."
  						spots remaining) Fee: ".$programRow['cost']."
  					</label>";
  				}
@@ -309,7 +309,7 @@ class Student {
  	}
  	
  	private function studentInProgram($program_id, $studentsRows) {
- 		return True;
+ 		return False;
  	}
  	
  	private function remainingSpots($program_id) {
