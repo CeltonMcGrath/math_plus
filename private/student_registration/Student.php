@@ -14,6 +14,7 @@ class Student {
    private $database;    
  
    public function __construct($s_id, $db) {
+   		/* Returns student object with student id s_id */
    		$this->student_id = $s_id;
    		$this->database = $db;
    		
@@ -46,12 +47,12 @@ class Student {
 	   	$this->photo_permission = $row['photo_permission'];
    }
 
-   public static function createStudent($u_id, $f_name,
+	public static function createStudent($u_id, $f_name,
    		$l_name, $p_name, $gr, $all, $med, $perm_leave, 
    		$perm_photo, $db) {
    	    /*Creates student contact in database.*/
    		
-   		$query = "INSERT INTO students (user_id, first_name, last_name, 
+		$query = "INSERT INTO students (user_id, first_name, last_name, 
    				preferred_name, grade, allergies, medical, permission_to_leave,
    				photo_permission) 
 	   			VALUES
@@ -59,7 +60,7 @@ class Student {
    				:preferred_name, :grade, :allergies, :medical, 
    				:permission_to_leave, :photo_permission)";
 	   	 
-	   	$query_params = array(
+		$query_params = array(
 	   			':user_id' => $u_id,
 	   			':first_name' => $f_name,
 	   			':last_name' => $l_name,
@@ -83,11 +84,13 @@ class Student {
 	   	return True;
    }
   
-   public function printName() {
-   	echo $this->first_name." ".$this->last_name;
-   }
+	public function printName() {
+		/* Prints the name of the student: 'First name Last name' */
+		echo $this->first_name." ".$this->last_name;
+	}
  
    public function displayStudentInfo() {
+   		/* Student display for students.php */
     	echo "
 	    	<div class='contact'>
 		   		<input class='accordion' type='checkbox'
@@ -110,24 +113,15 @@ class Student {
 	   		</div>";
    }
    
-   private function displayStudentForm() {
+	private function displayStudentForm() {
+		/* Displays student form for students.php*/
    		if ($this->photo_permission=="yes") {
-   			$photo_yes = 'checked';
-   			$photo_no = '';
-   		}
-   		else {
-   			$photo_yes = '';
-   			$photo_no = 'checked';
+   			$photo_check = 'checked';
    		}
 
 		if ($this->permission_to_leave=="yes") {
-   			$leave_yes = 'checked';
-   			$leave_no = '';
+   			$leave_check = 'checked';
    		}
-   		else {
-   			$leave_yes = '';
-   			$leave_no = 'checked';
-   		} 
    		
    		echo "<form action='students.php' method='post'> 
    	    			<input type='hidden' name='student_id' 
@@ -145,16 +139,12 @@ class Student {
    	    				value='$this->medical'/>
    					<br /> 
 					Permission to leave: 
-					<input type='radio' name='permission_to_leave' 
- 								value='yes' ".$leave_yes."/> Yes
-					<input type='radio' name='permission_to_leave' 
- 								value='no' ".$leave_no."/> No
-						    <br />
+					<input class='regular 'type='checkbox' 
+ 						name='permission_to_leave' ".$photo_check."/>
+   					<br /><br />
    					Photo permission: 
-   					<input type='radio' name='photo_permission' 
-   	    						value='yes' ".$photo_yes."/> Yes
-   					<input type='radio' name='photo_permission' 
-   	    						value='no' ".$photo_no."/> No
+   					<input class='regular 'type='checkbox' 
+ 						name='photo_permission' ".$photo_check."/>
    					<br /><br />
    					Delete student: <input type='radio' name='delete' 
    	    				value='yes'/> Yes
@@ -187,16 +177,13 @@ class Student {
 						    Medical:<input type='text' name='medical'/>
 						    <br /> 
  							Permission to leave: 
-						    <input type='radio' name='permission_to_leave' 
- 								value='yes'/> Yes
-						    <input type='radio' name='permission_to_leave' 
- 								value='no' checked/> No
-						    <br />
-						    Photo permission: 
-						    <input type='radio' name='photo_permission' 
- 								value='yes' checked> Yes
-						    <input type='radio' name='photo_permission' 
- 								value='no'> No
+							<input class='regular 'type='checkbox' 
+		 						name='permission_to_leave' />
+		   					<br /><br />
+		   					Photo permission: 
+		   					<input class='regular 'type='checkbox' 
+		 						name='photo_permission' />
+		   					<br /><br />
 						    <br />
 						    <input type='submit' value='Submit' />
 						</form> 
@@ -205,7 +192,9 @@ class Student {
    }
    
     private function displayFutureProgramList() {
- 		// Generate list of upcoming programs student is registered in.
+    	/* Print a html list of programs this student is enrolled in that 
+    	 * end in the future.*/
+    	
  		echo "Upcoming programs: <ul>";
  		// Query the db for guardian contacts associated with current user
  		$query = 'SELECT 
@@ -242,6 +231,8 @@ class Student {
  	}  
  	
  	public function displayAllPrograms() {
+ 		/* Display accordion-style list of programs for programs.php */
+ 		
  		//Select all upcoming programs
  		$query = 'SELECT *
 	   			FROM
@@ -274,8 +265,7 @@ class Student {
 	   				</script>");
 	   	}
 	   	$studentPrograms = $stmt->fetchAll();
- 		
- 		
+ 				
  		foreach($programRows as $programRow):
  			$program_id = $programRow['program_id'];
  			echo "	
@@ -291,7 +281,8 @@ class Student {
  					echo "<label for='".$program_id."'>
  						<input class='regular' name='program_group[]' 
  							value='".$program_id."' type='checkbox'/>
- 						".$programRow['program_name'].", (".$this->remainingSpots($program_id)."
+ 						".$programRow['program_name'].",
+ 								 (".$this->remainingSpots($program_id)."
  						spots remaining) Fee: ".$programRow['cost']."
  					</label>";
  				}
@@ -321,7 +312,8 @@ class Student {
  	
 	public static function updateStudent($s_id, $p_name, 
     				$gr, $all, $med, $leave_perm, $photo_perm, $db) {
-		/* Updates guardian data and returns true iff success. */
+		/* Updates student data and returns true iff success. */
+		
 		$query = "UPDATE students
 	    		SET preferred_name = :preferred_name, grade = :grade, 
 					allergies = :allergies, medical = :medical,

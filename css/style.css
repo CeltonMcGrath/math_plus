@@ -131,3 +131,12 @@ a:hover{
 .nobullet {
 	list-style-type: none;
 }
+
+/* Success and error phrases (ie. incorrect password) */.
+.success {
+	color: green;
+}
+
+.error {
+	color: red;
+}
