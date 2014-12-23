@@ -8,7 +8,7 @@
     	//First item in POST array should be student ID
     	//Later items are program id's
     	$student_id = $_POST['student_id'];
-    	if(!$_SESSION['cart_programs'])) {
+    	if (!$_SESSION['cart_programs']) {
     		$_SESSION['cart_programs'] = [];
     	}
     	
@@ -17,8 +17,9 @@
     		//Get program information: name, cost, 
     		
     		//Create student-program array
-    		$new_program[] = 
-    			array('student_id'=>$student_id, 'program_id' = $program_id);
+    		$new_program[] =
+    			array('student_id' => $student_id, 
+			'program_id' => $selectedPrograms['program_id']);
     		
     		//Add student-program array to session array
     		$_SESSION["cart_programs"] = 

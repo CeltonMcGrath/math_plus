@@ -371,7 +371,7 @@ class Student {
    		return True;
    }
    
-   public function programCartDisplay {
+   public function programCartDisplay() {
 	   	/*$product_code = $cart_itm["code"];
 	   	$results = $mysqli->query("SELECT product_name,product_desc, price FROM products WHERE product_code='$product_code' LIMIT 1");
 	   	$obj = $results->fetch_object();
