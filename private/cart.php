@@ -1,6 +1,6 @@
 <?php 
     require("../common.php"); 
-    include 'Student.php';
+    include 'student_registration/Student.php';
 
     /* If form has been submitted, then user has been referred to
      * the shopping cart by adding programs for a specific student.
@@ -14,17 +14,16 @@
     	}
    		
     	$selectedPrograms = $_POST['program_group'];
-    	for ($i=0; $i < count($selectedPrograms); $i++) {
+    	foreach ($selectedPrograms as $program=>$program_id) {
     		//Get program information: name, cost, 
     			
     		//Create student-program array
     		$new_program[] =
     			array('student_id' => $student_id, 
-			'program_id' => $selectedPrograms[i]);
+			'program_id' => $program_id);
     		
     		//Add student-program array to session array
-    		$_SESSION["cart_programs"] = 
-    			array_push($_SESSION["cart_programs"], $new_program);
+    		array_push($_SESSION["cart_programs"], $new_program);
     	}
     }
     
@@ -32,7 +31,7 @@
     include '../template/header.php';
     echo "<section class='content'>";
 
-	if(isset($_SESSION["products"])) {
+	if(isset($_SESSION["cart_programs"])) {
 		
         $total = 0;
         echo '<form method="post" action="cart.php">';

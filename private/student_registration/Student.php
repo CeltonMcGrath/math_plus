@@ -115,10 +115,11 @@ class Student {
    
 	private function displayStudentForm() {
 		/* Displays student form for students.php*/
-   		if ($this->photo_permission) {
+   		$photo_check = '';
+		if ($this->photo_permission) {
    			$photo_check = 'checked';
    		}
-
+		$leave_check = '';
 		if ($this->permission_to_leave) {
    			$leave_check = 'checked';
    		}
