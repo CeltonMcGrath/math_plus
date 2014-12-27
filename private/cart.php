@@ -49,12 +49,14 @@
         
         echo "<form method='post' 
         		action='https://www.paypal.com/cgi-bin/webscr' >
-	        <input type='hidden' name='cmd' value='_xclick'>
+	        <input type='hidden' name='cmd' value='_cart'>
 	        <input type='hidden' name='business' value='info@freshcoffeenetwork.com'>
-	        <input type='hidden' name='item_name' value='1 coffee bean'>
+	        <input type='hidden' name='item_name_1' value='coffee bean'>
+	        <input type='hidden' name='amount_1' value='12.00'>
+	        <input type='hidden' name='item_name_2' value='coffee filter'>
+	        <input type='hidden' name='amount_2' value='13.00'>
 	        <input type='hidden' name='currency_code' value='CAD'>
-	        <input type='hidden' name='amount' value='12.00'>
-	        <input type='image' 
+		 <input type='image' 
 	        		src='http://www.paypal.com/en_US/i/btn/x-click-but01.gif' 
 	        		name='submit' 
 	        		alt='Pay with Paypal.'>
