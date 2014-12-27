@@ -47,6 +47,19 @@
         echo '<strong>Total : $".$total."</strong>';
         echo '</span>';
         echo '</form>';
+        
+        echo "<form method='post' 
+        		action='https://www.paypal.com/cgi-bin/webscr' >
+	        <input type='hidden' name='cmd' value='_xclick'>
+	        <input type='hidden' name='business' value='info@freshcoffeenetwork.com'>
+	        <input type='hidden' name='item_name' value='1 coffee bean'>
+	        <input type='hidden' name='currency_code' value='CAD'>
+	        <input type='hidden' name='amount' value='12.00'>
+	        <input type='image' 
+	        		src='http://www.paypal.com/en_US/i/btn/x-click-but01.gif' 
+	        		name='submit' 
+	        		alt='Pay with Paypal.'>
+        </form>";
     } 
     else {
 		echo '<h1>Your cart is empty.</h1>';
