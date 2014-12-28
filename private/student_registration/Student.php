@@ -388,6 +388,7 @@ class Student {
 	   	echo '<input type="hidden" name="item_desc['.$cart_items.']" value="'.$obj->product_desc.'" />';
 	   	echo '<input type="hidden" name="item_qty['.$cart_items.']" value="'.$cart_itm["qty"].'" />';
 	   	$cart_items ++;*/
+   		return 10;
    }
 
 }

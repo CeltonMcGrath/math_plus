@@ -31,8 +31,7 @@
     include '../template/header.php';
     echo "<section class='content'>";
 
-	if(isset($_SESSION["cart_programs"])) {
-		
+	if(isset($_SESSION["cart_programs"])) {		
         $total = 0;
         echo '<form method="post" action="cart.php">';
         echo '<ul>';
@@ -45,22 +44,15 @@
         echo '<span class="check-out-txt">';
         echo '<strong>Total : $".$total."</strong>';
         echo '</span>';
+        //Update cart options (ie. remove)
         echo '</form>';
         
-        echo "<form method='post' 
-        		action='https://www.paypal.com/cgi-bin/webscr' >
-	        <input type='hidden' name='cmd' value='_cart'>
-	        <input type='hidden' name='business' value='info@freshcoffeenetwork.com'>
-	        <input type='hidden' name='item_name_1' value='coffee bean'>
-	        <input type='hidden' name='amount_1' value='12.00'>
-	        <input type='hidden' name='item_name_2' value='coffee filter'>
-	        <input type='hidden' name='amount_2' value='13.00'>
-	        <input type='hidden' name='currency_code' value='CAD'>
-		 <input type='image' 
-	        		src='http://www.paypal.com/en_US/i/btn/x-click-but01.gif' 
-	        		name='submit' 
-	        		alt='Pay with Paypal.'>
+        echo "<form action='expresscheckout.php' METHOD='POST'>
+        <input type='image' name='submit' 
+        		src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif' 
+        		border='0' align='top' alt='Check out with PayPal'/>
         </form>";
+        
     } 
     else {
 		echo '<h1>Your cart is empty.</h1>';
