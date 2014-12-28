@@ -140,8 +140,8 @@ class Program {
 		 </div>";
 	}
 	
+	/* Displays shopping cart entry with removal option for cart.php */
 	public function displayProgramForCart($studentName) {
-		// Display Student name, program name, program date, cost, delete checkbox
 		echo "
 		<article>
 			".$studentName." - ".$this->program_name." ".$this->cost."   

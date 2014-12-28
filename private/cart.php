@@ -57,6 +57,7 @@
         		border='0' align='top' alt='Check out with PayPal'/>
         </form>";
     } 
+    
     else {
 		echo '<h1>Your cart is empty.</h1>';
     }

@@ -358,6 +358,7 @@ class Student {
 	   	$program = new Program($program_id);
 	   	echo $program->displayForCart($this->printName());
    		return $program->getCost();
+   		
 	}
 
 }
