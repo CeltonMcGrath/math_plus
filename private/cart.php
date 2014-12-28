@@ -33,20 +33,18 @@
 
 	if(isset($_SESSION["cart_programs"])) {		
         $total = 0;
-        echo '<form method="post" action="cart.php">';
-        echo '<ul>';
-        $cart_items = 0;
+        echo "<form method='post' action='cart.php'>
+        		<input type='hidden' name='update_cart' value='update' />
+        		<ul>";
         foreach ($_SESSION["cart_programs"] as $cart_itm) {
            $student = new Student($cart_itm['student_id'], $db);
            $total += $student->programCartDisplay($cart_itm['program_id']);
         }
-        $_SESSON["Payment_Amount"] = total;
-	echo '</ul>';
-        echo '<span class="check-out-txt">';
-        echo '<strong>Total : $".$total."</strong>';
-        echo '</span>';
-        //Update cart options (ie. remove)
-        echo '</form>';
+        $_SESSION["Payment_Amount"] = $total;
+		echo "</ul>
+				<article>Total: ".$total."</article>
+        		<input type='submit' value='Update cart' />
+       		</form>";
         
         echo "<form action='expresscheckout.php' METHOD='POST'>
         <input type='image' name='submit' 

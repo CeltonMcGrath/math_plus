@@ -1,19 +1,21 @@
 <?php
+include Program.php
+
 class Student {
-	
-   public $student_id;
-   private $user_id;
-   private $first_name;
-   private $last_name;
-   private $preferred_name;
-   private $grade;
-   private $allergies;
-   private $medical;
-   private $permission_to_leave;
-   private $photo_permission;
-   private $database;    
+
+	public $student_id;
+	private $user_id;
+	private $first_name;
+	private $last_name;
+	private $preferred_name;
+	private $grade;
+	private $allergies;
+	private $medical;	
+	private $permission_to_leave;
+	private $photo_permission;
+	private $database;    
  
-   public function __construct($s_id, $db) {
+	public function __construct($s_id, $db) {
    		/* Returns student object with student id s_id */
    		$this->student_id = $s_id;
    		$this->database = $db;
@@ -89,7 +91,7 @@ class Student {
 		echo $this->first_name." ".$this->last_name;
 	}
  
-   public function displayStudentInfo() {
+	public function displayStudentInfo() {
    		/* Student display for students.php */
     	echo "
 	    	<div class='contact'>
@@ -156,7 +158,7 @@ class Student {
    	    		</form>";			
    }
    
-   public static function displayEmptyStudentForm() {
+	public static function displayEmptyStudentForm() {
  		echo "
 				<div class='contact'>
     				<input class='accordion' type='checkbox' id='check-0' />
@@ -249,72 +251,58 @@ class Student {
 	   				</script>");
  		}	
  		$programRows = $stmt->fetchAll();
- 		
- 		//Select programs student is already registered in
- 		$query = 'SELECT program_id, status
-	   			FROM
- 					students_programs 
-	   			WHERE
- 					students_programs.student_id = :student_id';
- 		$query_params = array(':student_id' => $this->student_id);   	
-	   	try	{
-	   		// Execute the query against the database
-	   		$stmt = $this->database->prepare($query);
-	   		$result = $stmt->execute($query_params);
-	   	} catch(PDOException $ex) {
-	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
-	   	}
-	   	$studentPrograms = $stmt->fetchAll();
- 				
+		
  		foreach($programRows as $programRow):
- 			$program_id = $programRow['program_id'];
- 			echo "	
- 			<div class='contact'>
- 				<input class='accordion' type='checkbox' 
- 					id='".$program_id."'/>";
- 				if ($this->studentInProgram($program_id, $studentPrograms)) {
- 					echo "<label for='".$program_id."'>
- 					".$programRow['program_name']." (Status: ".$status.")
- 					</label>";
- 				}
- 				else {
- 					echo "<label for='".$program_id."'>
- 						<input class='regular' name='program_group[]' 
- 							value='".$program_id."' type='checkbox'/>
- 						".$programRow['program_name'].",
- 								 (".$this->remainingSpots($program_id)."
- 						spots remaining) Fee: ".$programRow['cost']."
- 					</label>";
- 				}
- 			echo "<article>
- 					<ul>
- 						<li>Start date: ".$programRow['start_date']."</li>
- 						<li>End date: ".$programRow['end_date']."</li>
- 						<li>Registration deadline: 
- 								".$programRow['registration_deadline']."
- 						</li>
- 						<li>Grade levels: ".$programRow['grades']."</li>
- 						<li>Description: ".$programRow['description']."</li>
- 					</ul>
- 				</article>
- 			</div>";
+ 			$program = new Program($programRow['program_id'], $db);
+ 			$status = $this->programStatus($program->$program_id)
+ 			if ($status) {
+ 				$program->displayProgramForSelectionTwo($status);
+ 			}
+ 			else {
+ 				$program->displayProgramForSelectionOne();
+ 			}
  		endforeach;
+ 	}
+ 	
+ 	/* Returns status of registration if student in program and 
+ 	 * false if the student is not registered in the program.
+ 	 */
+ 	private function programStatus($program_id) {
+ 		$query = 'SELECT status
+	   			FROM
+ 					students_programs
+	   			WHERE
+ 					students_programs.student_id = :student_id
+ 					and student_programs.program_id = :program_id'
+ 				
+ 		$query_params = array(
+ 				':student_id' => $this->student_id,
+ 				':program_id' => $this->program_id,
+ 		);
  		
+ 		try	{
+ 			// Execute the query against the database
+ 			$stmt = $this->database->prepare($query);
+ 			$result = $stmt->execute($query_params);
+ 		} catch(PDOException $ex) {
+ 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+ 		}
+ 		$row = $stmt->fetch();
+ 		
+ 		if ($studentPrograms) {
+ 			return row['status'];
+ 		}
+ 		else {
+ 			return false;
+ 		} 
  	}
  	
- 	private function studentInProgram($program_id, $studentsRows) {
- 		return False;
- 	}
- 	
- 	private function remainingSpots($program_id) {
- 		return 0;
- 	}
- 	
+ 	/* Updates database record of student and returns true iff
+ 	 * update successful. 
+ 	 * */
 	public static function updateStudent($s_id, $p_name, 
     				$gr, $all, $med, $leave_perm, $photo_perm, $db) {
-		/* Updates student data and returns true iff success. */
-		
 		$query = "UPDATE students
 	    		SET preferred_name = :preferred_name, grade = :grade, 
 					allergies = :allergies, medical = :medical,
@@ -343,7 +331,7 @@ class Student {
 		return True;
 	}
      	
-   public static function deleteStudent($s_id, $db) {
+	public static function deleteStudent($s_id, $db) {
    		/* Deletes student from database.*/
 	   	$query = "DELETE FROM students
 	    		WHERE student_id = :student_id";
@@ -362,34 +350,15 @@ class Student {
 	   	return True;
    }
    
-   public function displayPastProgramList() {
+	public function displayPastProgramList() {
    		return True;
-   }
+	}
    
-   public function programCartDisplay() {
-	   	/*$product_code = $cart_itm["code"];
-	   	$results = $mysqli->query("SELECT product_name,product_desc, price FROM products WHERE product_code='$product_code' LIMIT 1");
-	   	$obj = $results->fetch_object();
-	   	
-	   	echo '<li class="cart-itm">';
-	   	echo '<span class="remove-itm"><a href="cart_update.php?removep='.$cart_itm["code"].'&return_url='.$current_url.'">&times;</a></span>';
-	   	echo '<div class="p-price">'.$currency.$obj->price.'</div>';
-	   	echo '<div class="product-info">';
-	   	echo '<h3>'.$obj->product_name.' (Code :'.$product_code.')</h3> ';
-	   	echo '<div class="p-qty">Qty : '.$cart_itm["qty"].'</div>';
-	   	echo '<div>'.$obj->product_desc.'</div>';
-	   	echo '</div>';
-	   	echo '</li>';
-	   	$subtotal = ($cart_itm["price"]*$cart_itm["qty"]);
-	   	$total = ($total + $subtotal);
-	   	
-	   	echo '<input type="hidden" name="item_name['.$cart_items.']" value="'.$obj->product_name.'" />';
-	   	echo '<input type="hidden" name="item_code['.$cart_items.']" value="'.$product_code.'" />';
-	   	echo '<input type="hidden" name="item_desc['.$cart_items.']" value="'.$obj->product_desc.'" />';
-	   	echo '<input type="hidden" name="item_qty['.$cart_items.']" value="'.$cart_itm["qty"].'" />';
-	   	$cart_items ++;*/
-   		return 10;
-   }
+	public function programCartDisplay($program_id) {
+	   	$program = new Program($program_id);
+	   	echo $program->displayForCart($this->printName());
+   		return $program->cost;
+	}
 
 }
    
