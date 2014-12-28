@@ -7,23 +7,28 @@
      * Add these programs to the session shopping cart.
      */
     if (!empty($_POST)) {
-    	$student_id = $_POST['student_id'];
-    	// Create session shopping cart array if not already created
-    	if (!$_SESSION['cart_programs']) {
-    		$_SESSION['cart_programs'] = [];
+    	if ($_POST['operation']=='update') {
+    		//Update cart
     	}
-   		
-    	$selectedPrograms = $_POST['program_group'];
-    	foreach ($selectedPrograms as $program=>$program_id) {
-    		//Get program information: name, cost, 
-    			
-    		//Create student-program array
-    		$new_program[] =
-    			array('student_id' => $student_id, 
-			'program_id' => $program_id);
+    	else {
+    		$student_id = $_POST['student_id'];
+    		// Create session shopping cart array if not already created
+    		if (!$_SESSION['cart_programs']) {
+    			$_SESSION['cart_programs'] = [];
+    		}
+    		 
+    		$selectedPrograms = $_POST['program_group'];
+    		foreach ($selectedPrograms as $program=>$program_id) {
+    			//Get program information: name, cost,
+    			 
+    			//Create student-program array
+    			$new_program[] =
+    			array('student_id' => $student_id,
+    					'program_id' => $program_id);
     		
-    		//Add student-program array to session array
-    		array_push($_SESSION["cart_programs"], $new_program);
+    			//Add student-program array to session array
+    			array_push($_SESSION["cart_programs"], $new_program);
+    		}
     	}
     }
     
@@ -34,7 +39,7 @@
 	if(isset($_SESSION["cart_programs"])) {		
         $total = 0;
         echo "<form method='post' action='cart.php'>
-        		<input type='hidden' name='update_cart' value='update' />
+        		<input type='hidden' name='operation' value='update' />
         		<ul>";
         foreach ($_SESSION["cart_programs"] as $cart_itm) {
            $student = new Student($cart_itm['student_id'], $db);
@@ -51,7 +56,6 @@
         		src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif' 
         		border='0' align='top' alt='Check out with PayPal'/>
         </form>";
-        
     } 
     else {
 		echo '<h1>Your cart is empty.</h1>';

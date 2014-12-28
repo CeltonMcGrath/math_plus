@@ -357,7 +357,7 @@ class Student {
 	public function programCartDisplay($program_id) {
 	   	$program = new Program($program_id);
 	   	echo $program->displayForCart($this->printName());
-   		return $program->cost;
+   		return $program->getCost();
 	}
 
 }

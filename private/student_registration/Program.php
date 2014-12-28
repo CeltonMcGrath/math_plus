@@ -140,8 +140,16 @@ class Program {
 		 </div>";
 	}
 	
-	public function displayProgramForCart($student_name) {
-		
+	public function displayProgramForCart($studentName) {
+		// Display Student name, program name, program date, cost, delete checkbox
+		echo "
+		<article>
+			".$studentName." - ".$this->program_name." ".$this->cost."   
+					     Remove:
+			<input class='regular' name='delete_group[]'
+				value='".$this->program_id."' type='checkbox'/>
+		</article>
+		";
 	}
   
    
