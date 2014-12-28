@@ -15,9 +15,9 @@
 	//' Replace <API_PASSWORD> with your API Password
 	//' Replace <API_SIGNATURE> with your Signature
 	//'------------------------------------
-	$API_UserName="<API_USERNAME>";
-	$API_Password="<API_PASSWORD>";
-	$API_Signature="<API_SIGNATURE>";
+	$API_UserName="mcgrathcelton_api1.gmail.com";
+	$API_Password="843LJ5HJS4ZVVBKH";
+	$API_Signature="AFcWxV21C7fd0v3bYYYRCpSSRl31Asgd4.QKizdnefddw96OjLiG46m1";
 
 	// BN Code 	is only applicable for partners
 	$sBNCode = "PP-ECWizard";

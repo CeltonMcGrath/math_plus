@@ -40,7 +40,8 @@
            $student = new Student($cart_itm['student_id'], $db);
            $total += $student->programCartDisplay($cart_itm['program_id']);
         }
-        echo '</ul>';
+        $_SESSON["Payment_Amount"] = total;
+	echo '</ul>';
         echo '<span class="check-out-txt">';
         echo '<strong>Total : $".$total."</strong>';
         echo '</span>';
