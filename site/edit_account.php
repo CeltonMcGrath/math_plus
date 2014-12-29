@@ -82,6 +82,20 @@
 		<span class="success"><?php echo $success?></span>
 		<section id="accordion">
 			<div class="contact">
+   				<label>
+   					<a href="guardians.php">Manage parent and guardian contacts</a>
+   				</label>
+			</div>
+		</section>
+		<section id="accordion">
+			<div class="contact">
+				<label>
+   					<a href="students.php">Manage student and programs</a>
+   				</label>
+			</div>
+		</section>
+		<section id="accordion">
+			<div class="contact">
 				<input class='accordion' type='checkbox' id='email'/>
    				<label for="email">Update email address</label>
    				<article>
