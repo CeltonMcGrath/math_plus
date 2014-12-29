@@ -18,7 +18,7 @@ if ( $PaymentOption == "PayPal")
         //' example : $paymentAmount = "15.00";
         //'------------------------------------
 
-        $paymentAmount = "";
+        $paymentAmount = $_SESSION["Payment_Amount"];
         
         
         //'------------------------------------

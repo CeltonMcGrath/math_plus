@@ -42,7 +42,7 @@
         foreach ($_SESSION["cart_programs"] as $cart_itm) {
            $student = new Student($cart_itm[0], $db);
            $total += $student->programCartDisplay($cart_itm[1], $counter);
-	   $counter++;
+	   	   $counter++;
         }
         $_SESSION["Payment_Amount"] = $total;
 		echo "</ul>
