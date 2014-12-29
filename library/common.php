@@ -4,20 +4,18 @@
     $password = "sp2014"; 
     $host = "localhost"; 
     $dbname = "login_system"; 
-    
-    $private_dir = "/math_plus/private/";
-    $public_dir = "/math_plus/public/";
+        
+    $public_area = array("login", "forgot_password", "register");
 
     // Communicate with the database via UTF-8 
     $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'); 
      
 	// Connect to database.
-    try 
-    { 
-        $db = new PDO("mysql:host={$host};dbname={$dbname};charset=utf8", $username, $password, $options); 
+    try { 
+        $db = new PDO("mysql:host={$host};dbname={$dbname};charset=utf8", 
+        	$username, $password, $options); 
     } 
-    catch(PDOException $ex) 
-    { 
+    catch(PDOException $ex) { 
         // TO DO : what to do with die statements? 
         die("Failed to connect to the database: " . $ex->getMessage()); 
     } 
@@ -60,15 +58,20 @@
      
     session_start(); 
     
-    // If the user is not logged in and is trying to access private user area, redirect to login.
-    if(empty($_SESSION['user']) && substr($_SERVER['REQUEST_URI'], 0, strlen($private_dir))==$private_dir)
-    {
-    	header("Location: ".$public_dir."login.php");
-    	die("Redirecting to login page.");
+    /* If the user is not logged in and is trying to access private user area, 
+     * redirect to login.
+     */
+    if(empty($_SESSION['user'])) {
+    	if (!preg_match($public_area[0], $_SERVER['REQUEST_URI']) ||
+    		!preg_match($public_area[1], $_SERVER['REQUEST_URI']) ||
+    		!preg_match($public_area[2], $_SERVER['REQUEST_URI'])) {
+    			header("Location: /math_plus/site/login.php");
+    			die("Redirecting to login page.");
+    	}
     }
-    // If the user is logged in and is trying to access login, logout or forgot password page, redirect to splash.
+    /*// If the user is logged in and is trying to access login, logout or forgot password page, redirect to splash.
     elseif (!empty($_SESSION['user']) && substr($_SERVER['REQUEST_URI'], 0, strlen($public_dir))==$public_dir) {
-    	header("Location: ".$private_dir."splash.php");
+    	header("Location: "/math_plus/site/splash.php");
     	die("Redirecting to the homepage.");
-    }
+    }*/
 

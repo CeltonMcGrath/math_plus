@@ -1,5 +1,6 @@
 <?php  
-    require("../../common.php");     
+    require("../library/common.php");     
+    include '../library/Student.php';    
     
     if (empty($_POST)) { 
     	//Redirect to students.php
@@ -7,11 +8,10 @@
     	die("Redirecting to students page.");
     	
     }
-    include 'Student.php';
-    include '../../template/head.php';
-    include '../../template/header.php';
     
     $student = new Student($_POST['student_id'], $db);
+    include '../library/site_template/head.php';
+    include '../library/site_template/header.php';
     ?>
 
 	<section class='content'>
@@ -19,7 +19,7 @@
 			<?php $student->printName()?>
 		</h1>
 		<section id='accordion'> 
-			<form action='/math_plus/private/cart.php' method='post'>
+			<form action='cart.php' method='post'>
 				<input type='hidden' name='operation'
 					value='update_student' />
 				<input type='hidden' name='student_id' 
@@ -29,7 +29,7 @@
     		</form>
 		</section>
 	</section>
-	<?php include '../../template/footer.php';?>
+	<?php include '../library/site_template/footer.php';?>
 </html>	
 
 

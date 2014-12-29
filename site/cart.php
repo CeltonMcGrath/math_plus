@@ -1,6 +1,6 @@
 <?php 
-    require("../common.php"); 
-    include 'student_registration/Student.php';
+    require("../library/common.php"); 
+    include '../library/Student.php';
 
     /* If form has been submitted, then user has been referred to
      * the shopping cart by adding programs for a specific student.
@@ -30,8 +30,8 @@
     	}
     }
     
-    include '../template/head.php';
-    include '../template/header.php';
+    include '../library/site_template/head.php';
+    include '../library/site_template/header.php';
     echo "<section class='content'>";
 	if(isset($_SESSION["cart_programs"])) {		
         $total = 0;
@@ -62,7 +62,7 @@
     }
  
 	echo "</section>";
-	include '../template/footer.php';
+	include '../library/site_template/footer.php';
 	?>
 	
 	<!-- Add Digital goods in-context experience.  -->

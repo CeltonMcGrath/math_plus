@@ -1,11 +1,11 @@
 <?php 
-    require("../common.php"); 
-    include '../template/head.php';
-    include '../template/header.php';    
+    require("../library/common.php"); 
+    include '../library/site_template/head.php';
+    include '../library/site_template/header.php';    
 ?> 
 	<section class="content">
 		<a href="guardian_registration/guardians.php">Manage guardian and parent contacts</a><br /> 
 		<a href="student_registration/students.php">Manage students and programs</a><br />
 	</section>	
-	<?php include '../template/footer.php';?>
+	<?php include '../library/site_template/footer.php';?>
 </html>

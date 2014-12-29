@@ -1,7 +1,7 @@
 <?php 
-    require("../../common.php");
-    
-    include 'Guardian.php';   
+    require("../library/common.php");     
+    include '../library/Guardian.php';
+       
     // Check if form has been submitted
     if(!empty($_POST)) {
     	if ($_POST['guardian_id']==0) {
@@ -22,8 +22,8 @@
     		}
     	}
     }
-    include '../../template/head.php';
-    include '../../template/header.php';
+    include '../library/site_template/head.php';
+    include '../library/site_template/header.php';
 ?> 
 	<section class="content">
 		<h1>Guardians</h1>
@@ -55,6 +55,6 @@
 			    endforeach; ?>
 			</section>
 	</section>
-	<?php include '../../template/footer.php';?>
+	<?php include '../library/site_template/footer.php';?>
 </html>
 

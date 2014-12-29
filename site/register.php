@@ -1,7 +1,7 @@
 <?php
     // First we execute our common code to connection to the database and start the session 
-    require("../../common.php");   
-    include 'user_register.php';
+    require("../library/common.php");   
+    include '../library/user_registration/user_register.php';
 
     $emailEntry = $emailErr = $email2Err = $passwordErr = $password2Err = "";
     $successPhrase = "";
@@ -57,10 +57,10 @@
 		<meta charset="utf-8">
 		<title>Math+ Registration</title>
 		<style type="text/css">
-			@import url(/math_plus/css/style.css);
-			@import url(/math_plus/css/main.css);
+			@import url(../public_html/style.css);
+			@import url(../public_html/main.css);
 		</style>
-		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
 	</head>
 	
 	<section class="content">
@@ -100,7 +100,7 @@
 				</form>				
 			</div>
 			<div class="login-extra">
-				<a href="../login.php">Return to login</a>
+				<a href="login.php">Return to login</a>
 			</div>
 		</section>
 	</section>

@@ -1,7 +1,7 @@
 <?php
     // First we execute our common code to connection to the database and start the session 
-    require("../common.php");   
-    include 'user_registration/user_register.php';
+    require("../library/common.php");   
+    include '../library/user_registration/user_register.php';
     
     $successPhrase = "";
     $errorPhrase = "";
@@ -17,14 +17,15 @@
     	}
     	else {
     		if (resetPassword($email, $db)) {
-    			$successPhrase = "An email has been sent to your email address with a temporary
-    					password. Please login with your temporary password and change it.
+    			$successPhrase = "An email has been sent to your email address 
+    					with a temporarypassword. Please login with your 
+    					temporary password and change it.
     					(Check your junk/ spam folders.)";
     			
     		}
     		else {
-    			$errorPhrase = "Oops something went wrong! Please try again or contact 
-    								system administrator. (See FAQ).";
+    			$errorPhrase = "Oops something went wrong! Please try again or 
+    					contact site administrator.";
     		}
     	}
     	
@@ -36,10 +37,10 @@
 		<meta charset="utf-8">
 		<title>Math+ Registration</title>
 		<style type="text/css">
-			@import url(/math_plus/css/style.css);
-			@import url(/math_plus/css/main.css);
+			@import url(../public_html/style.css);
+			@import url(../public_html/main.css);
 		</style>
-		<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
 	</head>
 	<body>
 		<section class="container">

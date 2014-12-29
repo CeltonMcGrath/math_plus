@@ -1,9 +1,7 @@
 <?php  
-    require("../../common.php");     
-    include 'Student.php';
-    include '../../template/head.php';
-    include '../../template/header.php';
-    
+    require("../library/common.php");     
+    include '../library/Student.php';
+   
     // This if statement checks to determine whether the add new student form as been submitted.
     if(!empty($_POST)) {
     	if ($_POST['student_id']==0) {
@@ -26,6 +24,9 @@
     		}
     	}    
     }
+    
+    include '../library/site_template/head.php';
+    include '../library/site_template/header.php';
 ?>
 	<section class="content">
 		<h1>Students</h1>
@@ -56,6 +57,6 @@
 				endforeach; ?>
 			</section>
 	</section>
-<?php include '../../template/footer.php';?>
+<?php include '../library/site_template/footer.php';?>
 </html>
 

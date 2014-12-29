@@ -1,5 +1,5 @@
 <?php 
-    require("../common.php"); 
+    require("../library/common.php"); 
     
     // Redisplay user email if they have a login email.
     $submitted_email = '';
@@ -70,10 +70,10 @@
 		<meta charset="utf-8">
 		<title>Math+ Registration</title>
 		<style type="text/css">
-			@import url(/math_plus/css/style.css);
-			@import url(/math_plus/css/main.css);
+			@import url(../public_html/style.css);
+			@import url(../public_html/main.css);
 		</style>
-		<link rel="icon" href="/math_plus/css/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
 	</head>
 	
 	<body>
@@ -94,7 +94,7 @@
 				</form> 				
 			</div>
 			<div class="login-extra">
-				<a href="user_registration/register.php">Register</a>
+				<a href="register.php">Register</a>
 				<a href="forgot_password.php">Forgot password</a>
 			</div>
 		</section>

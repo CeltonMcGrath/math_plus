@@ -1,7 +1,7 @@
 <?php
 /*Code adapted from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14 for PDO connection.*/
 
-	require('../../common.php');
+	require('../library/common.php');
 	$msg='';
 
 	if(!empty($_GET['activation']) && isset($_GET['activation'])) {

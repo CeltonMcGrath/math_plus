@@ -357,8 +357,7 @@ class Student {
 	public function programCartDisplay($program_id, $counter) {
 	   	$program = new Program($program_id, $this->database);
 	   	$program->displayForCart($this->first_name." ".$this->last_name, $counter);
-   		return $program->getCost();
-   		
+   		return $program->getCost();   		
 	}
 
 }

@@ -1,9 +1,7 @@
 <?php 
-    require("../common.php"); 
-    include '../template/head.php';
-    include '../template/header.php';
-    include '../public/user_registration/user_register.php';
-    include '../public/user_registration/user_maintenance.php';
+    require("../library/common.php"); 
+    include '../library/user_registration/user_register.php';
+    include '../library/user_registration/user_maintenance.php';
     
     $passwordSuccess = $passwordErr = $emailSuccess = $emailErr = "";
     
@@ -75,6 +73,9 @@
     				}
     	}
     }   
+    
+    include '../library/site_template/head.php';
+    include '../library/site_template/header.php';
 ?> 
 	<section class="content">
 		<h1>Edit Account</h1>
@@ -144,5 +145,5 @@
 			</div>
 		</section>
 	</section>
-    <?php include '../template/footer.php';?>
+    <?php include '../library/site_template/footer.php';?>
 </html>

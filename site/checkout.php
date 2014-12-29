@@ -1,5 +1,5 @@
 <?php
-require_once ("paypalfunctions.php");
+require_once ("../library/paypalfunctions.php");
 
 $PaymentOption = "PayPal";
 if ( $PaymentOption == "PayPal")
