@@ -116,16 +116,8 @@ footer p {
 	color:#555;
 }
 
-a{
-	color:#008BB0;
-}
-
-a:visited{
-	color:#008BB0;
-}
-
-a:hover{
-	color:#33b5e5;
+.contact a {
+	color:#fff;
 }
 
 .nobullet {

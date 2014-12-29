@@ -1,3 +1,5 @@
 Options +FollowSymlinks
-RewriteEngine on
-RewriteRule ^math_plus/(.*) http://54.174.128.163/math_plus/site/$1.php [NC]
+RewriteEngine On
+# Resolve .php file for extensionless php urls
+RewriteRule ^([^/.]+)$ site/$1.php [L]
+
