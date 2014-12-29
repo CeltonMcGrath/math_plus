@@ -1,6 +1,0 @@
-AuthType Basic
-AuthName "My Protected Area"
-AuthUserFile ./.htpasswd
-Require valid-user
-Options -Indexes
-
