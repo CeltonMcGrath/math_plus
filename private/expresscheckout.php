@@ -26,6 +26,7 @@ $paymentType = "Sale";
 //'
 //' This is set to the value entered on the Integration Assistant 
 //'------------------------------------
+
 $returnURL = "http://54.174.128.163/math_plus/private/confirm.php";
 
 //'------------------------------------
