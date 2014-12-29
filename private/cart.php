@@ -44,14 +44,14 @@
            $total += $student->programCartDisplay($cart_itm[1], $counter);
 	   	   $counter++;
         }
-        $_SESSION["Payment_Amount"] = $total;
 		echo "</ul>
 				<article>Total: ".$total."</article>
         		<input type='submit' value='Update cart' />
        		</form>";
         
         echo "<form action='checkout.php' METHOD='POST'>
-			<input type='image' name='paypal_submit' id='paypal_submit'  
+		<input type='hidden' name='cart_total' value=".$total." />	
+		<input type='image' name='paypal_submit' id='paypal_submit'  
         	src='https://www.paypal.com/en_US/i/btn/btn_dg_pay_w_paypal.gif' 
         	border='0' align='top' alt='Pay with PayPal'/>
 			</form>";

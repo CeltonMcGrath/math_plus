@@ -13,12 +13,9 @@ if ( $PaymentOption == "PayPal")
         //'------------------------------------
         //' The paymentAmount is the total value of 
         //' the purchase.
-        //'
-        //' TODO: Enter the total Payment Amount within the quotes.
-        //' example : $paymentAmount = "15.00";
         //'------------------------------------
 
-        $paymentAmount = $_SESSION["Payment_Amount"];
+        $paymentAmount = $_POST['cart_total'];
         
         
         //'------------------------------------
