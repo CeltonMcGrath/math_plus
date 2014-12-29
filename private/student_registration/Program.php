@@ -19,7 +19,7 @@ class Program {
    		
    		/*Retrieves student data from db.*/
 	   	$query = 'SELECT program_name, cost, capacity, start_date, 
-	   			end_date, registration_date, grades, description
+	   			end_date, registration_deadline, grades, description
 	   			FROM programs
 	    		WHERE program_id = :program_id';
 	   	
@@ -59,13 +59,13 @@ class Program {
 	   	 
 		$query_params = array(
 				':program_name' => $name_0,
-				':cost' => $cost_0;
+				':cost' => $cost_0,
 				':capacity' => $cap,
 				':start_date' => $s_date,
 				':end_date' => $e_date,
-				':registration_deadline' => r_date,
+				':registration_deadline' => $r_date,
 				':grades' => $gr, 
-				':description' => $des,
+				':description' => $des
 	   	);
 	   	
 	   	try	{
@@ -80,12 +80,12 @@ class Program {
 	   	return True;
    }
    
-	public function getCost {
-		return this->$cost;
+	public function getCost() {
+		return $this->cost;
 	}
 	
 	/* Returns the remaining number of spots in this program. */
- 	private function remainingSpots($program_id) {
+ 	private function remainingSpots() {
  		return 0;
  	}
 	
@@ -99,7 +99,7 @@ class Program {
 			<label for='".$this->program_id."'>
  				<input class='regular' name='program_group[]'
  					value='".$this->program_id."' type='checkbox'/>
- 				".$programRow['program_name'].", (".$this->remainingSpots()."
+ 				".$this->program_name.", (".$this->remainingSpots()."
 		 		spots remaining) Fee: ".$this->cost."
 		 	</label>
 			<article>
@@ -110,7 +110,7 @@ class Program {
 			 			".$this->registration_deadline."
 					</li>
 			 		<li>Grade levels: ".$this->grades."</li>
-			 		<li>Description: ".$this->description"</li>
+			 		<li>Description: ".$this->description."</li>
 			 	</ul>
 			 </article>
 		 </div>";
@@ -123,7 +123,7 @@ class Program {
 		echo "
 		<div class='contact'>
 			<input class='accordion' type='checkbox' id='".$this->program_id."'/>
-			<label for='".this->$program_id."'>
+			<label for='".$this->program_id."'>
 				".$this->program_name." (Status: ".$status.")
 			</label>
 			<article>
@@ -134,20 +134,21 @@ class Program {
 			 			".$this->registration_deadline."
 					</li>
 			 		<li>Grade levels: ".$this->grades."</li>
-			 		<li>Description: ".$this->description"</li>
+			 		<li>Description: ".$this->description."</li>
 			 	</ul>
 			 </article>
 		 </div>";
 	}
 	
 	/* Displays shopping cart entry with removal option for cart.php */
-	public function displayProgramForCart($studentName) {
-		echo "
-		<article>
-			".$studentName." - ".$this->program_name." ".$this->cost."   
-					     Remove:
+	public function displayForCart($studentName, $counter) {
+		echo "<li>
+		<article id='contact'>
+			".$studentName." - ".$this->program_name." - ".$this->cost."   
+			------ Remove:
 			<input class='regular' name='delete_group[]'
-				value='".$this->program_id."' type='checkbox'/>
+				value='".$counter."' type='checkbox'/>
+		</li>
 		</article>
 		";
 	}

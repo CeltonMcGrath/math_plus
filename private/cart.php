@@ -7,24 +7,22 @@
      * Add these programs to the session shopping cart.
      */
     if (!empty($_POST)) {
-    	if ($_POST['operation']=='update') {
-    		//Update cart
+    	if ($_POST['operation']=='update_cart') {
+    		foreach ($_POST['delete_group'] as $index) {
+			unset($_SESSION['cart_programs'][$index]);
+		}	
     	}
     	else {
     		$student_id = $_POST['student_id'];
     		// Create session shopping cart array if not already created
-    		if (!$_SESSION['cart_programs']) {
+    		if (!isset($_SESSION['cart_programs'])) {
     			$_SESSION['cart_programs'] = [];
     		}
     		 
     		$selectedPrograms = $_POST['program_group'];
-    		foreach ($selectedPrograms as $program=>$program_id) {
-    			//Get program information: name, cost,
-    			 
+    		foreach ($selectedPrograms as $program_id) {
     			//Create student-program array
-    			$new_program[] =
-    			array('student_id' => $student_id,
-    					'program_id' => $program_id);
+    			$new_program = array($student_id, $program_id);
     		
     			//Add student-program array to session array
     			array_push($_SESSION["cart_programs"], $new_program);
@@ -35,15 +33,16 @@
     include '../template/head.php';
     include '../template/header.php';
     echo "<section class='content'>";
-
 	if(isset($_SESSION["cart_programs"])) {		
         $total = 0;
+	$counter = 0;
         echo "<form method='post' action='cart.php'>
-        		<input type='hidden' name='operation' value='update' />
+        		<input type='hidden' name='operation' value='update_cart' />
         		<ul>";
         foreach ($_SESSION["cart_programs"] as $cart_itm) {
-           $student = new Student($cart_itm['student_id'], $db);
-           $total += $student->programCartDisplay($cart_itm['program_id']);
+           $student = new Student($cart_itm[0], $db);
+           $total += $student->programCartDisplay($cart_itm[1], $counter);
+	   $counter++;
         }
         $_SESSION["Payment_Amount"] = $total;
 		echo "</ul>

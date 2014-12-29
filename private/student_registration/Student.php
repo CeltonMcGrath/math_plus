@@ -1,5 +1,5 @@
 <?php
-include Program.php
+include 'Program.php';
 
 class Student {
 
@@ -253,8 +253,8 @@ class Student {
  		$programRows = $stmt->fetchAll();
 		
  		foreach($programRows as $programRow):
- 			$program = new Program($programRow['program_id'], $db);
- 			$status = $this->programStatus($program->$program_id)
+ 			$program = new Program($programRow['program_id'], $this->database);
+ 			$status = $this->programStatus($program->program_id);
  			if ($status) {
  				$program->displayProgramForSelectionTwo($status);
  			}
@@ -273,11 +273,11 @@ class Student {
  					students_programs
 	   			WHERE
  					students_programs.student_id = :student_id
- 					and student_programs.program_id = :program_id'
+ 					and students_programs.program_id = :program_id';
  				
  		$query_params = array(
  				':student_id' => $this->student_id,
- 				':program_id' => $this->program_id,
+ 				':program_id' => $program_id,
  		);
  		
  		try	{
@@ -290,8 +290,8 @@ class Student {
  		}
  		$row = $stmt->fetch();
  		
- 		if ($studentPrograms) {
- 			return row['status'];
+ 		if ($row) {
+ 			return $row['status'];
  		}
  		else {
  			return false;
@@ -354,9 +354,9 @@ class Student {
    		return True;
 	}
    
-	public function programCartDisplay($program_id) {
-	   	$program = new Program($program_id);
-	   	echo $program->displayForCart($this->printName());
+	public function programCartDisplay($program_id, $counter) {
+	   	$program = new Program($program_id, $this->database);
+	   	$program->displayForCart($this->first_name." ".$this->last_name, $counter);
    		return $program->getCost();
    		
 	}
