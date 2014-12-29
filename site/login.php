@@ -48,7 +48,7 @@
 	            $_SESSION['user'] = $row; 
 	             
 	            // Redirect the user to the private members-only page. 
-	            header("Location: ../private/splash.php"); 
+	            header("Location: splash.php"); 
 	            die("Logging in..."); 
             } 
             elseif ($row['status'] == 0) {

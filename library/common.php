@@ -62,9 +62,9 @@
      * redirect to login.
      */
     if(empty($_SESSION['user'])) {
-    	if (!preg_match($public_area[0], $_SERVER['REQUEST_URI']) ||
-    		!preg_match($public_area[1], $_SERVER['REQUEST_URI']) ||
-    		!preg_match($public_area[2], $_SERVER['REQUEST_URI'])) {
+    	if (!preg_match('/'.$public_area[0].'/', $_SERVER['REQUEST_URI']) &
+    		!preg_match('/'.$public_area[1].'/', $_SERVER['REQUEST_URI']) &
+    		!preg_match('/'.$public_area[2].'/', $_SERVER['REQUEST_URI'])) {
     			header("Location: /math_plus/site/login.php");
     			die("Redirecting to login page.");
     	}
@@ -74,4 +74,3 @@
     	header("Location: "/math_plus/site/splash.php");
     	die("Redirecting to the homepage.");
     }*/
-
