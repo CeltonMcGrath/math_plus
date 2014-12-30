@@ -3,7 +3,7 @@
  *	 PayPal Express Checkout Call
  * =====================================
  */
-require_once ("paypalfunctions.php");
+require_once ("../library/paypalfunctions.php");
 
 $PaymentOption = "PayPal";
 if ( $PaymentOption == "PayPal" )
@@ -58,14 +58,14 @@ if ( $PaymentOption == "PayPal" )
 		 * (ex: start download, start streaming, Add coins to the game.. etc)
 		 '********************************************************************************************************************
 		 '
-		 ' THE PARTNER SHOULD SAVE THE KEY TRANSACTION RELATED INFORMATION LIKE
+		 
+		' THE PARTNER SHOULD SAVE THE KEY TRANSACTION RELATED INFORMATION LIKE
 		 '                    transactionId & orderTime
 		 '  IN THEIR OWN  DATABASE
 		 ' AND THE REST OF THE INFORMATION CAN BE USED TO UNDERSTAND THE STATUS OF THE PAYMENT
 		 '
 		 '********************************************************************************************************************
 		 */
-
 		$transactionId		= $resArray["PAYMENTINFO_0_TRANSACTIONID"]; // Unique transaction ID of the payment.
 		$transactionType 	= $resArray["PAYMENTINFO_0_TRANSACTIONTYPE"]; // The type of transaction Possible values: l  cart l  express-checkout
 		$paymentType		= $resArray["PAYMENTINFO_0_PAYMENTTYPE"];  // Indicates whether the payment is instant or delayed. Possible values: l  none l  echeck l  instant
@@ -128,7 +128,6 @@ window.onload = function(){
           }
       }                              
 };
-                                
 </script>
 </html>
 		<?php

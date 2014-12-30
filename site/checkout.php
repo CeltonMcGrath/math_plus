@@ -31,7 +31,7 @@ if ( $PaymentOption == "PayPal")
         //'
         //' This is set to the value entered on the Integration Assistant 
         //'------------------------------------
-        $returnURL = "http://54.174.128.163/math_plus/private/splash.php";
+        $returnURL = "http://54.174.128.163/math_plus/site/confirm.php";
 
         //'------------------------------------
         //' The cancelURL is the location buyers are sent to when they hit the
@@ -39,7 +39,7 @@ if ( $PaymentOption == "PayPal")
         //'
         //' This is set to the value entered on the Integration Assistant 
         //'------------------------------------
-        $cancelURL = "http://54.174.128.163/math_plus/private/cart.php";
+        $cancelURL = "http://54.174.128.163/math_plus/site/cart.php";
 
         //'------------------------------------
         //' Calls the SetExpressCheckout API call

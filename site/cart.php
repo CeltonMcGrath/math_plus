@@ -63,8 +63,7 @@
  
 	echo "</section>";
 	include '../library/site_template/footer.php';
-	?>
-	
+	?>	
 	<!-- Add Digital goods in-context experience.  -->
 	<script 
 		src='https://www.paypalobjects.com/js/external/dg.js' 
@@ -75,9 +74,6 @@
 		{
 			trigger: 'paypal_submit',
 			expType: 'instant'
-			 /* PayPal will decide the experience type for the buyer based on 
-			  * his/her 'Remember me on your computer' option.
-			  */
 		});
 	</script>
 	
