@@ -12,7 +12,7 @@
     	</h1>
 	    <form action='checkout.php' METHOD='POST'>
 			<input type='hidden' name='cart_total' 
-    			value=".$POST['cart_total']." />
+    			value=".$_POST['cart_total']." />
 			<input type='image' name='paypal_submit' id='paypal_submit'
 	        	src='https://www.paypal.com/en_US/i/btn/btn_dg_pay_w_paypal.gif'
 	        	border='0' align='top' alt='Pay with PayPal'/>
