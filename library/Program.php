@@ -117,8 +117,8 @@ class Program {
 	public function displayForCart($studentName, $counter) {
 		echo "
 		<li>
-			<section id="accordion">
-				<div class="contact">
+			<section id='accordion'>
+				<div class='contact'>
 	   				<label>
 	   					".$studentName." - ".$this->program_name." 
 	   					- ".$this->cost." (Remove:

@@ -91,7 +91,7 @@ class Student {
 		echo $this->first_name." ".$this->last_name;
 	}
  
-	/* Student display for students.php */v
+	/* Student display for students.php */
 	public function displayStudentInfo() {
     	echo "
 	    	<div class='contact'>
@@ -147,7 +147,7 @@ class Student {
    			<input class='regular 'type='checkbox' name='photo_permission' 
    				".$photo_check."/> 
    			<br /><br />";    
-   		this->displayGuardianPickupSelection();	
+   		$this->displayGuardianPickupSelection();	
    		echo "<br /><br />   						
  			<input type='checkbox' class='regular' name='consent' checked />
    			".$text_field['student_consent']."
@@ -196,7 +196,7 @@ class Student {
 	   			<input class='regular 'type='checkbox' 
 	   				name='photo_permission' /> 
 	   			<br /><br />";    
-   				displayNewGuardianPickupSelection();	
+   				displayNewGuardianPickup();	
    				echo "<br /><br />   						
 	 			<input type='checkbox' class='regular' name='consent' />
 	   			".$text_field['student_consent']."
@@ -299,7 +299,7 @@ class Student {
  		$programRows = $stmt->fetchAll();
 		
  		foreach($programRows as $programRow):
- 			$program = new Program(, $this->database);
+ 			$program = new Program($programRow['program_id'], $this->database);
  			echo "<div class='contact'>
  					<input class='accordion' type='checkbox' 
  					id='".$this->program_id."'/>";
