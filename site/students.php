@@ -1,5 +1,6 @@
 <?php  
     require("../library/common.php");     
+    include '../library/config.php';
     include '../library/Student.php';
    
     /* This if statement checks to determine whether 

@@ -11,8 +11,8 @@
 		margin:100px 0px 610px 0px;
 	}
 	
-	section.content, div.contact {
-		max-width: 600px;
+	#section content, div.contact {
+		max-width: 100%;
 	}
 }
 
@@ -52,6 +52,5 @@ textarea {
 .contact form {
 	padding: 5px 5px 5px 5px;
 }
-
 
 

@@ -5,11 +5,12 @@
 		$stmt = $db->prepare($query);
 		$result = $stmt->execute();
 	} catch ( PDOException $ex ) {
-		die ( "Failed to run query: " . $ex->getMessage () );
+		echo("<script>console.log('PHP: ".$ex->getMessage()."')
+	   				</script>");
 	}
 	$rows = $stmt->fetchAll();
-	
+	$GLOBALS['text_field'] = array();	
 	foreach ($rows as $row):
-		$text_field[${row['name']] = $row['text']; 
-	endforeach; 
+		$GLOBALS['text_field'][$row['name']] = $row['text']; 
+	endforeach;
 ?>

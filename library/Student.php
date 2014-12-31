@@ -138,10 +138,10 @@ class Student {
    			<input type='text' name='grade' value='$this->grade'/> 
    			<br />
    			".$text_field['allergy_label'].":
-   			<textarea name='allergies' row='3' value='$this->allergies'/> 
+   			<textarea name='allergies'>".$this->allergies."</textarea> 
    			<br />
    			".$text_field['medical_label'].":
-   			<textarea name='medical' row='3' value='$this->medical'/>
+   			<textarea name='medical'>".$this->medical."</textarea>
    			<br /><br />
    			".$text_field['photo_perm_label'].": 
    			<input class='regular 'type='checkbox' name='photo_permission' 
@@ -169,7 +169,8 @@ class Student {
 	
 	/* Displays empty student form. */
 	public static function displayEmptyStudentForm() {
- 		echo "
+		$text_field = $GLOBALS['text_field'];
+		echo "
 			<div class='contact'>
     		<input class='accordion' type='checkbox' id='check-0' />
     		<label for='check-0'>Add new student</label>
@@ -187,16 +188,16 @@ class Student {
 	   			<input type='text' name='grade' /> 
 	   			<br />
 	   			".$text_field['allergy_label'].":
-	   			<textarea name='allergies' row='3' /> 
+	   			<textarea name='allergies' row='3'></textarea> 
 	   			<br />
 	   			".$text_field['medical_label'].":
-	   			<textarea name='medical' row='3' />
+	   			<textarea name='medical' row='3'></textarea>
 	   			<br /><br />
 	   			".$text_field['photo_perm_label'].": 
 	   			<input class='regular 'type='checkbox' 
 	   				name='photo_permission' /> 
 	   			<br /><br />";    
-   				displayNewGuardianPickup();	
+   				self::displayNewGuardianPickup();	
    				echo "<br /><br />   						
 	 			<input type='checkbox' class='regular' name='consent' />
 	   			".$text_field['student_consent']."
