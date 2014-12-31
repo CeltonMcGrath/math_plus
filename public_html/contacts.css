@@ -4,10 +4,7 @@
 		display: block;
 	}
 	
-	#accordion li {
-		list-style-type: none;
-	}
-	
+
 	#accordion input.accordion[type="checkbox"] {
 		display: none;
 	}

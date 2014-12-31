@@ -22,8 +22,8 @@
 		<h1>Frequently asked questions</h1>
 			<section id="accordion">
 			<?php 
-			foreach ($rows as $row) {
-			echo "<div class='contact'>
+			foreach($rows as $row):
+				echo "<div class='contact'>
 					<input class='accordion' type='checkbox' 
     					id='".$row['id']."' />
 					<label for='".$row['id']."'>".$row['question']."</label>
