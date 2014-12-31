@@ -53,7 +53,7 @@ header {
 	z-index: 10;
 }
 
-#nav_tabs{
+#nav_tabs {
 	float: left;
 	margin-left: 50px;
 	padding-top: 4px;
@@ -84,8 +84,6 @@ body {
     padding-bottom: 40px;
     z-index: 0;
 }
-
-
 
 /* Footer */
 footer {

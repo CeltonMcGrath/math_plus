@@ -147,8 +147,8 @@ class Student {
    			<input class='regular 'type='checkbox' name='photo_permission' 
    				".$photo_check."/> 
    			<br /><br />";    
-   		$this->displayGuardianPickupSelection();	
-   		echo "<br /><br />   						
+   			$this->displayGuardianPickupSelection();	
+   			echo "<br /><br />   						
  			<input type='checkbox' class='regular' name='consent' checked />
    			".$text_field['student_consent']."
  			<br /><br /> 						
