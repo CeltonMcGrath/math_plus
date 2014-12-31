@@ -40,7 +40,6 @@
 		        ); 
 		         
 		        try { 
-		            // Execute the query against the database 
 		            $stmt = $db->prepare($query); 
 		            $result = $stmt->execute($query_params); 
 		        } 
