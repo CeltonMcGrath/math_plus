@@ -30,7 +30,8 @@
     	}
     }
     
-    //Update databsae shopping cart.
+    //Update database shopping cart.
+    
     
     include '../library/site_template/head.php';
     include '../library/site_template/header.php';

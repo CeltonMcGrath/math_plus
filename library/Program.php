@@ -1,16 +1,16 @@
 <?php
 class Program {
 	
-   public $program_id;
-   private $program_name;
-   private $cost;
-   private $capacity;
-   private $start_date;
-   private $end_date;
-   private $registration_deadline;
-   private $grades;
-   private $description;
-   private $database;    
+	public $program_id;
+	private $program_name;
+	private $cost;
+	private $capacity;	
+	private $start_date;	
+	private $end_date;
+	private $registration_deadline;
+	private $grades;
+	private $description;
+	private $database;    
  
 	public function __construct($p_id, $db) {
    		/* Returns program object with progrma-id p_id */
@@ -26,7 +26,6 @@ class Program {
 	   	$query_params = array(':program_id' => $this->program_id);
 	   	 
 	   	try {
-	   		// Execute the query against the database
 	   		$stmt = $this->database->prepare($query);
 	   		$result = $stmt->execute($query_params);
 	   	}
@@ -45,111 +44,90 @@ class Program {
 	   	$this->grades = $row['grades'];
 	   	$this->description = $row['description'];
    }
-
-	public static function createProgram($name_0, $cost_0,
-   		$cap, $s_date, $e_date, $r_date, $gr, $des, $db) {
-   	    /*Creates program in database.*/
-   		
-		$query = "INSERT INTO programs (program_name, cost, 
-				capacity, start_date, end_date, registration_deadline, 
-				grades, description) 
-	   			VALUES
-				(:program_name, :cost, :capacity, :start_date, :end_date, 
-				:registration_deadline, :grades, :description)";
-	   	 
-		$query_params = array(
-				':program_name' => $name_0,
-				':cost' => $cost_0,
-				':capacity' => $cap,
-				':start_date' => $s_date,
-				':end_date' => $e_date,
-				':registration_deadline' => $r_date,
-				':grades' => $gr, 
-				':description' => $des
-	   	);
-	   	
-	   	try	{
-	   		// Execute the query against the database
-	   		$stmt = $db->prepare($query);
-	   		$result = $stmt->execute($query_params);
-	   	}
-	   	catch(PDOException $ex) {
-	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
-	   	}
-	   	return True;
-   }
    
+  	/* Returns undiscounted cost of program. */
 	public function getCost() {
 		return $this->cost;
 	}
 	
 	/* Returns the remaining number of spots in this program. */
  	private function remainingSpots() {
- 		return 0;
+ 		$query = 'SELECT COUNT(*)
+	   			FROM programs_students
+	    		WHERE program_id = :program_id';
+	   	
+	   	$query_params = array(':program_id' => $this->program_id);
+	   	 
+	   	try {
+	   		$stmt = $this->database->prepare($query);
+	   		$result = $stmt->execute($query_params);
+	   	}
+	   	catch(PDOException $ex) {
+	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+	   	}
+	   	
+	   	return $this->capacity - $result;
  	}
 	
-	/* Display program for program for programs.php if student is not
-	 * registered in program.
-	 */
-	public function displayProgramForSelectionOne() {
+ 	/* Displays program article for programs.php */
+ 	public function displayArticle() {
+ 		echo "<article>
+		 			<ul>
+			 			<li>Start date: ".$this->start_date."</li>
+			 			<li>End date: ".$this->end_date."</li>
+			 			<li>Registration deadline:
+			 			".$this->registration_deadline."
+			 			</li>
+			 			<li>Grade levels: ".$this->grades."</li>
+			 			<li>Description: ".$this->description."</li>
+		 			</ul>
+ 				</article>
+ 			</div>";
+ 	}
+ 	
+	/* Display program label for programs.php if student is not
+	 * registered in program. */
+	public function displayLabelForSelectionOne() {
 		echo "
-		<div class='contact'>
-			<input class='accordion' type='checkbox' id='".$this->program_id."'/>
 			<label for='".$this->program_id."'>
  				<input class='regular' name='program_group[]'
  					value='".$this->program_id."' type='checkbox'/>
  				".$this->program_name.", (".$this->remainingSpots()."
 		 		spots remaining) Fee: ".$this->cost."
-		 	</label>
-			<article>
-			 	<ul>
-			 		<li>Start date: ".$this->start_date."</li>
-			 		<li>End date: ".$this->end_date."</li>
-			 		<li>Registration deadline:
-			 			".$this->registration_deadline."
-					</li>
-			 		<li>Grade levels: ".$this->grades."</li>
-			 		<li>Description: ".$this->description."</li>
-			 	</ul>
-			 </article>
-		 </div>";
+		 	</label>";
 	}
 	
-	/* Display program for program for programs.php if student is
-	 * registered in program.
-	 */
-	public function displayProgramForSelectionTwo($status) {
-		echo "
-		<div class='contact'>
-			<input class='accordion' type='checkbox' id='".$this->program_id."'/>
-			<label for='".$this->program_id."'>
-				".$this->program_name." (Status: ".$status.")
-			</label>
-			<article>
-			 	<ul>
-			 		<li>Start date: ".$this->start_date."</li>
-			 		<li>End date: ".$this->end_date."</li>
-			 		<li>Registration deadline:
-			 			".$this->registration_deadline."
-					</li>
-			 		<li>Grade levels: ".$this->grades."</li>
-			 		<li>Description: ".$this->description."</li>
-			 	</ul>
-			 </article>
-		 </div>";
+	/* Display program label for programs.php if student is
+	 * registered in program. */
+	public function displayLabelForSelectionTwo() {
+		echo "<label for='".$this->program_id."'>
+				".$this->program_name." (<i>Registered</i>)
+			</label>";		 
+	}
+	
+	/* Displays program label for program.php is program has full capacity.*/
+	public function displayLabelForSelectionThree() {
+		echo "<label for='".$this->program_id."'>
+				".$this->program_name." (Sorry - full capacity)
+			</label>";
 	}
 	
 	/* Displays shopping cart entry with removal option for cart.php */
 	public function displayForCart($studentName, $counter) {
-		echo "<li>
-		<article id='contact'>
-			".$studentName." - ".$this->program_name." - ".$this->cost."   
-			------ Remove:
-			<input class='regular' name='delete_group[]'
-				value='".$counter."' type='checkbox'/>
+		echo "
+		<li>
+			<section id="accordion">
+				<div class="contact">
+	   				<label>
+	   					".$studentName." - ".$this->program_name." 
+	   					- ".$this->cost." (Remove:
+						<input class='regular' name='delete_group[]'
+							value='".$counter."' type='checkbox'/>)
+	   				</label>
+				</div>
+			</section>
 		</li>
-		</article>
 		";
 	}
   

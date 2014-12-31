@@ -24,7 +24,7 @@
 					value='update_student' />
 				<input type='hidden' name='student_id' 
  					value="<?php echo $student->student_id ?>"/>
-				<?php $student->displayAllPrograms(); ?>
+					<?php $student->displayAllPrograms(); ?>
     			<input type='submit' value='Add programs to cart' />
     		</form>
 		</section>

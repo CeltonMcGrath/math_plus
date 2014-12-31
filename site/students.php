@@ -2,7 +2,8 @@
     require("../library/common.php");     
     include '../library/Student.php';
    
-    // This if statement checks to determine whether the add new student form as been submitted.
+    /* This if statement checks to determine whether 
+     * the add new student form as been submitted. */
     if(!empty($_POST)) {
     	if ($_POST['student_id']==0) {
     		Student::createStudent($_SESSION['user']['user_id'],
@@ -12,16 +13,11 @@
     				isset($_POST['photo_permission']), $db);
     	}
     	else {
-    		$student_id = $_POST['student_id'];
-    		if($_POST['delete'] != 'no') {
-    			Student::deleteStudent($student_id, $db);
-    		}
-    		else {
-    			Student::updateStudent($student_id, $_POST['preferred_name'], 
+    		Student::updateStudent($_POST['student_id'], 
+    				$_POST['preferred_name'], 
     				$_POST['grade'], $_POST['allergies'],
     				$_POST['medical'], isset($_POST['permission_to_leave']),
     				isset($_POST['photo_permission']), $db);
-    		}
     	}    
     }
     
@@ -49,7 +45,7 @@
 				} catch ( PDOException $ex ) {
 					die ( "Failed to run query: " . $ex->getMessage () );
 				}
-				$rows = $stmt->fetchAll ();
+				$rows = $stmt->fetchAll();
 				
 				foreach ($rows as $row) :
 					$student = new Student ($row['student_id'], $db);

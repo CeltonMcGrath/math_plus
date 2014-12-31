@@ -8,7 +8,8 @@
     echo "
     <section class='content'>
     	<h1>
-    		To complete program registration, please 'pay with Paypal'.
+    		Click the button below to pay and 
+    		complete your registration.
     	</h1>
 	    <form action='checkout.php' METHOD='POST'>
 			<input type='hidden' name='cart_total' 

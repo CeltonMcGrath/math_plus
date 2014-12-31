@@ -3,7 +3,8 @@
     include '../library/user_registration/user_register.php';
     include '../library/user_registration/user_maintenance.php';
     
-    $passwordSuccess = $passwordErr = $emailSuccess = $emailErr = "";
+    $success = "";
+    $passwordErr = $emailErr = "";
     
     // Check if update form has been submitted, and what update form.
     if(!empty($_POST)) { 
@@ -24,7 +25,6 @@
     		else {
     			if (updateEmail($_SESSION['user']['user_id'], 
     					$_POST['email'], $db)) {
-    						
     				$success = "Email successfully updateded.
     						An activation link has been sent to your email. 
     						Please close your browser and your account will be
@@ -68,7 +68,6 @@
     		/* Updates user's listserv settings. */
     		if (updateListserv($_SESSION['user']['user_id'], 
     				isset($_POST['listserv']), $db)) {
-    					
     					$success = "Mailing list settings successfuly updated.";
     				}
     	}
