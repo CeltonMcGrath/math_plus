@@ -1,66 +1,59 @@
 <?php 
     require("../library/common.php"); 
-    include '../library/Student.php';
-
-    /* If form has been submitted, then user has been referred to
-     * the shopping cart by adding programs for a specific student.
-     * Add these programs to the session shopping cart.
-     */
+    include '../library/Cart.php';
+ 
+    /*Load previous cart contents*/
+    $cart = new Cart(_SESSION['user_id']);
+    
     if (!empty($_POST)) {
+    	// Delete cart items
     	if ($_POST['operation']=='update_cart') {
-    		foreach ($_POST['delete_group'] as $index) {
-				unset($_SESSION['cart_programs'][$index]);
-			}	
+    		$cart->deletePrograms($_POST['delete_group']);	
     	}
+    	// Apply bursary codes
+    	elseif ($_POST['operation']=='apply_bursary') {
+    		$cart->applyBursary($_POST['bursary_id']);
+    	}
+    	/* User was redirected from program selection for
+    	 * some student. Add programs to cart. */
     	else {
     		$student_id = $_POST['student_id'];
-    		// Create session shopping cart array if not already created
-    		if (!isset($_SESSION['cart_programs'])) {
-    			$_SESSION['cart_programs'] = [];
-    		}
-    		 
     		$selectedPrograms = $_POST['program_group'];
     		foreach ($selectedPrograms as $program_id) {
-    			//Create student-program array
-    			$new_program = array($student_id, $program_id);
-    		
-    			//Add student-program array to session array
-    			array_push($_SESSION["cart_programs"], $new_program);
+    			$cart->addProgram($student_id, $program_id);
     		}
-    	}
-    }
-    
-    //Update database shopping cart.
-    
+    	}  	
+    }    
     
     include '../library/site_template/head.php';
     include '../library/site_template/header.php';
     echo "<section class='content'>";
-	if(isset($_SESSION["cart_programs"])) {		
-        $total = 0;
-		$counter = 0;
+	if(!$cart->isEmpty()) { ?>
+		<span class='success'>$success</span>;
+		<span class='error'>$error</span>;		
     	echo "<form method='post' action='cart.php'>
-        		<input type='hidden' name='operation' value='update_cart' />
+        		<input type='hidden' name='operation' value='update_cart'/>
         		<ul>";
-        foreach ($_SESSION["cart_programs"] as $cart_itm) {
-           $student = new Student($cart_itm[0], $db);
-           $total += $student->programCartDisplay($cart_itm[1], $counter);
-	   	   $counter++;
-        }
+        $total = cart->displayCart();
 		echo "</ul>
 				<article>Total: ".$total."</article>
-        		<input type='submit' value='Update cart' />
+        		<input type='submit' value='Delete selected programs'/>
        		</form>";
-				
+		echo "<br />";
+		echo "<form method='post' action='cart.php'>
+        		<input type='hidden' name='operation' value='apply_bursary'/>
+				Enter bursary code:<input type='text' name='bursary_id'/>
+				<input type='submit' value='Apply bursary to selected program'/>
+       		</form>";
+		echo "<br />";
 		echo "<form method='post' action='confirm.php'>
-			<input type='hidden' name='cart_total' value='".$total."' />
-        	<input type='submit' value='Proceed to payment' />
-       	</form>";			
-    }  
+			<input type='hidden' name='cart_total' value='".$total."'/>
+        	<input type='submit' value='Proceed to payment'/>
+       		</form>";			
+    <?php }  
     else {
 		echo '<h1>Your cart is empty.</h1>';
     }
- 
 	echo "</section>";
 	include '../library/site_template/footer.php';
 	?>	

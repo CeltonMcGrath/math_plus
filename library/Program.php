@@ -114,16 +114,16 @@ class Program {
 	}
 	
 	/* Displays shopping cart entry with removal option for cart.php */
-	public function displayForCart($studentName, $counter) {
+	public function displayForCart($studentName, $index) {
 		echo "
 		<li>
 			<section id='accordion'>
 				<div class='contact'>
 	   				<label>
-	   					".$studentName." - ".$this->program_name." 
-	   					- ".$this->cost." (Remove:
-						<input class='regular' name='delete_group[]'
-							value='".$counter."' type='checkbox'/>)
+	   					<input class='regular' name='program_group[]'
+							value='".$index."' type='checkbox'/>
+						".$studentName." - ".$this->program_name." 
+	   					- ".$this->cost."
 	   				</label>
 				</div>
 			</section>

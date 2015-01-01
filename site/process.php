@@ -4,7 +4,8 @@
  * =====================================
  */
 	require_once ("../library/paypalfunctions.php");
-
+	include '../library/Cart.php';
+	
 	// $res is.....
 	$res = GetExpressCheckoutDetails( $_REQUEST['token'] );
 	
@@ -39,11 +40,9 @@
 		//$taxAmt				= $resArray["PAYMENTINFO_0_TAXAMT"];  // Tax charged on the transaction.
 		//$exchangeRate		= $resArray["PAYMENTINFO_0_EXCHANGERATE"];  // Exchange rate if a currency conversion occurred. Relevant only if your are billing in their non-primary currency. If the customer chooses to pay with a currency other than the non-primary currency, the conversion occurs in the customer's account.
 		
-		/* Take shopping cart array from database and register each student 
-	     * in program. Delete shopping cart entry.
-		 */ 
-		
-		
+		/* Take shopping cart array from database and register each student */
+		$cart = new Cart($_SESSION['user_id']);
+		$cart->registerStudents($transactionId, $orderTime, $amt);
 		
 		/* Status of the payment:
 		 'Completed: The payment has been completed, and the funds have been added successfully to your account balance.

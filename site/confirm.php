@@ -1,16 +1,13 @@
 <?php 
     require("../library/common.php"); 
-
-    unset($_SESSION['cart_programs']);
     
     include '../library/site_template/head.php';
     include '../library/site_template/header.php';
     echo "
     <section class='content'>
-    	<h1>
-    		Click the button below to pay and 
-    		complete your registration.
-    	</h1>
+    	<p>Click the button below to pay and finalize your registration. 
+    		After your payment, complete the process by navigating to the 
+    		home page.</p>
 	    <form action='checkout.php' METHOD='POST'>
 			<input type='hidden' name='cart_total' 
     			value=".$_POST['cart_total']." />
@@ -35,8 +32,10 @@
 			expType: 'instant'
 		});
 	</script>
-	
-	<script>
+		
+</html>
+
+<?php /*	<script>
 		alert("Payment Cancelled"); 
 		 // add relevant message above or remove the line if not required
 		window.onload = function(){
@@ -50,6 +49,4 @@
 		          }
 		     }                              
 		};                             
-	</script>
-	
-</html>
+	</script> */?>

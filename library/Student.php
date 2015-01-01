@@ -379,9 +379,9 @@ class Student {
 	}
    
 	/* Displays shopping cart row for student. */
-	public function programCartDisplay($program_id, $counter) {
+	public function programCartDisplay($program_id, $index) {
 		$program = new Program($program_id, $this->database);
-		$program->displayForCart($this->first_name." ".$this->last_name, $counter);
+		$program->displayForCart($this->first_name." ".$this->last_name, $index);
    		return $program->getCost();   		
 	}
 
