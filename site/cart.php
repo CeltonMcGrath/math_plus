@@ -15,10 +15,11 @@
     	}
     	// Apply bursary codes
     	elseif (isset($_POST['bursary'])) {
-    		if (count($_POST['selected_programs'])) {
+    		if (count($_POST['selected_programs'])>1) {
     			$error = 'You may only apply code to one program.';
     		}
-    		elseif (!cart->validBursary($_POST['bursary_id'], $_POST['selected_programs'][0])) {
+    		elseif (!cart->validBursary($_POST['bursary_id'], 
+    				$_POST['selected_programs'][0])) {
     			$error = 'Code is incorrect.';
     		}
     		else {
@@ -30,11 +31,7 @@
     	/* User was redirected from program selection for
     	 * some student. Add programs to cart. */
     	else {
-    		$student_id = $_POST['student_id'];
-    		$selectedPrograms = $_POST['program_group'];
-    		foreach ($selectedPrograms as $program_id) {
-    			$cart->addProgram($student_id, $program_id);
-    		}
+    		$cart->addPrograms($_POST['student_id'], $_POST['program_group']);
     	}  	
     }    
     
@@ -46,7 +43,7 @@
 		<span class='error'>$error</span>	
     	<form method='post' action='cart.php'>
         	<ul>
-        	<?php $total = cart->displayCart(); ?>
+        	<?php $total = $cart->displayCart(); ?>
 			</ul>
 			<article> Total: <?php echo $total ?></article>
         	<input type='submit' name='delete' 
@@ -58,7 +55,8 @@
        	</form>
 		<br />
 		<form method='post' action='confirm.php'>
-			<input type='hidden' name='cart_total' value='".$total."'/>
+			<input type='hidden' name='cart_total' 
+				value='<?php echo $total ?>'/>
         	<input type='submit' value='Proceed to payment'/>
        	</form>";			
     <?php }  

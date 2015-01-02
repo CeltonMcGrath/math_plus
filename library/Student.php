@@ -90,6 +90,10 @@ class Student {
 	public function printName() {		
 		echo $this->first_name." ".$this->last_name;
 	}
+	
+	public function getName() {
+		return $this->first_name." ".$this->last_name;
+	}
  
 	/* Student display for students.php */
 	public function displayStudentInfo() {
@@ -163,7 +167,7 @@ class Student {
 	
 	/* Displays selection area for which guardians can pick-up 
 	 * unregistered student. */
-	private static function displayNewGuardianPickup() {
+	private function displayNewGuardianPickup() {
 		
 	}
 	
@@ -368,7 +372,6 @@ class Student {
 		);
 		
 		try {
-			// Execute the query against the database
 			$stmt = $db->prepare ( $query );
 			$result = $stmt->execute ( $query_params );
 		} catch ( PDOException $ex ) {
@@ -376,13 +379,6 @@ class Student {
 	   				</script>");
 		}
 		return True;
-	}
-   
-	/* Displays shopping cart row for student. */
-	public function programCartDisplay($program_id, $index) {
-		$program = new Program($program_id, $this->database);
-		$program->displayForCart($this->first_name." ".$this->last_name, $index);
-   		return $program->getCost();   		
 	}
 
 }

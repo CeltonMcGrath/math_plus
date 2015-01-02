@@ -26,21 +26,21 @@ class Cart {
 	   	try {
 	   		$stmt = $this->database->prepare($query);
 	   		$result = $stmt->execute($query_params);
-	   	}
-	   	catch(PDOException $ex) {
-	   		return False;
-	   	}
+	   	} catch ( PDOException $ex ) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+		}
 	   	$row = $stmt->fetch();
 	   	
-	   	$this->contents = this->cartStringToArray($row['contents']);
+	   	$this->contents = $this->cartStringToArray($row['contents']);
 	}
 
 	/* Returns array representation of string. */
-	private function cartStringToArray($string) {
+	private function cartStringToArray($db_string) {
 		/* Cart contents is stored in database as string:
 		 * "$index1:$student_id1:$program_id1:$bursary_id1;
 		 * $index2:$student_id2:$program_id2:$bursary_id2;" */
-		$array_strings = explode(";", $string);
+		$array_strings = explode(";", $db_string);
 		$array_tuples = array();
 		foreach ($array_strings as $cart_item) {
 			$temp = explode(":", $cart_item);
@@ -53,30 +53,79 @@ class Cart {
 	}
 	
 	/* Returns a string representation of cart array. */
-	private function cartArrayToString($array) {
+	private function cartArrayToString() {
 		$string = "";
-		foreach ($array as $cart_item) {
+		foreach ($this->contents as $cart_item) {
 			$string .= implode(":", $cart_item).";";
 		}
 		return $string;
 	}
 	
-	/* Displays cart for site/cart.php */
+	/* Displays cart for site/cart.php and returns the cost of this program
+	 * with bursaries tooken into account.*/
 	public function displayCart() {
-		foreach ($cart->contents as $cart_itm) {
-			$student = new Student($cart_itm['student_id'], $db);
+		$cart_total = 0;
+		foreach ($cart->contents as $index=>$cart_item) {
+			//Get student name
+			$student = new Student($cart_item['student_id'], $db);
+			$student_name = $student->getName();
+			//Get program name and cost
+			$program = new Program($cart_item['program_id'], $db);
+			$program = $program->getName();
+			if ($cart_item['bursary_id']!=0) {
+				$cost = $this->getBursaryValue()." (Bursary applied.)";
+			}
+			else {
+				$cost = $program->getCost();
+			}
 			
-			$total += $student->programCartDisplay($cart_itm[1], $counter);
-			$counter++;
+			echo "
+			<li>
+				<section id='accordion'>
+					<div class='contact'>
+	   					<label>
+	   						<input class='regular' name='selected_programs[]'
+								value='".$index."' type='checkbox'/>
+							".$student_name." - ".$program_name."
+	   						- ".$cost."
+	   					</label>
+					</div>
+				</section>
+			</li>
+			";
+			$cart_total += $cost;
 		}
+		return $cart_total;
+	}
+	
+	/* Retrieves bursary cost from database. */
+	private function bursaryCost($bursary_id) {
+		$query = "SELECT price
+	    		FROM bursary
+	    		WHERE bursary_id = :bursary_id";
+		 
+		$query_params = array(':user_id' => $this->user_id);
+		
+		try {
+			$stmt = $this->database->prepare($query);
+			$result = $stmt->execute($query_params);
+		} catch ( PDOException $ex ) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+		}
+		$row = $stmt->fetch();
+		return $row['price'];
 	}
     
 	/* Adds programs and student to cart. */  
-	public function addProgram($student_id, $program_id) {
-    	array_push($cart->contents, 
+	public function addPrograms($student_id, $selectedPrograms) {
+		foreach ($selectedPrograms as $program_id) {
+			array_push($cart->contents, 
     		array('student_id' => $student_id,
     		'program_id' => $program_id, 
     		'bursary_id' => false));
+		}
+		$this->syncDatabase();  	
     	return true;
 	}
    
@@ -85,12 +134,17 @@ class Cart {
 		foreach ($_POST['delete_group'] as $index) {
 			unset($cart->contents($index));
 		}
+		$this->syncDatabase();
 	}
 	
 	/* Registers students in programs and empties cart.
 	 * Called upon successful payment. */
 	public function registerStudents($transactionId, $orderTime, $amt) {
-		
+		/* Add to programs_students table.*/
+		/* Add transaction information. */
+		$cart->contents = array();
+		$this->syncDatabase();
+		return true;
 	}
 	
 	/* Returns True iff this cart is empty.*/
@@ -101,40 +155,63 @@ class Cart {
 	/* Add bursary code. */
 	public function applyBursary($bursary_id, $selected_programs) {
 		$cart->contents[$selected_program[0]]['bursary_id'] = $bursary_id;
+		$this->syncDatabase();
 	}
 
 	/* Checks whether bursary can be applied to program at $index. 
 	 * Bursary may be already used or not exist, or may not be applicable
 	 * to program. */
 	public static function validBursary($bursary_id, $index) {
+		$program_id = $cart->contents['index']['program_id']
+		
 		$query = "SELECT *
 	    		FROM bursaries
-	    		WHERE bursary_id = :bursary_id, status = 0";
+	    		WHERE bursary_id = :bursary_id, program_id = :program_id, 
+					student_id = 0";
 		 
-		$query_params = array(':bursary_id' => $$bursary_id);
+		$query_params = array(
+				':bursary_id' => $bursary_id, 
+				':program_id' => $program_id
+		);
 		
 		try {
 			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
-		}
-		catch(PDOException $ex) {
-			return False;
+		} catch ( PDOException $ex ) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
 		}
 		$row = $stmt->fetch();
 		if (empty($row)) {
+			//Valid bursary with bursary does not exist.
 			return false;
 		}
-		elseif ($row[0]['program_id']) {
-			
-		}
 		else {
+			// Valid bursary exists
 			return true;
 		}
 	}
 	
-	private static syncDatabase() {
+	/* Updates database record of shopping cart contents. */
+	private syncDatabase() {
+		$query = "UPDATE cart
+	    		SET contents = :contents
+	    		WHERE user_id = :user_id";
 		
+		$query_params = array (
+				':preferred_name' => 
+					$this->cartArrayToString(),
+				':user_id' => $this->user_id
+		);	
+		try {
+			$stmt = $db->prepare ( $query );
+			$result = $stmt->execute ( $query_params );
+		} catch ( PDOException $ex ) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+		}
 	}
+	
  }
 
 

@@ -13,7 +13,7 @@ class Program {
 	private $database;    
  
 	public function __construct($p_id, $db) {
-   		/* Returns program object with progrma-id p_id */
+   		/* Retrieves database object. */
    		$this->program_id = $p_id;
    		$this->database = $db;
    		
@@ -48,6 +48,10 @@ class Program {
   	/* Returns undiscounted cost of program. */
 	public function getCost() {
 		return $this->cost;
+	}
+	
+	public function getName() {
+		return $this->name();
 	}
 	
 	/* Returns the remaining number of spots in this program. */
@@ -106,30 +110,12 @@ class Program {
 			</label>";		 
 	}
 	
-	/* Displays program label for program.php is program has full capacity.*/
+	/* Displays program label for programs.php is program has full capacity.*/
 	public function displayLabelForSelectionThree() {
 		echo "<label for='".$this->program_id."'>
 				".$this->program_name." (Sorry - full capacity)
 			</label>";
 	}
 	
-	/* Displays shopping cart entry with removal option for cart.php */
-	public function displayForCart($studentName, $index) {
-		echo "
-		<li>
-			<section id='accordion'>
-				<div class='contact'>
-	   				<label>
-	   					<input class='regular' name='selected_programs[]'
-							value='".$index."' type='checkbox'/>
-						".$studentName." - ".$this->program_name." 
-	   					- ".$this->cost."
-	   				</label>
-				</div>
-			</section>
-		</li>
-		";
-	}
-  
-   
+ 
 }
