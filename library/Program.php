@@ -120,7 +120,7 @@ class Program {
 			<section id='accordion'>
 				<div class='contact'>
 	   				<label>
-	   					<input class='regular' name='program_group[]'
+	   					<input class='regular' name='selected_programs[]'
 							value='".$index."' type='checkbox'/>
 						".$studentName." - ".$this->program_name." 
 	   					- ".$this->cost."
