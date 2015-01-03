@@ -174,6 +174,8 @@ class Student {
 	/* Displays selection area for which guardians can pick-up 
 	 * unregistered student. */
 	private static function displayNewGuardianPickup() {
+		echo "Which guardian/parent contacts are allowed to pick this 
+			student up for lunch or at the end of daily programs?";
 		
 	}
 	

@@ -170,12 +170,13 @@ class Cart {
 	 * Called upon successful payment. */
 	public function registerStudents($transactionId, $orderTime, $amt) {
 		// Create transaction
-		$query = "INSERT INTO transactions (transaction_id, date, amount)
+		$query = "INSERT INTO transactions (transaction_id, user_id, date, amount)
 	   			VALUES
-				(:transaction_id, :date, :amount)";
+				(:transaction_id, :user_id, :date, :amount)";
 			
 		$query_params = array(
-				':transaction_id' => $transaction, 
+				':transaction_id' => $transactionId, 
+				':user_id' => $this->user_id,
 				':date' => $orderTime,
 				':amount' => $amt
 		);
@@ -207,8 +208,10 @@ class Cart {
 				$result = $stmt->execute($query_params);
 			}
 			catch(PDOException $ex) {
-				echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+				/*echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");*/
+				error_log($transactionId);
+				error_log($ex->getMessage());
 			}
 			
 			// Record usage of bursary
