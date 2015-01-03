@@ -57,7 +57,7 @@ class Program {
 	/* Returns the remaining number of spots in this program. */
  	public function remainingSpots() {
  		$query = 'SELECT COUNT(*)
-	   			FROM programs_students
+	   			FROM students_programs
 	    		WHERE program_id = :program_id';
 	   	
 	   	$query_params = array(':program_id' => $this->program_id);

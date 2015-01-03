@@ -3,7 +3,7 @@ include 'Program.php';
 
 class Student {
 
-	public $student_id;
+	private $student_id;
 	private $user_id;
 	private $first_name;
 	private $last_name;
