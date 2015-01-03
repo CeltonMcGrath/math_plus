@@ -10,11 +10,13 @@
     }
     
     $student = new Student($_POST['student_id'], $db);
+    echo $student->student_id;	
     include '../library/site_template/head.php';
     include '../library/site_template/header.php';
     ?>
 
 	<section class='content'>
+		<?php $student->student_id; ?>
 		<h1>Select programs for 
 			<?php $student->printName(); ?>
 		</h1>

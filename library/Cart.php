@@ -46,10 +46,10 @@ class Cart {
 	   			VALUES
 				(:user_id, :contents)";
 		
-		$query_params = array(':user_id' => $u_id, ':contents' => $contents);
+		$query_params = array(':user_id' => $this->user_id, ':contents' => "");
 		 
-		try	{
-			$stmt = $db->prepare($query);
+		try {
+			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex) {
