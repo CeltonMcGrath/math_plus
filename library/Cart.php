@@ -1,4 +1,6 @@
 <?php
+include 'Student.php';
+
 class Cart {
 	
 	// User who cart belongs too
@@ -82,8 +84,8 @@ class Cart {
 	/* Returns a string representation of cart array. */
 	private function cartArrayToString() {
 		$string = "";
-		foreach ($this->contents as $cart_item) {
-			$string .= implode(":", $cart_item).";";
+		foreach ($this->contents as $index=>$cart_item) {
+			$string .= $index.":".implode(":", $cart_item).";";
 		}
 		return $string;
 	}
@@ -92,15 +94,15 @@ class Cart {
 	 * with bursaries tooken into account.*/
 	public function displayCart() {
 		$cart_total = 0;
-		foreach ($cart->contents as $index=>$cart_item) {
+		foreach ($this->contents as $index=>$cart_item) {
 			//Get student name
-			$student = new Student($cart_item['student_id'], $db);
+			$student = new Student($cart_item['student_id'], $this->database);
 			$student_name = $student->getName();
 			//Get program name and cost
-			$program = new Program($cart_item['program_id'], $db);
+			$program = new Program($cart_item['program_id'], $this->database);
 			$program = $program->getName();
 			if ($cart_item['bursary_id']!=0) {
-				$cost = $this->getBursaryValue()." (Bursary applied.)";
+				$cost = $this->getBursaryCost()." (Bursary applied.)";
 			}
 			else {
 				$cost = $program->getCost();
@@ -126,7 +128,7 @@ class Cart {
 	}
 	
 	/* Retrieves bursary cost from database. */
-	private function bursaryCost($bursary_id) {
+	private function getBursaryCost($bursary_id) {
 		$query = "SELECT price
 	    		FROM bursary
 	    		WHERE bursary_id = :bursary_id";
@@ -150,7 +152,7 @@ class Cart {
 			array_push($this->contents, 
     		array('student_id' => $student_id,
     		'program_id' => $program_id, 
-    		'bursary_id' => false));
+    		'bursary_id' => -1));
 		}
 		$this->syncDatabase();  	
     		return true;
@@ -176,7 +178,7 @@ class Cart {
 	
 	/* Returns True iff this cart is empty.*/
 	public function isEmpty() {
-		return empty($cart->contents);
+		return empty($this->contents);
 	}
 	
 	/* Add bursary code. */

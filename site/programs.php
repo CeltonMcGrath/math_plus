@@ -20,7 +20,7 @@
 				<input type='hidden' name='operation'
 					value='update_student' />
 				<input type='hidden' name='student_id' 
- 					value='".$student->getId()."' />";
+ 					value='".str_replace('/', '', $student->getId())."' />";
     			$student->displayAllPrograms();
     	echo " 
     			<input type='submit' value='Add programs to cart' />

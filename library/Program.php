@@ -51,7 +51,7 @@ class Program {
 	}
 	
 	public function getName() {
-		return $this->name();
+		return $this->program_name;
 	}
 	
 	/* Returns the remaining number of spots in this program. */

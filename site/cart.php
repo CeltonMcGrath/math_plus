@@ -39,8 +39,8 @@
     include '../library/site_template/header.php';
     echo "<section class='content'>";
 	if(!$cart->isEmpty()) { ?>
-		<span class='success'>$success</span>
-		<span class='error'>$error</span>	
+		<span class='success'><?php $success ?></span>
+		<span class='error'><?php $error ?></span>	
     	<form method='post' action='cart.php'>
         	<ul>
         	<?php $total = $cart->displayCart(); ?>
