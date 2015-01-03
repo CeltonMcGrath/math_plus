@@ -3,7 +3,7 @@
     include '../library/Cart.php';
  
     /*Load previous cart contents*/
-    $cart = new Cart(_SESSION['user_id']);
+    $cart = new Cart($_SESSION['user']['user_id'], $db);
 
     $success = "";
     $error = "";
@@ -18,7 +18,7 @@
     		if (count($_POST['selected_programs'])>1) {
     			$error = 'You may only apply code to one program.';
     		}
-    		elseif (!cart->validBursary($_POST['bursary_id'], 
+    		elseif (!$cart->validBursary($_POST['bursary_id'], 
     				$_POST['selected_programs'][0])) {
     			$error = 'Code is incorrect.';
     		}

@@ -16,14 +16,14 @@
 
 	<section class='content'>
 		<h1>Select programs for 
-			<?php $student->printName()?>
+			<?php $student->printName(); ?>
 		</h1>
 		<section id='accordion'> 
 			<form action='cart.php' method='post'>
 				<input type='hidden' name='operation'
 					value='update_student' />
 				<input type='hidden' name='student_id' 
- 					value="<?php echo $student->student_id ?>"/>
+ 					value='<?php echo $student->student_id; ?>' />
 					<?php $student->displayAllPrograms(); ?>
     			<input type='submit' value='Add programs to cart' />
     		</form>

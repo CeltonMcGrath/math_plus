@@ -97,7 +97,7 @@ class Student {
  
 	/* Student display for students.php */
 	public function displayStudentInfo() {
-    	echo "
+		echo "
 	    	<div class='contact'>
 		   		<input class='accordion' type='checkbox'
 		   			id=".$this->student_id." />
@@ -118,10 +118,11 @@ class Student {
  					</form>
  				</article>
 	   		</div>";
-   }
+  	 }	
    
 	/* Displays student form for students.php*/
 	private function displayStudentForm() {
+		$text_field = $GLOBALS['text_field'];
    		$photo_check = '';
 		if ($this->photo_permission) {
    			$photo_check = 'checked';
@@ -167,7 +168,7 @@ class Student {
 	
 	/* Displays selection area for which guardians can pick-up 
 	 * unregistered student. */
-	private function displayNewGuardianPickup() {
+	private static function displayNewGuardianPickup() {
 		
 	}
 	
@@ -303,20 +304,25 @@ class Student {
  		}	
  		$programRows = $stmt->fetchAll();
 		
- 		foreach($programRows as $programRow):
+ 		if (count($programRows)==0) {
+			echo "No upcoming programs. Check back again!";
+			return true;
+		}
+
+		foreach($programRows as $programRow):
  			$program = new Program($programRow['program_id'], $this->database);
  			echo "<div class='contact'>
  					<input class='accordion' type='checkbox' 
- 					id='".$this->program_id."'/>";
+ 					id='".$program->program_id."'/>";
  			// Label
  			if ($this->inProgram($program->program_id)) {
- 				$program->displayProgramForSelectionTwo();
+ 				$program->displayLabelForSelectionTwo();
  			}
- 			elseif ($program->remainingSpots == 0) {
- 				$program->displayProgramForSelectoinThree();
+ 			elseif ($program->remainingSpots() == 0) {
+ 				$program->displayLabelForSelectionThree();
  			}
  			else {
- 				$program->displayProgramForSelectionOne();
+ 				$program->displayLabelForSelectionOne();
  			}
  			// Article
  			$program->displayArticle();

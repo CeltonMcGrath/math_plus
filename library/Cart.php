@@ -31,8 +31,12 @@ class Cart {
 	   				</script>");
 		}
 	   	$row = $stmt->fetch();
-	   	
-	   	$this->contents = $this->cartStringToArray($row['contents']);
+	        if (!count($row)) {
+			
+		}
+		else {
+	   		$this->contents = $this->cartStringToArray($row['contents']);
+		} 	
 	}
 
 	/* Returns array representation of string. */
@@ -44,10 +48,13 @@ class Cart {
 		$array_tuples = array();
 		foreach ($array_strings as $cart_item) {
 			$temp = explode(":", $cart_item);
-			$array_tuples[$temp[0]] = array(
-				'student_id' => $temp[1],
-    			'program_id' => $temp[2], 
-    			'bursary_id' => $temp[3]);
+			//echo("<script>console.log('".print_r($temp)."')</script>");
+			if (count($temp)>1) {
+				$array_tuples[$temp[0]] = array(
+					'student_id' => $temp[1],
+    				'program_id' => $temp[2], 
+    				'bursary_id' => $temp[3]);
+			}		
 		}
 		return $array_tuples; 
 	}
@@ -120,19 +127,19 @@ class Cart {
 	/* Adds programs and student to cart. */  
 	public function addPrograms($student_id, $selectedPrograms) {
 		foreach ($selectedPrograms as $program_id) {
-			array_push($cart->contents, 
+			array_push($this->contents, 
     		array('student_id' => $student_id,
     		'program_id' => $program_id, 
     		'bursary_id' => false));
 		}
 		$this->syncDatabase();  	
-    	return true;
+    		return true;
 	}
    
 	/* Deletes program in cart in position $index. */
 	public function deletePrograms($selected_programs) {
 		foreach ($_POST['delete_group'] as $index) {
-			unset($cart->contents($index));
+			unset($cart->contents[$index]);
 		}
 		$this->syncDatabase();
 	}
@@ -162,7 +169,7 @@ class Cart {
 	 * Bursary may be already used or not exist, or may not be applicable
 	 * to program. */
 	public static function validBursary($bursary_id, $index) {
-		$program_id = $cart->contents['index']['program_id']
+		$program_id = $cart->contents['index']['program_id'];
 		
 		$query = "SELECT *
 	    		FROM bursaries
@@ -193,18 +200,18 @@ class Cart {
 	}
 	
 	/* Updates database record of shopping cart contents. */
-	private syncDatabase() {
+	private function syncDatabase() {
 		$query = "UPDATE cart
 	    		SET contents = :contents
 	    		WHERE user_id = :user_id";
 		
 		$query_params = array (
-				':preferred_name' => 
+				':contents' => 
 					$this->cartArrayToString(),
 				':user_id' => $this->user_id
 		);	
 		try {
-			$stmt = $db->prepare ( $query );
+			$stmt = $this->database->prepare ( $query );
 			$result = $stmt->execute ( $query_params );
 		} catch ( PDOException $ex ) {
 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
