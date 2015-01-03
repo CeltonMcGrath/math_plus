@@ -85,7 +85,12 @@ class Student {
 	   	}
 	   	return True;
    }
-  
+  	
+  	/* Prints this student's ID. */
+	public function printId() {
+		echo $this->student_id;
+	}
+   
     /* Prints the name of the student: 'First name Last name' */
 	public function printName() {		
 		echo $this->first_name." ".$this->last_name;

@@ -25,7 +25,7 @@
 				<input type='hidden' name='operation'
 					value='update_student' />
 				<input type='hidden' name='student_id' 
- 					value='<?php echo $student->student_id; ?>' />
+ 					value='<?php $student->printId(); ?>' />
 					<?php $student->displayAllPrograms(); ?>
     			<input type='submit' value='Add programs to cart' />
     		</form>
