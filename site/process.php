@@ -42,7 +42,6 @@
 		//$exchangeRate		= $resArray["PAYMENTINFO_0_EXCHANGERATE"];  // Exchange rate if a currency conversion occurred. Relevant only if your are billing in their non-primary currency. If the customer chooses to pay with a currency other than the non-primary currency, the conversion occurs in the customer's account.
 		
 		/* Take shopping cart array from database and register each student */
-		print_r($_SESSION);
 		$cart = new Cart($_SESSION['user']['user_id'], $db);
 		$cart->registerStudents($transactionId, $orderTime, $amt);
 		

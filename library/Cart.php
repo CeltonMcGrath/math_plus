@@ -169,8 +169,67 @@ class Cart {
 	/* Registers students in programs and empties cart.
 	 * Called upon successful payment. */
 	public function registerStudents($transactionId, $orderTime, $amt) {
-		/* Add to programs_students table.*/
-		/* Add transaction information. */
+		// Create transaction
+		$query = "INSERT INTO transactions (transaction_id, date, amount)
+	   			VALUES
+				(:transaction_id, :date, :amount)";
+			
+		$query_params = array(
+				':transaction_id' => $transaction, 
+				':date' => $orderTime,
+				':amount' => $amt
+		);
+		
+		try {
+			$stmt = $this->database->prepare($query);
+			$result = $stmt->execute($query_params);
+		}
+		catch(PDOException $ex) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+		}
+		
+		foreach ($this->contents as $cart_item) {
+			// Add student-program entry
+			$query = "INSERT INTO students_programs 
+					(transaction_id, program_id, student_id)
+	   			VALUES
+					(:transaction_id, :program_id, :student_id)";
+			
+			$query_params = array(
+					':transaction_id' => $transactionId, 
+					':program_id' => $cart_item['program_id'], 
+					':student_id' => $cart_item['student_id']
+			);
+				
+			try {
+				$stmt = $this->database->prepare($query);
+				$result = $stmt->execute($query_params);
+			}
+			catch(PDOException $ex) {
+				echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+			}
+			
+			// Record usage of bursary
+			if ($cart_item['bursary_id']!=-1) {
+				$query = "UPDATE bursaries
+	    		SET student_id = :student_id, transaction_id = :transaction_id
+	    		WHERE bursary_id = :bursary_id";
+				
+				$query_params = array (
+						':student_id' => $cart['student_id'],
+						':transaction_id' => $transactionId
+				);
+				try {
+					$stmt = $this->database->prepare ( $query );
+					$result = $stmt->execute ( $query_params );
+				} catch ( PDOException $ex ) {
+					echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+				}
+			}
+		}
 		$this->contents = array();
 		$this->syncDatabase();
 		return true;
