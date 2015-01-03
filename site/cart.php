@@ -38,14 +38,15 @@
     include '../library/site_template/head.php';
     include '../library/site_template/header.php';
     echo "<section class='content'>";
-	if(!$cart->isEmpty()) { ?>
-		<span class='success'><?php $success ?></span>
-		<span class='error'><?php $error ?></span>	
+	if(!$cart->isEmpty()) {
+		echo "
+		<span class='success'>".$success."</span>
+		<span class='error'>".$error."</span>	
     	<form method='post' action='cart.php'>
-        	<ul>
-        	<?php $total = $cart->displayCart(); ?>
-			</ul>
-			<article> Total: <?php echo $total ?></article>
+        	<ul>";
+        $total = $cart->displayCart();
+		echo "</ul>
+			<article> Total: ".$total."</article>
         	<input type='submit' name='delete' 
         		value='Delete selected programs'/>
         	<br />
@@ -56,10 +57,10 @@
 		<br />
 		<form method='post' action='confirm.php'>
 			<input type='hidden' name='cart_total' 
-				value='<?php echo $total ?>'/>
+				value='".$total."'/>
         	<input type='submit' value='Proceed to payment'/>
        	</form>";			
-    <?php }  
+    }  
     else {
 		echo '<h1>Your cart is empty.</h1>';
     }
