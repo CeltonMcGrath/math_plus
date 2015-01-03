@@ -28,7 +28,7 @@
 	<section class="content">
 		<h1>Students</h1>
 			<section id="accordion">
-				<?php Student::displayEmptyStudentForm();
+				<?php Student::displayEmptyStudentForm($db, $_SESSION['user']['user_id']);
 				// Generate accordian-style contact list
 				
 				// Query the db for student contacts associated with current user
