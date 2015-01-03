@@ -87,8 +87,8 @@ class Student {
    }
   	
   	/* Prints this student's ID. */
-	public function printId() {
-		echo $this->student_id;
+	public function getId() {
+		return $this->student_id;
 	}
    
     /* Prints the name of the student: 'First name Last name' */
