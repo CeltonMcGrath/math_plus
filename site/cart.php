@@ -15,7 +15,10 @@
     	}
     	// Apply bursary codes
     	elseif (isset($_POST['bursary'])) {
-    		if (count($_POST['selected_programs'])>1) {
+    		if (!isset($_POST['selected_programs'])) {
+			$error = 'Please select a program.';
+		}
+		elseif (count($_POST['selected_programs'])>1) {
     			$error = 'You may only apply code to one program.';
     		}
     		elseif (!$cart->validBursary($_POST['bursary_id'], 
@@ -46,7 +49,7 @@
         	<ul>";
         $total = $cart->displayCart();
 		echo "</ul>
-			<article> Total: ".$total."</article>
+			<article> Total: ".number_format($total, 2)."</article>
         	<input type='submit' name='delete' 
         		value='Delete selected programs'/>
         	<br />

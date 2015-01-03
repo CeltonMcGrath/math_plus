@@ -14,7 +14,7 @@
     include '../library/site_template/header.php';
     echo "
     <section class='content'>
-		<h1>Select programs for".$student->getName()."</h1>
+		<h1>Select programs for ".$student->getName()."</h1>
 		<section id='accordion'> 
 			<form action='cart.php' method='post'>
 				<input type='hidden' name='operation'

@@ -100,9 +100,9 @@ class Cart {
 			$student_name = $student->getName();
 			//Get program name and cost
 			$program = new Program($cart_item['program_id'], $this->database);
-			$program = $program->getName();
-			if ($cart_item['bursary_id']!=0) {
-				$cost = $this->getBursaryCost()." (Bursary applied.)";
+			$program_name = $program->getName();
+			if ($cart_item['bursary_id']!=-1) {
+				$cost = $this->getBursaryCost($cart_item['bursary_id'])." (Bursary applied.)";
 			}
 			else {
 				$cost = $program->getCost();
@@ -130,10 +130,10 @@ class Cart {
 	/* Retrieves bursary cost from database. */
 	private function getBursaryCost($bursary_id) {
 		$query = "SELECT price
-	    		FROM bursary
+	    		FROM bursaries
 	    		WHERE bursary_id = :bursary_id";
 		 
-		$query_params = array(':user_id' => $this->user_id);
+		$query_params = array(':bursary_id' => $bursary_id);
 		
 		try {
 			$stmt = $this->database->prepare($query);
@@ -160,8 +160,8 @@ class Cart {
    
 	/* Deletes program in cart in position $index. */
 	public function deletePrograms($selected_programs) {
-		foreach ($_POST['delete_group'] as $index) {
-			unset($cart->contents[$index]);
+		foreach ($selected_programs as $index) {
+			unset($this->contents[$index]);
 		}
 		$this->syncDatabase();
 	}
@@ -171,7 +171,7 @@ class Cart {
 	public function registerStudents($transactionId, $orderTime, $amt) {
 		/* Add to programs_students table.*/
 		/* Add transaction information. */
-		$cart->contents = array();
+		$this->contents = array();
 		$this->syncDatabase();
 		return true;
 	}
@@ -183,20 +183,19 @@ class Cart {
 	
 	/* Add bursary code. */
 	public function applyBursary($bursary_id, $selected_programs) {
-		$cart->contents[$selected_program[0]]['bursary_id'] = $bursary_id;
+		$this->contents[$selected_programs[0]]['bursary_id'] = $bursary_id;
 		$this->syncDatabase();
 	}
 
 	/* Checks whether bursary can be applied to program at $index. 
 	 * Bursary may be already used or not exist, or may not be applicable
 	 * to program. */
-	public static function validBursary($bursary_id, $index) {
-		$program_id = $cart->contents['index']['program_id'];
+	public function validBursary($bursary_id, $index) {
+		$program_id = $this->contents[$index]['program_id'];
 		
 		$query = "SELECT *
 	    		FROM bursaries
-	    		WHERE bursary_id = :bursary_id, program_id = :program_id, 
-					student_id = 0";
+	    		WHERE bursary_id = :bursary_id AND program_id = :program_id AND student_id = 0";
 		 
 		$query_params = array(
 				':bursary_id' => $bursary_id, 
@@ -207,7 +206,7 @@ class Cart {
 			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		} catch ( PDOException $ex ) {
-			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+			echo("<script>console.log('PHP validBursary: ".$ex->getMessage()."');
 	   				</script>");
 		}
 		$row = $stmt->fetch();
