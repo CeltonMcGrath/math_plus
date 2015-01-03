@@ -43,19 +43,20 @@
     echo "<section class='content'>";
 	if(!$cart->isEmpty()) {
 		echo "
+		<h1>Program shopping cart:</h1>
 		<span class='success'>".$success."</span>
 		<span class='error'>".$error."</span>	
     	<form method='post' action='cart.php'>
         	<ul>";
         $total = $cart->displayCart();
 		echo "</ul>
-			<article> Total: ".number_format($total, 2)."</article>
         	<input type='submit' name='delete' 
         		value='Delete selected programs'/>
         	<br />
         	Enter bursary code:<input type='text' name='bursary_id'/>
 			<input type='submit' name='bursary'
 				value='Apply bursary to selected program'/>
+			<article> Total: ".number_format($total, 2)."</article>
        	</form>
 		<br />
 		<form method='post' action='confirm.php'>
@@ -65,7 +66,8 @@
        	</form>";			
     }  
     else {
-		echo '<h1>Your cart is empty.</h1>';
+		echo '<h1>Your cart is empty. 
+			Add programs under student management panel.</h1>';
     }
 	echo "</section>";
 	include '../library/site_template/footer.php';

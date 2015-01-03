@@ -69,8 +69,8 @@ class Guardian {
 	   	return True;
    }
    
-   public function displayGuardianForm() {
-   	/* Display html form with student data. */
+   /* Display html form with guardian data for guardian.php */
+   public function displayGuardianForm() {  	
    	echo "
    		<div class='contact'>
    			<input class='accordion' type='checkbox' id='$this->guardian_id'
@@ -103,8 +103,8 @@ class Guardian {
    		 </div>";
    }
    
-	public static function updateGuardian($g_id, $tel_1, $tel_2, $em, $db) {
-		/* Updates guardian data and returns true iff success. */
+   /* Updates guardian data and returns true iff success. */
+	public static function updateGuardian($g_id, $tel_1, $tel_2, $em, $db) {		
 		$query = "UPDATE guardians
 	    		SET phone_1 = :phone_1, phone_2 = :phone_2, email = :email
 	    		WHERE guardian_id = :guardian_id";
@@ -127,9 +127,9 @@ class Guardian {
 	}
 
 
-      	
-   public static function deleteGuardian($g_id, $db) {
-   		/* Deletes guardian from database.*/
+   /* Deletes guardian from database for guardians.php*/
+	public static function deleteGuardian($g_id, $db) {
+   		
 	   	$query = "DELETE FROM guardians
 	    		WHERE guardian_id = :guardian_id";
 	   	
@@ -145,10 +145,10 @@ class Guardian {
 	   				</script>");
 	   	}
 	   	return True;
-   }
+	}
    
+   /* Displays html form for guardian to be created for guardians.php */
    static function displayEmptyGuardianForm() {
-   		/* Displays html form for guardian to created. */
    		echo "
    		<div class='contact'>
    			<input class='accordion' type='checkbox' id='0' />
@@ -171,6 +171,11 @@ class Guardian {
    		    </article>
    		 </div>";
    } 
+   
+    /* Returns the name of this guardian - FirstName LastName. */
+	public function getName() {
+		return this->first_name." ".this->last_name();
+	}
 
 }
 

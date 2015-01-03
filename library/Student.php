@@ -1,5 +1,6 @@
 <?php
 include 'Program.php';
+include 'Guardian.php';
 
 class Student {
 
@@ -172,11 +173,43 @@ class Student {
 	}
 	
 	/* Displays selection area for which guardians can pick-up 
-	 * unregistered student. */
+	 * unregistered student for student form in students.php */
 	private static function displayNewGuardianPickup() {
-		echo "Which guardian/parent contacts are allowed to pick this 
+		echo "Which guardian/parent contacts are allowed to pick this
 			student up for lunch or at the end of daily programs?";
 		
+		$query = "SELECT guardian_id FROM guardians 
+    				WHERE user_id = :user_id"; 
+		
+		$query_params = array(':user_id' => $this->user_id); 
+		         
+		try { 
+			$stmt = $db->prepare($query); 
+			$result = $stmt->execute($query_params); 
+		} 
+        catch(PDOException $ex)  {   
+        	echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>"); 
+		} 
+		$rows = $stmt->fetchAll();
+		
+		if (empty($rows)) {
+			echo "<span class='error'>No guardian/parent contacts registered.
+				Please fill out the guardian and parent contact form whether or
+				not student may leave on their own. </span>";
+		}
+		else {
+			echo "<ul>";
+			foreach ($rows as $row) {
+				$guardian = new Guardian(); 
+				echo "<li>
+						<input class='regular' name='guardian_group[]'
+							value='".$guardian->guardian_id."' type='checkbox'/>
+						".$guardian->getName()."
+						</li>";
+			}
+			echo "/ul>";
+		}
 	}
 	
 	/* Displays empty student form. */
@@ -190,27 +223,25 @@ class Student {
     			<form action='students.php' method='post'> 
 	   	    	<input type='hidden' name='student_id' value='0'/>
 	   	    	First name: 
-	   			<input type='text' name='first_name' /><br />
+	   			<input type='text' name='first_name' />
 	   			Last name: 
-	   			<input type='text' name='last_name' '/><br />
+	   			<input type='text' name='last_name' '/>
 	   			Preferred name: 
-	   			<input type='text' name='preferred_name' /><br />
-	   			<br />
+	   			<input type='text' name='preferred_name' />
 	   			Grade:
 	   			<input type='text' name='grade' /> 
-	   			<br />
+				<br />
 	   			".$text_field['allergy_label'].":
 	   			<textarea name='allergies' row='3'></textarea> 
-	   			<br />
 	   			".$text_field['medical_label'].":
 	   			<textarea name='medical' row='3'></textarea>
-	   			<br /><br />
-	   			".$text_field['photo_perm_label'].": 
+	   			<br />
 	   			<input class='regular 'type='checkbox' 
 	   				name='photo_permission' /> 
-	   			<br /><br />";    
+	   			".$text_field['photo_perm_label']."
+	   			<br />";    
    				self::displayNewGuardianPickup();	
-   				echo "<br /><br />   						
+   				echo "<br />  						
 	 			<input type='checkbox' class='regular' name='consent' />
 	   			".$text_field['student_consent']."
 	 			<br /><br /> 						
