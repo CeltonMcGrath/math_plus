@@ -16,6 +16,10 @@ class Student {
 	private $photo_permission;
 	private $database;    
  
+	/*---------------------------------------------------------------
+	 *  Constructors
+	 * ---------------------------------------------------------------*/
+	
 	/* Returns student object with student id s_id */
 	public function __construct($s_id, $db) {  		
    		$this->student_id = $s_id;
@@ -87,6 +91,10 @@ class Student {
 	   	return True;
    }
   	
+   /*---------------------------------------------------------------
+    *  Getter and printer functions
+    * ---------------------------------------------------------------*/
+   
   	/* Prints this student's ID. */
 	public function getId() {
 		return $this->student_id;
@@ -100,7 +108,12 @@ class Student {
 	public function getName() {
 		return $this->first_name." ".$this->last_name;
 	}
- 
+ 	
+	/*---------------------------------------------------------------
+	 *  Functions which display individualized contents of student 
+	 *  contact in students.php
+	 * ---------------------------------------------------------------*/
+	
 	/* Student display for students.php */
 	public function displayStudentInfo() {
 		echo "
@@ -135,7 +148,12 @@ class Student {
    		}
 		$leave_check = '';
 		if ($this->permission_to_leave) {
-   			$leave_check = 'checked';
+   			$leave_yes = 'checked';
+   			$leave_no = '';
+   		}
+   		else {
+   			$leave_yes = '';
+   			$leave_no = 'checked';
    		}
    		
    		echo "
@@ -144,113 +162,39 @@ class Student {
    			Preferred name: 
    			<input type='text' name='preferred_name' 
    				value='$this->preferred_name'/> 
-   			<br />
    			Grade:
    			<input type='text' name='grade' value='$this->grade'/> 
    			<br />
-   			".$text_field['allergy_label'].":
+	   		".$text_field['allergy_label']."
    			<textarea name='allergies'>".$this->allergies."</textarea> 
-   			<br />
    			".$text_field['medical_label'].":
    			<textarea name='medical'>".$this->medical."</textarea>
-   			<br /><br />
-   			".$text_field['photo_perm_label'].": 
+   			<br />
    			<input class='regular 'type='checkbox' name='photo_permission' 
-   				".$photo_check."/> 
-   			<br /><br />";    
+   				".$photo_check."/> ".$text_field['photo_perm_label']."   			 
+   			<br /><br /> 
+   			<input class='regular 'type='checkbox'
+   				name='leave_permission[]' ".$leave_no." />
+   			".$text_field['leave_perm_no']."
+   			<input class='regular 'type='checkbox'
+   				name='leave_permission[]' ".$leave_yes." />
+   			".$text_field['leave_perm_yes']."
+   			<br /><br />";
    			$this->displayGuardianPickupSelection();	
-   			echo "<br /><br />   						
- 			<input type='checkbox' class='regular' name='consent' checked />
-   			".$text_field['student_consent']."
- 			<br /><br /> 						
-   			<input type='submit' value='Submit Changes' />
-   	    </form>";			
+   			echo "<br /><br />
+	 			<input type='checkbox' class='regular' name='consent' 
+   					checked />
+	   			".$text_field['student_consent']."
+	 			<br /><br />
+	   			<input type='submit' value='Submit Changes' />
+	   	    </form>";
    }
    
    	/* Displays selection area for which guardians can pick-up student. */
 	private function displayGuardianPickupSelection() {
    		return true;
 	}
-	
-	/* Displays selection area for which guardians can pick-up 
-	 * unregistered student for student form in students.php */
-	private static function displayNewGuardianPickup($db, $user_id) {
-		echo "Which guardian/parent contacts are allowed to pick this
-			student up for lunch or at the end of daily programs?";
-		
-		$query = "SELECT guardian_id FROM guardians 
-    				WHERE user_id = :user_id"; 
-		
-		$query_params = array(':user_id' => $user_id); 
-		         
-		try { 
-			$stmt = $db->prepare($query); 
-			$result = $stmt->execute($query_params); 
-		} 
-        catch(PDOException $ex)  {   
-        	echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>"); 
-		} 
-		$rows = $stmt->fetchAll();
-		
-		if (empty($rows)) {
-			echo "<br /><span class='error'>No guardian/parent contacts registered.
-				Please fill out the guardian and parent contact form whether or
-				not student may leave on their own. </span>";
-		}
-		else {
-			echo "<ul>";
-			foreach ($rows as $row) {
-				$guardian = new Guardian($row['guardian_id'], $db); 
-				echo "<li>
-						<input class='regular' name='guardian_group[]'
-							value='".$guardian->getId()."' type='checkbox'/>
-						".$guardian->getName()."
-						</li>";
-			}
-			echo "</ul>";
-		}
-	}
-	
-	/* Displays empty student form. */
-	public static function displayEmptyStudentForm($db, $user_id) {
-		$text_field = $GLOBALS['text_field'];
-		echo "
-			<div class='contact'>
-    		<input class='accordion' type='checkbox' id='check-0' />
-    		<label for='check-0'>Add new student</label>
-    		<article>
-    			<form action='students.php' method='post'> 
-	   	    	<input type='hidden' name='student_id' value='0'/>
-	   	    	First name: 
-	   			<input type='text' name='first_name' />
-	   			Last name: 
-	   			<input type='text' name='last_name' '/>
-	   			Preferred name: 
-	   			<input type='text' name='preferred_name' />
-	   			Grade:
-	   			<input type='text' name='grade' /> 
-				<br />
-	   			".$text_field['allergy_label']."
-	   			<textarea name='allergies' row='3'></textarea> 
-	   			".$text_field['medical_label']."
-	   			<textarea name='medical' row='3'></textarea>
-	   			<br />
-	   			<input class='regular 'type='checkbox' 
-	   				name='photo_permission' /> 
-	   			".$text_field['photo_perm_label']."
-	   			<br /><br />";    
-   				self::displayNewGuardianPickup($db, $user_id);	
-   				echo "<br /><br />  						
-	 			<input type='checkbox' class='regular' name='consent' />
-	   			".$text_field['student_consent']."
-	 			<br /><br /> 						
-	   			<input type='submit' value='Submit Changes' />
-	   	    	</form> 
-    		</article>
-    	</div>";
-   }
-   
+	  
    /* Print a html list of programs this student is enrolled in that
     * end in the future.*/
     private function displayFutureProgramList() {	
@@ -325,6 +269,11 @@ class Student {
  		echo "</ul>";
  	}
  	
+ 	/*---------------------------------------------------------------
+ 	 *  Functions which are used for programs.php
+ 	 *  (Individualized display for each student.)
+ 	 * ---------------------------------------------------------------*/
+ 	
  	/* Display accordion-style list of programs for programs.php */
  	public function displayAllPrograms() {		
  		//Select all upcoming programs
@@ -392,6 +341,97 @@ class Student {
  		$row = $stmt->fetch();
  		
  		return !empty($row); 
+ 	}
+
+ 	/*---------------------------------------------------------------
+ 	 *  Static functions which allow creation of new students or
+ 	 *  updates of students in students.php
+ 	 * ---------------------------------------------------------------*/
+ 	
+ 	/* Displays empty student form. */
+ 	public static function displayEmptyStudentForm($db, $user_id) {
+ 		$text_field = $GLOBALS['text_field'];
+ 		echo "
+			<div class='contact'>
+    		<input class='accordion' type='checkbox' id='check-0' />
+    		<label for='check-0'>Add new student</label>
+    		<article>
+    			<form action='students.php' method='post'>
+	   	    	<input type='hidden' name='student_id' value='0'/>
+	   	    	First name:
+	   			<input type='text' name='first_name' />
+	   			Last name:
+	   			<input type='text' name='last_name' '/>
+	   			Preferred name:
+	   			<input type='text' name='preferred_name' />
+	   			Grade:
+	   			<input type='text' name='grade' />
+				<br />
+	   			".$text_field['allergy_label']."
+	   			<textarea name='allergies' row='3'></textarea>
+	   			".$text_field['medical_label']."
+	   			<textarea name='medical' row='3'></textarea>
+	   			<br />
+	   			<input class='regular 'type='checkbox'
+	   				name='photo_permission' />
+	   			".$text_field['photo_perm_label']."
+	   			<br /><br />
+ 				<input class='regular 'type='checkbox'
+ 					name='leave_permission[]' id='leave_no' />
+ 				".$text_field['leave_perm_no']."
+ 				<input class='regular 'type='checkbox'
+ 					name='leave_permission[]' id='leave_yes' />
+ 				".$text_field['leave_perm_yes']."
+ 				<br /><br />";			
+ 		self::displayNewGuardianPickup($db, $user_id);
+ 		echo "<br /><br />
+	 			<input type='checkbox' class='regular' name='consent' />
+	   			".$text_field['student_consent']."
+	 			<br /><br />
+	   			<input type='submit' value='Submit Changes' />
+	   	    	</form>
+    		</article>
+    	</div>";
+ 	}
+ 	
+ 	/* Displays selection area for which guardians can pick-up
+ 	 * unregistered student for student form in students.php */
+ 	private static function displayNewGuardianPickup($db, $user_id) {
+ 		echo "Which guardian/parent contacts are allowed to pick this
+				student up for lunch or at the end of daily programs?";
+ 	
+ 		$query = "SELECT guardian_id FROM guardians
+	    				WHERE user_id = :user_id";
+ 	
+ 		$query_params = array(':user_id' => $user_id);
+ 	
+ 		try {
+ 			$stmt = $db->prepare($query);
+ 			$result = $stmt->execute($query_params);
+ 		}
+ 		catch(PDOException $ex)  {
+ 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+		   				</script>");
+ 		}
+ 		$rows = $stmt->fetchAll();
+ 	
+ 		if (empty($rows)) {
+ 			echo "<br /><span class='error'>No guardian/parent contacts registered.
+					Please fill out the guardian and parent contact form whether or
+					not student may leave on their own. </span>";
+ 		}
+ 		else {
+ 			echo "<ul>";
+ 			foreach ($rows as $row) {
+ 				$guardian = new Guardian($row['guardian_id'], $db);
+ 				echo "<li>
+							<input class='regular' name='guardian_group[]'
+								value='".$guardian->getId()."' type='checkbox'/>
+							".$guardian->getName()."
+							</li>";
+ 			}
+ 			echo "</ul>";
+ 		}
  	}
  	
  	/* Updates database record of student and returns true iff
