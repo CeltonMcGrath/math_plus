@@ -31,14 +31,34 @@ class Cart {
 	   				</script>");
 		}
 	   	$row = $stmt->fetch();
-	        if (!count($row)) {
-			
+	    
+	    if (empty($row)) {
+			$this->createNew();		
 		}
 		else {
 	   		$this->contents = $this->cartStringToArray($row['contents']);
 		} 	
 	}
 
+	/* Creates cart in database. */
+	private function createNew() {
+		$query = "INSERT INTO cart (user_id, contents)
+	   			VALUES
+				(:user_id, :contents)";
+		
+		$query_params = array(':user_id' => $u_id, ':contents' => $contents);
+		 
+		try	{
+			$stmt = $db->prepare($query);
+			$result = $stmt->execute($query_params);
+		}
+		catch(PDOException $ex) {
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+		}
+		$this->contents = array();
+	}
+	
 	/* Returns array representation of string. */
 	private function cartStringToArray($db_string) {
 		/* Cart contents is stored in database as string:
