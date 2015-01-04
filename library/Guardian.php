@@ -15,7 +15,7 @@ class Guardian {
    		$this->database = $db;
    		
    		/*Retrieves guardian data from db.*/
-	   	$query = "SELECT first_name, last_name, phone_1, phone_2, email
+	   	$query = "SELECT user_id, first_name, last_name, phone_1, phone_2, email
 	    		FROM guardians
 	    		WHERE guardian_id = :guardian_id";
 	   	
@@ -31,6 +31,7 @@ class Guardian {
 	   	}
 	   	$row = $stmt->fetch();
 	   	
+		$this->user_id = $row['user_id'];
 	   	$this->first_name = $row['first_name']; 
 	   	$this->last_name = $row['last_name']; 
 	   	$this->phone_1 = $row['phone_1']; 

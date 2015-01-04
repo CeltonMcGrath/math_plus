@@ -2,35 +2,46 @@
     require("../library/common.php");     
     include '../library/config.php';
     include '../library/Student.php';
-   
+  
+    $error = '';
+    $success = '';
     /* Add new student or update registered student.
-     * Validate all user input. */
+    * Validate all user input. */
+    if (!isset($_POST['guardian_group'])) {
+	$guardian_group = array();
+    }
+    else {
+	$guardian_group = $_POST['guardian_group'];
+    }
+    
     if(!empty($_POST)) {
     	// Check for entered grade
-    	if (sizeof(test_input($_POST['grade']))==0) {
-    		$error = "Update unsuccesful. Please enter valid grade."
+    	if (!count(test_input($_POST['grade']))) {
+    		$error = "Update unsuccesful. Please enter valid grade.";
+    	}
+        if (!isset($_POST['leave_permission'])) {    
+		$error = "Update unsuccessful. Please indicate whether or not 
+    				student may leave programs on their own.";
     	}
     	// Check user has not checked both leave permission boxes
-    	elseif (isset($_POST['leave_permission']['leave_yes']) 
-    			& isset($_POST['leave_permission']['leave_no'])) {
+    	elseif (count($_POST['leave_permission'])==2) { 
     		$error = "Update unsuccesful. Please indicate whether or not 
     				student may leave programs on their own.";
     	}
     	// Check user has checked at least one leave permission boxes
-   		elseif (!isset($_POST['leave_permission']['leave_yes']) 
-    			& !isset($_POST['leave_permission']['leave_no'])) {
-    		$error = "Update unsuccessful. Please indicate whether or not 
+        if (!isset($_POST['leave_permission'])) {    
+		$error = "Update unsuccessful. Please indicate whether or not 
     				student may leave programs on their own.";
     	}
     	elseif (!isset($_POST['consent'])) {
     		$error = "Update unsuccessful. Consent required to use this
-    				registration system."
+    				registration system.";
     	}
     	// If student id is 0, then user is inputting new student.
 		elseif ($_POST['student_id']==0) {
     		// Check for non-empty first and last name
-    		if (!count(test_input($_POST['first_name']) || 
-    				!count(test_input($_POST['last_name']) {
+    		if (!count(test_input($_POST['first_name'])) || 
+    				!count(test_input($_POST['last_name']))) {
     			$error = "Update unsuccessful. Please enter correct first name
     					 and last name.";
     		}
@@ -38,20 +49,26 @@
     				$_POST['first_name'], $_POST['last_name'],
     				$_POST['preferred_name'], $_POST['grade'], 
     				$_POST['allergies'], $_POST['medical'], 
-    				isset($_POST['leave_permission']['leave_yes']),
+    				$_POST['leave_permission'][0]=='leave_yes',
     				isset($_POST['photo_permission']), 
-    				$_POST['guardian_group'], $db);
+    				$guardian_group, $db);
     		$success = "Update successful.";
     	}
     	// Otherwise, update student.
     	else {
-    		Student::updateStudent($_POST['student_id'], 
+    		if (!isset($_POST['guardian_group'])) {
+			$guardian_group = array();
+		}
+		else {
+			$guardian_group = $_POST['guardian_group'];
+		}
+		Student::updateStudent($_POST['student_id'], 
     				$_POST['preferred_name'], $_POST['grade'], 
     				$_POST['allergies'], $_POST['medical'], 
-    				isset($_POST['leave_permission']['leave_yes']),
+    				$_POST['leave_permission'][0]=='leave_yes',
     				isset($_POST['photo_permission']), 
-    				$_POST['guardian_group'], $db);
-    		$success = "Update successful."
+    				$guardian_group, $db);
+    		$success = "Update successful.";
     	}    
     }
     
@@ -60,8 +77,8 @@
 ?>
 	<section class="content">
 		<h1>Students</h1>
-			<span class='error'><?php $error?></span>
-			<span class='success'><?php $success?></span>
+			<span class='error'><?php echo $error ?></span>
+			<span class='success'><?php echo $success ?></span>
 			<section id="accordion">
 				<?php Student::displayEmptyStudentForm($db, $_SESSION['user']['user_id']);
 				// Generate accordian-style contact list

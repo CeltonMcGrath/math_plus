@@ -26,7 +26,7 @@ class Student {
    		$this->database = $db;
    		
    		/*Retrieves student data from db.*/
-	   	$query = 'SELECT first_name, last_name, preferred_name, grade, 
+	   	$query = 'SELECT user_id, first_name, last_name, preferred_name, grade, 
 	   			allergies, medical, permission_to_leave, photo_permission
 	   			FROM students
 	    		WHERE student_id = :student_id';
@@ -44,6 +44,7 @@ class Student {
 	   	}
 	   	$row = $stmt->fetch();
 	   	
+		$this->user_id = $row['user_id'];
 	   	$this->first_name = $row['first_name']; 
 	   	$this->last_name = $row['last_name']; 
 	   	$this->preferred_name = $row['preferred_name']; 
@@ -57,7 +58,7 @@ class Student {
 	/*Creates student contact in database.*/
 	public static function createStudent($u_id, $f_name,
    		$l_name, $p_name, $gr, $all, $med, $perm_leave, 
-   		$perm_photo, $db) {	    
+   		$perm_photo, $guardian_group, $db) {	    
    		
 		$query = "INSERT INTO students (user_id, first_name, last_name, 
    				preferred_name, grade, allergies, medical, permission_to_leave,
@@ -196,22 +197,20 @@ class Student {
 				student up for lunch or at the end of daily programs?";
  	
  		$query = "SELECT guardian_id FROM guardians
-	    				WHERE user_id = :user_id";
+	    		WHERE user_id = :user_id";
  	
- 		$query_params = array(':user_id' => $user_id);
+ 		$query_params = array(':user_id' => $this->user_id);
  	
  		try {
- 			$stmt = $db->prepare($query);
+ 			$stmt = $this->database->prepare($query);
  			$result = $stmt->execute($query_params);
  		}
  		catch(PDOException $ex)  {
- 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-		   				</script>");
+ 			error_log($ex->getMessage());
  		}
  		$rows = $stmt->fetchAll();
- 	
  		if (empty($rows)) {
- 			echo "<br /> <span class='error'>
+ 			echo "<br /><span class='error'>
  						No guardian/parent contacts registered. Please fill 
  						out the guardian and parent contact form whether or 
  						not student may leave on their own. 
@@ -225,7 +224,7 @@ class Student {
  			$query_params = array(':student_id' => $this->student_id);
  			
  			try {
- 				$stmt = $db->prepare($query);
+ 				$stmt = $this->database->prepare($query);
  				$result = $stmt->execute($query_params);
  			}
  			catch(PDOException $ex)  {
@@ -237,7 +236,7 @@ class Student {
  			
  			echo "<ul>";
  			foreach ($rows as $row) {
- 				$guardian = new Guardian($row['guardian_id'], $db);
+ 				$guardian = new Guardian($row['guardian_id'], $this->database);
  				$checked = "";
  				if (isset($guardians[$row['guardian_id']])) {
  					$checked = "checked";
@@ -283,8 +282,8 @@ class Student {
  			
  		foreach($rows as $row):
  			echo "<li>".$row['program_name']." 
- 				(".$row['programs.start_date']."-".$row['programs.end_date'].")
- 				<i>Registered</i></li>";
+ 				(".$row['start_date']."-".$row['end_date'].")
+ 				(<i>Registered</i>)</li>";
  		endforeach;
  		echo "</ul>";
  	}  
@@ -446,7 +445,7 @@ class Student {
 	 			<input type='checkbox' class='regular' name='consent' />
 	   			".$text_field['student_consent']."
 	 			<br /><br />
-	   			<input type='submit' value='Submit Changes' />
+	   			<input type='submit' value='Add new student' />
 	   	    	</form>
     		</article>
     	</div>";
@@ -495,7 +494,8 @@ class Student {
  	/* Updates database record of student and returns true iff
  	 * update successful. */
 	public static function updateStudent($s_id, $p_name, 
-    				$gr, $all, $med, $leave_perm, $photo_perm, $db) {
+    				$gr, $all, $med, $leave_perm, $photo_perm, 
+		$guardian_group, $db) {
 		$query = "UPDATE students
 	    		SET preferred_name = :preferred_name, grade = :grade, 
 					allergies = :allergies, medical = :medical,

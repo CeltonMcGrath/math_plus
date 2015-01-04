@@ -4,9 +4,17 @@
        
     // Check if form has been submitted
     if(!empty($_POST)) {
-    	if ($_POST['guardian_id']==0) {
+	//Validate user input
+	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+		$error = "Please enter a valid email.";
+	}
+	elseif () {
+		$error = "Please enter a numeric telephone number, including 
+			area code.";
+	}
+    	elseif ($_POST['guardian_id']==0) {
     		/* 0 indicates new guardian request. */
-    		Guardian::createGuardian($_SESSION['user']['user_id'],
+		Guardian::createGuardian($_SESSION['user']['user_id'],
     		$f_name = $_POST['first_name'], $l_name = $_POST['last_name'],
     		$tel_1 = $_POST['phone_1'], $tel_2 = $_POST['phone_2'],
     		$em = $_POST['email'], $db);
