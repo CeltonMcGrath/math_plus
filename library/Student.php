@@ -91,6 +91,10 @@ class Student {
 	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
 	   				</script>");
 	   	}
+	   	
+	   	// Update guardian permissions for student
+	    $student_id = $db->lastInsertId();
+	    self::updateGuardianGroup($student_id);
 	   	return True;
    }
   	
@@ -383,14 +387,13 @@ class Student {
  	 *  Static functions which allow creation of new students or
  	 *  updates of students in students.php
  	 * ---------------------------------------------------------------*/
- 	
-
- 	
- 	/* Updates database record of student and returns true iff
- 	 * update successful. */
+ 		
+ 	/* Updates database records related to student and returns true 
+ 	 * iff update successful. */
 	public static function updateStudent($s_id, $p_name, 
     				$gr, $all, $med, $leave_perm, $photo_perm, 
 		$guardian_group, $db) {
+		//Update students table
 		$query = "UPDATE students
 	    		SET preferred_name = :preferred_name, grade = :grade, 
 					allergies = :allergies, medical = :medical,
@@ -415,8 +418,50 @@ class Student {
 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
 	   				</script>");
 		}
+		//Update guardian permissions
+		self::updateGuardianGroup($guardian_group, $s_id, $db)
+		
 		return True;
 	}
+	
+	/* Updates guardian permissions */
+	public static function updateGuardianGroup($guardian_group, $student_id, 
+			$db) {
+		//Delete old students guardian permissions
+		$query = "DELETE FROM students_programs
+	    		WHERE student_id = :student_id";
+		 
+		$query_params = array(':student_id' => $student_id);
+		 
+		try {
+			$stmt = $db->prepare($query);
+			$result = $stmt->execute($query_params);
+		}
+		catch(PDOException $ex)	{
+			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
+		}
+		// Add new student guardian permissions for each guardian
+		foreach ($guardian_group as $guardian_id=>$tuple) {	
+			$query = "INSERT INTO students_guardians (student_id, guardian_id)
+		   			VALUES (:student_id, :guardian_id)";
+				
+			$query_params = array(
+					':student_id' => $student_id,
+					':guardian_id' => $guardian_id,
+			);
+			
+			try	{
+				$stmt = $db->prepare($query);
+				$result = $stmt->execute($query_params);
+			}
+			catch(PDOException $ex) {
+				echo("<script>console.log('PHP: ".$ex->getMessage()."');
+		   				</script>");
+			}
+		}	
+	}
+			
 
 }
    
