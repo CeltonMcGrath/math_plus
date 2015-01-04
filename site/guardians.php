@@ -2,8 +2,13 @@
     require("../library/common.php"); 
     include '../library/config.php';
     include '../library/Form_Validator.php';
+    include '../library/html_Generator.php';
+    include '../library/form_Generator.php';
     include '../library/Guardian.php';
        
+    $fg = new Form_Generator();
+    $hg = new html_Generator();
+    
     $error = '';
     $success = '';
     // Check if form has been submitted
@@ -48,10 +53,11 @@
 			<span class='success'><?php echo $success ?></span>
 			<section id="accordion">	
 			<?php 
-			Guardian::displayEmptyGuardianForm();
-			// Generate accordian-style contact list
-				// Query the db for guardian contacts 
-				// associated with current user
+			//Display accordion box for empty form
+				$hg->accordionBox(0, "Add new guardian contact", 
+					$fg->($guardian_id=0, $first_name='', $last_name='', 
+					$phone_1='', $phone_2='', $email=''));
+			//Display accordion box for each registered guardian
 				$query = "SELECT guardian_id FROM guardians 
     				WHERE user_id = :user_id"; 
 		        $query_params = array( 
@@ -69,7 +75,12 @@
 		        
 				foreach($rows as $row):
 					$guardian = new Guardian($row['guardian_id'], $db);
-					$guardian->displayGuardianForm();					
+					$label = $guardian->first_name." ".$guardian->last_name
+					$article = $hg->accordionBox($guardian->guardian_id, 
+						$guardian->first_name, $guardian->last_name, 
+						$guardian->phone_1, $guardian->phone_2, 
+						$guardian->email);
+					echo $hg->accordionBox($guardian->guardian_id, $label, $article);
 			    endforeach; ?>
 			</section>
 	</section>

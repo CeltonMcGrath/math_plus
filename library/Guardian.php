@@ -69,40 +69,7 @@ class Guardian {
 	   	}
 	   	return True;
    }
-   
-   /* Display html form with guardian data for guardian.php */
-   public function displayGuardianForm() {  	
-   	echo "
-   		<div class='contact'>
-   			<input class='accordion' type='checkbox' id='$this->guardian_id'
-   					/>
-   			<label for=".$this->guardian_id.">
-   					".$this->last_name.", ".$this->first_name."
-   			</label>
-   			<article>
-   		    	<form action='guardians.php' method='post'/>
-   		    		<input type='hidden' name='guardian_id'
-   							value='$this->guardian_id'/>
-   					Primary phone: <input type='tel' name='phone_1'
-   							value='$this->phone_1'/>
-   					<br />
-   					Secondary phone: <input type='tel' name='phone_2'
-   							value='$this->phone_2'/>
-   					<br />
-   					Email: <input type='text' name='email'
-   							value='$this->email'/>
-   					<br />
-   					Delete:
-   					<input type='radio' name='delete'
-   							value='yes'/> Yes
-   					<input type='radio' name='delete' value='no' checked/> No
-   					<br />
-   					<input type='submit' value='Submit changes'
-   							name='update' />
-   				</form>
-   		    </article>
-   		 </div>";
-   }
+
    
    /* Updates guardian data and returns true iff success. */
 	public static function updateGuardian($g_id, $tel_1, $tel_2, $em, $db) {		
@@ -128,7 +95,7 @@ class Guardian {
 	}
 
 
-   /* Deletes guardian from database for guardians.php*/
+    /* Deletes guardian from database for guardians.php*/
 	public static function deleteGuardian($g_id, $db) {
    		
 	   	$query = "DELETE FROM guardians
@@ -147,32 +114,7 @@ class Guardian {
 	   	}
 	   	return True;
 	}
-   
-   /* Displays html form for guardian to be created for guardians.php */
-   static function displayEmptyGuardianForm() {
-   		echo "
-   		<div class='contact'>
-   			<input class='accordion' type='checkbox' id='0' />
-   			<label for='0'>Add new contact</label>
-   			<article>
-   		    	<form action='guardians.php' method='post'/>
-   		    		<input type='hidden' name='guardian_id' value='0' />
-   					First name: <input type='text' name='first_name' value=''/>
-   					<br />
-   					Last name: <input type='text' name='last_name' value=''/>
-   					<br />
-   					Primary phone: <input type='tel' name='phone_1' value=''/>
-   					<br />
-   					Secondary phone: <input type='tel' name='phone_2' value=''/>
-   					<br />
-   					Email: <input type='text' name='email' value=''/>
-   					<br />
-   					<input type='submit' value='Add contact' name='update' />
-   				</form>
-   		    </article>
-   		 </div>";
-   } 
-   
+      
     /* Returns the name of this guardian - FirstName LastName. */
 	public function getName() {
 		return $this->first_name." ".$this->last_name;

@@ -107,8 +107,39 @@ class Form_Generator {
 	}
 	
 	/* Returns html guardian form for guardians.php */
-	public function guardianForm() {
-		
+	public function guardianForm($guardian_id, $first_name, $last_name, 
+			$phone_1, $phone_2, $email) {
+		// Display settings for already registered guardian form
+		if ($guardian_id) {
+			$delete = "
+				Delete:
+				<input type='radio' name='delete'
+				value='yes'/> Yes
+				<input type='radio' name='delete' value='no' checked/> No"
+			$submit_value = "Update contact";
+		}
+		// Display settings for new guardian form
+		else {
+			$delete = '';
+			$submit_value = 'Submit';
+		}
+		// Return form	 
+		return "<form action='guardians.php' method='post'/>
+				<input type='hidden' name='guardian_id'
+				value='$guardian_id'/>
+				Primary phone: <input type='tel' name='phone_1'
+				value='$phone_1'/>
+				<br />
+				Secondary phone: <input type='tel' name='phone_2'
+				value='$phone_2'/>
+				<br />
+				Email: <input type='text' name='email'
+				value='$email'/>
+				<br />
+				'$delete'
+				<br />
+				<input type='submit' value='$submit_value' name='update' />
+			</form>"
 	}
 	
 	/* Returns html registration form for register.php */
