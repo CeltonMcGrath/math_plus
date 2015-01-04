@@ -10,7 +10,7 @@
     if(!empty($_POST)) {
     	$form_validator = new Form_Validator();
     	$result = $form_validator->validateGuardianPOST($_POST);
-    	if ($result!= 0) {
+    	if ($result!= -1) {
     		$error = $result;
     	}
     	else {

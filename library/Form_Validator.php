@@ -6,18 +6,20 @@ class Form_Validator {
 		'last_name', 'preferred_name', 'grade', 'allergies', 'medical' 
 	);
 	private $guardian_simple_sanitize = array('guardian_id', 'first_name', 
-			'last_name', 'email', 'phone_1', 'phone_2');
+			'last_name', 'email', 'phone_1', 'phone_2', 'delete');
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
-	 * ---------:150--------------------------------------------*/
+	 * -----------------------------------------------------*/
 	
 	/* Sanitizes each value of student $_POST. */
 	public function sanitizeStudentPost($post) {
 		$data = array();
 		// Salinize text inputs
 		foreach ($this->student_simple_sanitize as $key) {
-			$data[$key] = htmlspecialchars($post[$key]);
+			if (isset($post[$key])) {
+				$data[$key] = htmlspecialchars($post[$key]);
+			}
 		}
 		// Initialize checkbox group
 		if (!isset($post['guardian_group'])) {
@@ -61,7 +63,6 @@ class Form_Validator {
 		}
 		// Check user has checked consent box
 		elseif (!isset($post['consent'])) {
-			error_log("KILLME");
 			return "Consent required to use this registration system.";
 		}
 		else {
@@ -78,7 +79,9 @@ class Form_Validator {
 		$data = array();
 		// Salinize text inputs
 		foreach ($this->guardian_simple_sanitize as $key) {
-			$data[$key] = htmlspecialchars($post[$key]);
+			if (isset($post[$key])) {
+				$data[$key] = htmlspecialchars($post[$key]);
+			}
 		}
 		return $data;
 	}
@@ -87,27 +90,21 @@ class Form_Validator {
 	 * if not.*/
 	public function validateGuardianPost($post) {
 		// Check first name
-		if (isset($post['first_name']) && $this->strip_input($post['first_name'])!=""){
+		if (isset($post['first_name']) && $this->strip_input($post['first_name'])==''){
 			return "Please enter a non-empty first name.";
 		}
 		// Check last name
-		elseif (isset($post['last_name']) && $this->strip_input($post['last_name'])!=""){
+		elseif (isset($post['last_name']) && $this->strip_input($post['last_name'])==''){
 			return "Please enter a non-empty last name.";
+		}
+		// Check primary phone
+		elseif (!isset($post['phone_1']) || $this->strip_input($post['phone_1'])=='') {
+			return "Please enter a non-empty phone number.";
 		}
 		// Check email
 		elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
 			return "Please enter a valid email.";
 		} 
-		// Check phone 1
-		elseif (false) {
-			return "Incorrect primary phone number. Please enter a numeric 
-					telephone number, including area code.";
-		}
-		// Check phone 2
-		elseif (false) {
-			return "Incorrect secondary phone number. Please enter a numeric 
-					telephone number, including area code.";
-		}
 		else {
 			return -1;
 		}	

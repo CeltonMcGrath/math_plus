@@ -27,8 +27,7 @@
     		}
     		else {
     			/* Update student contact */
-    			Student::updateStudent($_POST['student_id'], 
-    				$data['first_name'], $data['last_name'],
+    			Student::updateStudent($data['student_id'],
     				$data['preferred_name'], $data['grade'], 
     				$data['allergies'], $data['medical'], 
     				$data['leave_permission'], $data['photo_permission'], 
@@ -42,7 +41,7 @@
     include '../library/site_template/header.php';
 ?>
 	<section class="content">
-		<h1>Students</h1>
+		<span class="title"><h1>Students</h1></span>
 			<span class='error'><?php echo $error ?></span>
 			<span class='success'><?php echo $success ?></span>
 			<section id="accordion">
