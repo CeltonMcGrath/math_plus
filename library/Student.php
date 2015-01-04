@@ -1,21 +1,22 @@
 <?php
 include 'Program.php';
 include 'Guardian.php';
-include 'Form_Generator';
+include 'forms/Form_Generator.php';
+include 'forms/html_Generator.php';
 
 class Student {
 
-	private $student_id;
-	private $user_id;
-	private $first_name;
-	private $last_name;
-	private $preferred_name;
-	private $grade;
-	private $allergies;
-	private $medical;	
-	private $permission_to_leave;
-	private $photo_permission;
-	private $database;    
+	private $student_id; //integer
+	private $user_id; //integer
+	private $first_name; //string
+	private $last_name; //string
+	private $preferred_name; //string
+	private $grade; //string
+	private $allergies; //string
+	private $medical; //string	
+	private $permission_to_leave; //boolean
+	private $photo_permission; //boolean
+	private $database; //database connection
  
 	/*---------------------------------------------------------------
 	 *  Constructors
@@ -130,7 +131,7 @@ class Student {
 		   		<article>";
 					echo $fg->studentForm($this->student_id, $this->preferred_name, 
 						$this->grade, $this->allergies, $this->medical, 
-						$this->photo_permission, $this->leave_permission, 
+						$this->photo_permission, $this->permission_to_leave, 
 						$this->getGuardianGroup());
 					echo "<br />";
 		   			$this->displayFutureProgramList();
@@ -154,7 +155,7 @@ class Student {
 	 * (ie. Used to show that guardian can pick up student.) */
 	private function getGuardianGroup() {
 		// Retrieve all guardians associated with user.
- 		$guardian_group = self::getGuardians($this->database, $this->user_id);
+ 		$guardian_group = self::getUncheckedGuardianGroup($this->database, $this->user_id);
  		
 		// Select guardians which are already allowed to pick-up student
  		$query = "SELECT guardian_id FROM students_guardians
@@ -178,7 +179,7 @@ class Student {
  				$certain_guardians[$row['guardians_id']] = true;
  			}
  						
- 		foreach ($guardian_group as $guardian_id->$tuple) {
+ 		foreach ($guardian_group as $guardian_id=>$tuple) {
  			if (isset($certain_guardians[$guardian_id])) {
  				$guardian_group[$guardian_id][1] = true;
  			}			
@@ -189,12 +190,17 @@ class Student {
 	  
  	/* Displays empty student form. */
  	public static function displayEmptyStudentForm($db, $user_id) {
- 		$guardian_group = getUnCheckedGuardianGroup($db, $user_id);
+ 		$guardian_group = self::getUnCheckedGuardianGroup($db, $user_id);
 
  		$fg = new Form_Generator();
- 		echo $fg->studentForm(0, $preferred_name='', $grade ='',
+		$hg = new html_Generator();
+		
+		$id = '0';
+		$label = 'Add new student';
+		$article = $fg->studentForm(0, $preferred_name='', $grade ='',
  				$allergies='', $medical='', $photo_permission=false,
- 				$leave_permission=false, $guardian_group)
+ 				$leave_permission=false, $guardian_group);
+ 		echo $hg->accordionBox($id, $label, $article); 
  	}
  	
  	/* Retrieves guardians associated with this user.
@@ -204,10 +210,10 @@ class Student {
  	 	$query = "SELECT guardian_id FROM guardians
 	    		WHERE user_id = :user_id";
  	
- 	 		$query_params = array(':user_id' => $this->user_id);
+ 	 		$query_params = array(':user_id' => $user_id);
  	
  	 		try {
- 	 		$stmt = $this->database->prepare($query);
+ 	 		$stmt = $db->prepare($query);
  	 		$result = $stmt->execute($query_params);
  	 		}
  	 		catch(PDOException $ex)  {
@@ -216,11 +222,11 @@ class Student {
  	 		$rows_guardians = $stmt->fetchAll();
  	
  	 		// Create array of guardian_id's
- 	 		$guardian_group = Array();
+ 	 		$guardian_group = array();
  	 		foreach ($rows_guardians as $row) {
- 	 			$guardian = new Guardian($row['guardian_id'])
+ 	 			$guardian = new Guardian($row['guardian_id'], $db);
  	 			$guardian_group[$guardian->getId()] = 
- 	 				Array($guardian->getName(), false);
+ 	 				array($guardian->getName(), false);
  	 		}
 		return $guardian_group;
  	 }

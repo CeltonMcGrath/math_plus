@@ -89,7 +89,7 @@ class Form_Generator {
  					</span>";
 		}
 		else {
-			echo "<ul>";
+			$form .= "<ul>";
 			foreach ($guardian_group as $guardian_id=>$tuple) {
 				$checked = '';
 				if ($tuple[1]) {
@@ -102,9 +102,8 @@ class Form_Generator {
 					</li>";
 			}
 			$form .= "</ul>";
-			
-			return $form;*/
 		}
+		return $form;
 	}
 	
 	/* Returns html guardian form for guardians.php */

@@ -3,9 +3,10 @@
     include '../library/config.php';
     include '../library/Form_Validator.php';
     include '../library/Student.php';
-  
+   
     $error = '';
     $success = '';
+    
     // Check if form has been submitted
     if(!empty($_POST)) {
 	$form_validator = new Form_Validator();
@@ -75,4 +76,3 @@
 	</section>
 <?php include '../library/site_template/footer.php';?>
 </html>
-
