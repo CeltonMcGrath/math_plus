@@ -60,7 +60,7 @@ class Student {
 	/*Creates student contact in database.*/
 	public static function createStudent($u_id, $f_name,
    		$l_name, $p_name, $gr, $all, $med, $perm_leave, 
-   		$perm_photo, $guardian_group, $db) {	    
+   		$perm_photo, $selected_guardians, $db) {	    
    		
 		$query = "INSERT INTO students (user_id, first_name, last_name, 
    				preferred_name, grade, allergies, medical, permission_to_leave,
@@ -93,8 +93,8 @@ class Student {
 	   	}
 	   	
 	   	// Update guardian permissions for student
-	    $student_id = $db->lastInsertId();
-	    self::updateGuardianGroup($student_id);
+	    $student_id = $db->lastInsertId();	
+	    self::updateGuardianGroup($selected_guardians, $student_id, $db);
 	   	return True;
    }
   	
@@ -178,9 +178,9 @@ class Student {
  		$rows = $stmt->fetchAll();
  	
  			// Create array of guardian_id's
- 			$certain_guardians = Array();
+ 			$certain_guardians = array();
  			foreach ($rows as $row) {
- 				$certain_guardians[$row['guardians_id']] = true;
+ 				$certain_guardians[$row['guardian_id']] = true;
  			}
  						
  		foreach ($guardian_group as $guardian_id=>$tuple) {
@@ -392,7 +392,7 @@ class Student {
  	 * iff update successful. */
 	public static function updateStudent($s_id, $p_name, 
     				$gr, $all, $med, $leave_perm, $photo_perm, 
-		$guardian_group, $db) {
+		$selected_guardians, $db) {
 		//Update students table
 		$query = "UPDATE students
 	    		SET preferred_name = :preferred_name, grade = :grade, 
@@ -419,16 +419,16 @@ class Student {
 	   				</script>");
 		}
 		//Update guardian permissions
-		self::updateGuardianGroup($guardian_group, $s_id, $db)
+		self::updateGuardianGroup($selected_guardians, $s_id, $db);
 		
 		return True;
 	}
 	
 	/* Updates guardian permissions */
-	public static function updateGuardianGroup($guardian_group, $student_id, 
+	public static function updateGuardianGroup($selected_guardians, $student_id, 
 			$db) {
 		//Delete old students guardian permissions
-		$query = "DELETE FROM students_programs
+		$query = "DELETE FROM students_guardians
 	    		WHERE student_id = :student_id";
 		 
 		$query_params = array(':student_id' => $student_id);
@@ -438,11 +438,12 @@ class Student {
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex)	{
-			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+			echo("<script>console.log('PHP: DELETE".$ex->getMessage()."');
 	   				</script>");
 		}
+		echo("<script>console.log('PHP: DELETE')</script>");;
 		// Add new student guardian permissions for each guardian
-		foreach ($guardian_group as $guardian_id=>$tuple) {	
+		foreach ($selected_guardians as $guardian_id) {	
 			$query = "INSERT INTO students_guardians (student_id, guardian_id)
 		   			VALUES (:student_id, :guardian_id)";
 				
@@ -456,7 +457,8 @@ class Student {
 				$result = $stmt->execute($query_params);
 			}
 			catch(PDOException $ex) {
-				echo("<script>console.log('PHP: ".$ex->getMessage()."');
+				echo("<script>console.log('PHP: REPLACE ".$student_id."
+				 	".$guardian_id." ".$ex->getMessage()." ');
 		   				</script>");
 			}
 		}	
