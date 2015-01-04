@@ -1,75 +1,41 @@
 <?php  
     require("../library/common.php");     
     include '../library/config.php';
+    include '../library/Form_Validator';
     include '../library/Student.php';
   
     $error = '';
     $success = '';
-    /* Add new student or update registered student.
-    * Validate all user input. */
-    if (!isset($_POST['guardian_group'])) {
-	$guardian_group = array();
-    }
-    else {
-	$guardian_group = $_POST['guardian_group'];
-    }
-    
+    // Check if form has been submitted
     if(!empty($_POST)) {
-    	// Check for entered grade
-    	if (!count(test_input($_POST['grade']))) {
-    		$error = "Update unsuccesful. Please enter valid grade.";
+    	$form_validator = new Form_Validator();
+    	$result = $validateStudentForm($_POST);
+    	if ($result!= 0) {
+    		$error = $result;
     	}
-        if (!isset($_POST['leave_permission'])) {    
-		$error = "Update unsuccessful. Please indicate whether or not 
-    				student may leave programs on their own.";
-    	}
-    	// Check user has not checked both leave permission boxes
-    	elseif (count($_POST['leave_permission'])==2) { 
-    		$error = "Update unsuccesful. Please indicate whether or not 
-    				student may leave programs on their own.";
-    	}
-    	// Check user has checked at least one leave permission boxes
-        if (!isset($_POST['leave_permission'])) {    
-		$error = "Update unsuccessful. Please indicate whether or not 
-    				student may leave programs on their own.";
-    	}
-    	elseif (!isset($_POST['consent'])) {
-    		$error = "Update unsuccessful. Consent required to use this
-    				registration system.";
-    	}
-    	// If student id is 0, then user is inputting new student.
-		elseif ($_POST['student_id']==0) {
-    		// Check for non-empty first and last name
-    		if (!count(test_input($_POST['first_name'])) || 
-    				!count(test_input($_POST['last_name']))) {
-    			$error = "Update unsuccessful. Please enter correct first name
-    					 and last name.";
-    		}
-    		Student::createStudent($_SESSION['user']['user_id'],
-    				$_POST['first_name'], $_POST['last_name'],
-    				$_POST['preferred_name'], $_POST['grade'], 
-    				$_POST['allergies'], $_POST['medical'], 
-    				$_POST['leave_permission'][0]=='leave_yes',
-    				isset($_POST['photo_permission']), 
-    				$guardian_group, $db);
-    		$success = "Update successful.";
-    	}
-    	// Otherwise, update student.
     	else {
-    		if (!isset($_POST['guardian_group'])) {
-			$guardian_group = array();
-		}
-		else {
-			$guardian_group = $_POST['guardian_group'];
-		}
-		Student::updateStudent($_POST['student_id'], 
-    				$_POST['preferred_name'], $_POST['grade'], 
-    				$_POST['allergies'], $_POST['medical'], 
-    				$_POST['leave_permission'][0]=='leave_yes',
-    				isset($_POST['photo_permission']), 
-    				$guardian_group, $db);
-    		$success = "Update successful.";
-    	}    
+    		$data = $form_validator->sanitizeStudentPost($_POST);
+    		elseif (data['student_id']==0) {
+    			/* 0 indicates new student request. */
+    			Student::createStudent($_SESSION['user']['user_id'],
+    				$data['first_name'], $data['last_name'],
+    				$data['preferred_name'], $data['grade'], 
+    				$data['allergies'], $data['medical'], 
+    				$data['leave_permission'], $data['photo_permission'], 
+    				$data['guardian_group'], $db);
+    				$success = "Student successfully updated.";
+    		}
+    		else {
+    			/* Update student contact */
+    			Student::updateStudent($_POST['student_id'], 
+    				$data['first_name'], $data['last_name'],
+    				$data['preferred_name'], $data['grade'], 
+    				$data['allergies'], $data['medical'], 
+    				$data['leave_permission'], $data['photo_permission'], 
+    				$data['guardian_group'], $db);
+    				$success = "Student successfully updated.";
+    		}
+    	}
     }
     
     include '../library/site_template/head.php';

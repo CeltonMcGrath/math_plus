@@ -1,41 +1,52 @@
 <?php 
-    require("../library/common.php");     
+    require("../library/common.php"); 
+    include '../library/config.php';
+    include '../library/Form_Validator';
     include '../library/Guardian.php';
        
+    $error = '';
+    $success = '';
     // Check if form has been submitted
     if(!empty($_POST)) {
-	//Validate user input
-	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-		$error = "Please enter a valid email.";
-	}
-	elseif () {
-		$error = "Please enter a numeric telephone number, including 
-			area code.";
-	}
-    	elseif ($_POST['guardian_id']==0) {
-    		/* 0 indicates new guardian request. */
-		Guardian::createGuardian($_SESSION['user']['user_id'],
-    		$f_name = $_POST['first_name'], $l_name = $_POST['last_name'],
-    		$tel_1 = $_POST['phone_1'], $tel_2 = $_POST['phone_2'],
-    		$em = $_POST['email'], $db);
+    	$form_validator = new Form_Validator();
+    	$result = $validateGuardianForm($_POST);
+    	if ($result!= 0) {
+    		$error = $result;
     	}
     	else {
-    		/* Update or delete guardian contact */
-    		if(($_POST['delete'])=="yes") {
-    			Guardian::deleteGuardian($_POST['guardian_id'], $db);
+    		$data = $form_validator->sanitizeGuardianPost($_POST);
+    		elseif (data['guardian_id']==0) {
+    			/* 0 indicates new guardian request. */
+    			Guardian::createGuardian($_SESSION['user']['user_id'],
+    			$data['first_name'], $data['last_name'],
+    			$data['phone_1'], $data['phone_2'],
+    			$data['email'], $db);
+    			$success = "Guardian successfully added.";
     		}
     		else {
-    			Guardian::updateGuardian($_POST['guardian_id'], 
-    				$_POST['phone_1'], $_POST['phone_2'], $_POST['email'], $db);
-    		}
-    	}
+    			/* Update or delete guardian contact */
+    			if (data['delete'])=="yes") {
+    				Guardian::deleteGuardian($_POST['guardian_id'], $db);
+    				$success = "Guardian deleted.";
+    			}
+    			else {
+    				Guardian::updateGuardian(data['guardian_id'], 
+    					$data['phone_1'], $data['phone_2'], $data['email'], 
+    					$db);
+    				$success = "Guardian successfully updated.";
+    			}
+    		}	
+    	}    	
     }
+    
     include '../library/site_template/head.php';
     include '../library/site_template/header.php';
 ?> 
 	<section class="content">
 		<h1>Guardians</h1>
-			<section id="accordion">
+			<span class='error'><?php echo $error ?></span>
+			<span class='success'><?php echo $success ?></span>
+			<section id="accordion">	
 			<?php 
 			Guardian::displayEmptyGuardianForm();
 			// Generate accordian-style contact list
