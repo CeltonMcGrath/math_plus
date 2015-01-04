@@ -45,7 +45,9 @@
 			<span class='error'><?php echo $error ?></span>
 			<span class='success'><?php echo $success ?></span>
 			<section id="accordion">
-				<?php Student::displayEmptyStudentForm($db, $_SESSION['user']['user_id']);
+				<?php Student::displayEmptyStudentForm
+					($db, $_SESSION['user']['user_id']);
+				
 				// Generate accordian-style contact list
 				
 				// Query the db for student contacts associated with current user

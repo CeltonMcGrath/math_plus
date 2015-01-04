@@ -72,12 +72,39 @@ class Form_Generator {
 	}
 	
 	/* Returns html guardian selection form for students.php
-	 * $guardian_group is an array of 3-tuples
-	 * ($guardian_id, $checked). $checked is a boolean indicating
-	 * whether or not to check the checkbox.
+	 * $guardian_group is an array of 2-tuples:
+	 * $guardian_id => Array(0 => $guardian_name, 1 = > $checked)
+	 * $checked is a boolean indicating whether or not to check the checkbox.
+	 * (ie. Used to show that guardian can pick up student.)
 	 */
 	private function guardianSelectionForm($guardian_group) {
+		$form = "Which guardian/parent contacts are allowed to pick this
+				student up for lunch or at the end of daily programs?";
 		
+		if (empty($guardian_group)) {
+			$form .= "<br /><span class='error'>
+ 						No guardian/parent contacts registered. Please fill
+ 						out the guardian and parent contact form whether or
+ 						not student may leave on their own.
+ 					</span>";
+		}
+		else {
+			echo "<ul>";
+			foreach ($guardian_group as $guardian_id=>$tuple) {
+				$checked = '';
+				if ($tuple[1]) {
+					$checked = "checked";
+				}
+				$form .= "<li>
+						<input class='regular' name='guardian_group[]'
+							value='".$guardian_id."' type='checkbox'
+							".$checked." />".$tuple[0]."
+					</li>";
+			}
+			$form .= "</ul>";
+			
+			return $form;*/
+		}
 	}
 	
 	/* Returns html guardian form for guardians.php */

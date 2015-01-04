@@ -1,6 +1,7 @@
 <?php
 include 'Program.php';
 include 'Guardian.php';
+include 'Form_Generator';
 
 class Student {
 
@@ -117,6 +118,8 @@ class Student {
 	
 	/* Student display for students.php */
 	public function displayStudentInfo() {
+		$fg = new Form_Generator();
+		
 		echo "
 	    	<div class='contact'>
 		   		<input class='accordion' type='checkbox'
@@ -125,9 +128,10 @@ class Student {
 		   			".$this->last_name.", ".$this->first_name."
 		   		</label>
 		   		<article>";
-					echo $fg->studentForm($this->student_id, $this->preferred_name, $this->grade,
-			$this->allergies, $this->medical, $this->photo_permission, 
-			$this->leave_permission, $this->displayGuardianPickupSelection)
+					echo $fg->studentForm($this->student_id, $this->preferred_name, 
+						$this->grade, $this->allergies, $this->medical, 
+						$this->photo_permission, $this->leave_permission, 
+						$this->getGuardianGroup());
 					echo "<br />";
 		   			$this->displayFutureProgramList();
 		   			echo "<br />";
@@ -142,68 +146,85 @@ class Student {
 	   		</div>";
   	 }	
    
-   	/* Displays selection area for which guardians can pick-up student. */
-	private function displayGuardianPickupSelection() {
-		$form = "Which guardian/parent contacts are allowed to pick this
-				student up for lunch or at the end of daily programs?";
- 	
- 		$query = "SELECT guardian_id FROM guardians
-	    		WHERE user_id = :user_id";
- 	
- 		$query_params = array(':user_id' => $this->user_id);
- 	
+   	/* Returns array of guardian student relationship (all associated with
+   	 * curret user session. 
+  	 * $guardian_group is an array of 2-tuples:
+	 * $guardian_id => Array($guardian_name, $checked)
+	 * $checked is a boolean indicating whether or not to check the checkbox.
+	 * (ie. Used to show that guardian can pick up student.) */
+	private function getGuardianGroup() {
+		// Retrieve all guardians associated with user.
+ 		$guardian_group = self::getGuardians($this->database, $this->user_id);
+ 		
+		// Select guardians which are already allowed to pick-up student
+ 		$query = "SELECT guardian_id FROM students_guardians
+	    			WHERE student_id = :student_id";
+ 			
+ 		$query_params = array(':student_id' => $this->student_id);
+ 			
  		try {
  			$stmt = $this->database->prepare($query);
  			$result = $stmt->execute($query_params);
  		}
  		catch(PDOException $ex)  {
- 			error_log($ex->getMessage());
- 		}
+ 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+		   		</script>");
+ 		} 			
  		$rows = $stmt->fetchAll();
- 		if (empty($rows)) {
- 			$form .= "<br /><span class='error'>
- 						No guardian/parent contacts registered. Please fill 
- 						out the guardian and parent contact form whether or 
- 						not student may leave on their own. 
- 					</span>";
- 		}
- 		else {
- 			// Select guardiands which are already allowed to pick-up student
- 			$query = "SELECT guardian_id FROM students_guardians
-	    				WHERE student_id = :student_id";
- 			
- 			$query_params = array(':student_id' => $this->student_id);
- 			
- 			try {
- 				$stmt = $this->database->prepare($query);
- 				$result = $stmt->execute($query_params);
- 			}
- 			catch(PDOException $ex)  {
- 				echo("<script>console.log('PHP: ".$ex->getMessage()."');
-		   				</script>");
- 			}
- 			
- 			$guardians = $stmt->fetchAll();
- 			
- 			echo "<ul>";
+ 	
+ 			// Create array of guardian_id's
+ 			$certain_guardians = Array();
  			foreach ($rows as $row) {
- 				$guardian = new Guardian($row['guardian_id'], $this->database);
- 				$checked = "";
- 				if (isset($guardians[$row['guardian_id']])) {
- 					$checked = "checked";
- 				}
- 				$form .= "<li>
-						<input class='regular' name='guardian_group[]'
-							value='".$guardian->getId()."' type='checkbox'
-							".$checked." />".$guardian->getName()."
-					</li>";
+ 				$certain_guardians[$row['guardians_id']] = true;
  			}
- 			$form .= "</ul>";
- 			
- 			return $form;
+ 						
+ 		foreach ($guardian_group as $guardian_id->$tuple) {
+ 			if (isset($certain_guardians[$guardian_id])) {
+ 				$guardian_group[$guardian_id][1] = true;
+ 			}			
  		}
+ 		
+ 		return $guardian_group;
  	}
 	  
+ 	/* Displays empty student form. */
+ 	public static function displayEmptyStudentForm($db, $user_id) {
+ 		$guardian_group = getUnCheckedGuardianGroup($db, $user_id);
+
+ 		$fg = new Form_Generator();
+ 		echo $fg->studentForm(0, $preferred_name='', $grade ='',
+ 				$allergies='', $medical='', $photo_permission=false,
+ 				$leave_permission=false, $guardian_group)
+ 	}
+ 	
+ 	/* Retrieves guardians associated with this user.
+ 	 * Returns an array who's values are guadian ids.*/
+ 	 private static function getUnCheckedGuardianGroup($db, $user_id) {
+ 	 	// Get all guardians associated with user
+ 	 	$query = "SELECT guardian_id FROM guardians
+	    		WHERE user_id = :user_id";
+ 	
+ 	 		$query_params = array(':user_id' => $this->user_id);
+ 	
+ 	 		try {
+ 	 		$stmt = $this->database->prepare($query);
+ 	 		$result = $stmt->execute($query_params);
+ 	 		}
+ 	 		catch(PDOException $ex)  {
+ 	 		error_log($ex->getMessage());
+ 	 		}
+ 	 		$rows_guardians = $stmt->fetchAll();
+ 	
+ 	 		// Create array of guardian_id's
+ 	 		$guardian_group = Array();
+ 	 		foreach ($rows_guardians as $row) {
+ 	 			$guardian = new Guardian($row['guardian_id'])
+ 	 			$guardian_group[$guardian->getId()] = 
+ 	 				Array($guardian->getName(), false);
+ 	 		}
+		return $guardian_group;
+ 	 }
+ 	 
    /* Print a html list of programs this student is enrolled in that
     * end in the future.*/
     private function displayFutureProgramList() {	
@@ -357,52 +378,7 @@ class Student {
  	 *  updates of students in students.php
  	 * ---------------------------------------------------------------*/
  	
- 	/* Displays empty student form. */
- 	public static function displayEmptyStudentForm($db, $user_id) {
- 		echo $fg->studentForm(0, $preferred_name='', $grade ='',
-			$allergies='', $medical='', $photo_permission=false, 
- 			$leave_permission=false, $guardian_group=array())
- 	}
- 	
- 	/* Displays selection area for which guardians can pick-up
- 	 * unregistered student for student form in students.php */
- 	private static function displayNewGuardianPickup($db, $user_id) {
- 		echo "Which guardian/parent contacts are allowed to pick this
-				student up for lunch or at the end of daily programs?";
- 	
- 		$query = "SELECT guardian_id FROM guardians
-	    				WHERE user_id = :user_id";
- 	
- 		$query_params = array(':user_id' => $user_id);
- 	
- 		try {
- 			$stmt = $db->prepare($query);
- 			$result = $stmt->execute($query_params);
- 		}
- 		catch(PDOException $ex)  {
- 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-		   				</script>");
- 		}
- 		$rows = $stmt->fetchAll();
- 	
- 		if (empty($rows)) {
- 			echo "<br /><span class='error'>No guardian/parent contacts registered.
-					Please fill out the guardian and parent contact form whether or
-					not student may leave on their own. </span>";
- 		}
- 		else {
- 			echo "<ul>";
- 			foreach ($rows as $row) {
- 				$guardian = new Guardian($row['guardian_id'], $db);
- 				echo "<li>
-							<input class='regular' name='guardian_group[]'
-								value='".$guardian->getId()."' type='checkbox'/>
-							".$guardian->getName()."
-							</li>";
- 			}
- 			echo "</ul>";
- 		}
- 	}
+
  	
  	/* Updates database record of student and returns true iff
  	 * update successful. */
