@@ -10,13 +10,13 @@ class Form_Validator {
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
-	 * -----------------------------------------------------*/
+	 * ---------:150--------------------------------------------*/
 	
 	/* Sanitizes each value of student $_POST. */
 	public function sanitizeStudentPost($post) {
 		$data = array();
 		// Salinize text inputs
-		foreach ($student_simple_sanitize as $key) {
+		foreach ($this->student_simple_sanitize as $key) {
 			$data[$key] = htmlspecialchars($post[$key]);
 		}
 		// Initialize checkbox group
@@ -38,19 +38,19 @@ class Form_Validator {
 	 * if not.*/
 	public function validateStudentPost($post) {
 		// Check first name
-		if (isset($post['first_name']) && strip_input($post['first_name'])==""){
-			return "Please enter a non-empty first name.";;
+		if (isset($post['first_name']) && $this->strip_input($post['first_name'])==''){
+			return "Please enter a non-empty first name.";
 		}
 		// Check last name
-		if (isset($post['last_name']) && strip_input($post['last_name'])==""){
-			return "Please enter a non-empty last name."
+		elseif (isset($post['last_name']) && $this->strip_input($post['last_name'])==""){
+			return "Please enter a non-empty last name.";
 		}
 		// Check for entered grade
-		if (strip_input($post['grade']=="")) {
+		elseif ($this->strip_input($post['grade'])=="") {
 			return "Please enter valid grade.";
 		}
 		// Check if permission to leave was indicated at all
-		if (!isset($post['leave_permission'])) {
+		elseif (!isset($post['leave_permission'])) {
 			return "Please indicate whether or not student may leave programs 
 				on their own.";
 		}
@@ -60,11 +60,12 @@ class Form_Validator {
 				on their own.";
 		}
 		// Check user has checked consent box
-		elseif (!isset($_POST['consent'])) {
+		elseif (!isset($post['consent'])) {
+			error_log("KILLME");
 			return "Consent required to use this registration system.";
 		}
 		else {
-			return 0;
+			return -1;
 		}			
 	}
 	
@@ -76,7 +77,7 @@ class Form_Validator {
 	public function sanitizeGuardianPost($post) {
 		$data = array();
 		// Salinize text inputs
-		foreach ($guardian_simple_sanitize as $key) {
+		foreach ($this->guardian_simple_sanitize as $key) {
 			$data[$key] = htmlspecialchars($post[$key]);
 		}
 		return $data;
@@ -86,34 +87,34 @@ class Form_Validator {
 	 * if not.*/
 	public function validateGuardianPost($post) {
 		// Check first name
-		if (isset($post['first_name']) && strip_input($post['first_name'])!=""){
-			return "Please enter a non-empty first name."
+		if (isset($post['first_name']) && $this->strip_input($post['first_name'])!=""){
+			return "Please enter a non-empty first name.";
 		}
 		// Check last name
-		if (isset($post['last_name']) && strip_input($post['last_name'])!=""){
-			return "Please enter a non-empty last name."
+		elseif (isset($post['last_name']) && $this->strip_input($post['last_name'])!=""){
+			return "Please enter a non-empty last name.";
 		}
 		// Check email
-		if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+		elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
 			return "Please enter a valid email.";
 		} 
 		// Check phone 1
-		elseif () {
+		elseif (false) {
 			return "Incorrect primary phone number. Please enter a numeric 
 					telephone number, including area code.";
 		}
 		// Check phone 2
-		else if () {
+		elseif (false) {
 			return "Incorrect secondary phone number. Please enter a numeric 
 					telephone number, including area code.";
 		}
 		else {
-			return 0;
+			return -1;
 		}	
 	}
 	
 	// Input tester
-	function test_input($data) {
+	function strip_input($data) {
 		$data = trim($data);
 		$data = stripslashes($data);
 		$data = htmlspecialchars($data);

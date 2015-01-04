@@ -1,21 +1,21 @@
 <?php  
     require("../library/common.php");     
     include '../library/config.php';
-    include '../library/Form_Validator';
+    include '../library/Form_Validator.php';
     include '../library/Student.php';
   
     $error = '';
     $success = '';
     // Check if form has been submitted
     if(!empty($_POST)) {
-    	$form_validator = new Form_Validator();
-    	$result = $validateStudentForm($_POST);
-    	if ($result!= 0) {
+	$form_validator = new Form_Validator();
+    	$result = $form_validator->validateStudentPost($_POST);
+    	if ($result != -1) {
     		$error = $result;
     	}
     	else {
     		$data = $form_validator->sanitizeStudentPost($_POST);
-    		elseif (data['student_id']==0) {
+    		if ($data['student_id']==0) {
     			/* 0 indicates new student request. */
     			Student::createStudent($_SESSION['user']['user_id'],
     				$data['first_name'], $data['last_name'],
@@ -23,7 +23,7 @@
     				$data['allergies'], $data['medical'], 
     				$data['leave_permission'], $data['photo_permission'], 
     				$data['guardian_group'], $db);
-    				$success = "Student successfully updated.";
+    				$success = "Student successfully created.";
     		}
     		else {
     			/* Update student contact */

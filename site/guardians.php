@@ -1,7 +1,7 @@
 <?php 
     require("../library/common.php"); 
     include '../library/config.php';
-    include '../library/Form_Validator';
+    include '../library/Form_Validator.php';
     include '../library/Guardian.php';
        
     $error = '';
@@ -9,13 +9,13 @@
     // Check if form has been submitted
     if(!empty($_POST)) {
     	$form_validator = new Form_Validator();
-    	$result = $validateGuardianForm($_POST);
+    	$result = $form_validator->validateGuardianPOST($_POST);
     	if ($result!= 0) {
     		$error = $result;
     	}
     	else {
     		$data = $form_validator->sanitizeGuardianPost($_POST);
-    		elseif (data['guardian_id']==0) {
+    		if ($data['guardian_id']==0) {
     			/* 0 indicates new guardian request. */
     			Guardian::createGuardian($_SESSION['user']['user_id'],
     			$data['first_name'], $data['last_name'],
@@ -25,12 +25,12 @@
     		}
     		else {
     			/* Update or delete guardian contact */
-    			if (data['delete'])=="yes") {
+    			if ($data['delete']=="yes") {
     				Guardian::deleteGuardian($_POST['guardian_id'], $db);
     				$success = "Guardian deleted.";
     			}
     			else {
-    				Guardian::updateGuardian(data['guardian_id'], 
+    				Guardian::updateGuardian($data['guardian_id'], 
     					$data['phone_1'], $data['phone_2'], $data['email'], 
     					$db);
     				$success = "Guardian successfully updated.";
