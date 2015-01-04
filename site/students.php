@@ -3,22 +3,55 @@
     include '../library/config.php';
     include '../library/Student.php';
    
-    /* This if statement checks to determine whether 
-     * the add new student form as been submitted. */
+    /* Add new student or update registered student.
+     * Validate all user input. */
     if(!empty($_POST)) {
-    	if ($_POST['student_id']==0) {
+    	// Check for entered grade
+    	if (sizeof(test_input($_POST['grade']))==0) {
+    		$error = "Update unsuccesful. Please enter valid grade."
+    	}
+    	// Check user has not checked both leave permission boxes
+    	elseif (isset($_POST['leave_permission']['leave_yes']) 
+    			& isset($_POST['leave_permission']['leave_no'])) {
+    		$error = "Update unsuccesful. Please indicate whether or not 
+    				student may leave programs on their own.";
+    	}
+    	// Check user has checked at least one leave permission boxes
+   		elseif (!isset($_POST['leave_permission']['leave_yes']) 
+    			& !isset($_POST['leave_permission']['leave_no'])) {
+    		$error = "Update unsuccessful. Please indicate whether or not 
+    				student may leave programs on their own.";
+    	}
+    	elseif (!isset($_POST['consent'])) {
+    		$error = "Update unsuccessful. Consent required to use this
+    				registration system."
+    	}
+    	// If student id is 0, then user is inputting new student.
+		elseif ($_POST['student_id']==0) {
+    		// Check for non-empty first and last name
+    		if (!count(test_input($_POST['first_name']) || 
+    				!count(test_input($_POST['last_name']) {
+    			$error = "Update unsuccessful. Please enter correct first name
+    					 and last name.";
+    		}
     		Student::createStudent($_SESSION['user']['user_id'],
     				$_POST['first_name'], $_POST['last_name'],
-    				$_POST['preferred_name'], $_POST['grade'], $_POST['allergies'],
-    				$_POST['medical'], isset($_POST['permission_to_leave']),
-    				isset($_POST['photo_permission']), $db);
+    				$_POST['preferred_name'], $_POST['grade'], 
+    				$_POST['allergies'], $_POST['medical'], 
+    				isset($_POST['leave_permission']['leave_yes']),
+    				isset($_POST['photo_permission']), 
+    				$_POST['guardian_group'], $db);
+    		$success = "Update successful.";
     	}
+    	// Otherwise, update student.
     	else {
     		Student::updateStudent($_POST['student_id'], 
-    				$_POST['preferred_name'], 
-    				$_POST['grade'], $_POST['allergies'],
-    				$_POST['medical'], isset($_POST['permission_to_leave']),
-    				isset($_POST['photo_permission']), $db);
+    				$_POST['preferred_name'], $_POST['grade'], 
+    				$_POST['allergies'], $_POST['medical'], 
+    				isset($_POST['leave_permission']['leave_yes']),
+    				isset($_POST['photo_permission']), 
+    				$_POST['guardian_group'], $db);
+    		$success = "Update successful."
     	}    
     }
     
@@ -27,6 +60,8 @@
 ?>
 	<section class="content">
 		<h1>Students</h1>
+			<span class='error'><?php $error?></span>
+			<span class='success'><?php $success?></span>
 			<section id="accordion">
 				<?php Student::displayEmptyStudentForm($db, $_SESSION['user']['user_id']);
 				// Generate accordian-style contact list

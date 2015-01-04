@@ -146,7 +146,6 @@ class Student {
 		if ($this->photo_permission) {
    			$photo_check = 'checked';
    		}
-		$leave_check = '';
 		if ($this->permission_to_leave) {
    			$leave_yes = 'checked';
    			$leave_no = '';
@@ -174,26 +173,84 @@ class Student {
    				".$photo_check."/> ".$text_field['photo_perm_label']."   			 
    			<br /><br /> 
    			<input class='regular 'type='checkbox'
-   				name='leave_permission[]' ".$leave_no." />
+   				name='leave_permission[]' value='leave_no' ".$leave_no." />
    			".$text_field['leave_perm_no']."
+   			<br />
    			<input class='regular 'type='checkbox'
-   				name='leave_permission[]' ".$leave_yes." />
+   				name='leave_permission[]' value='leave_yes' ".$leave_yes." />
    			".$text_field['leave_perm_yes']."
    			<br /><br />";
    			$this->displayGuardianPickupSelection();	
    			echo "<br /><br />
-	 			<input type='checkbox' class='regular' name='consent' 
+	 		<input type='checkbox' class='regular' name='consent' 
    					checked />
-	   			".$text_field['student_consent']."
-	 			<br /><br />
-	   			<input type='submit' value='Submit Changes' />
+	   		".$text_field['student_consent']."
+	 		<br /><br />
+	   		<input type='submit' value='Submit Changes' />
 	   	    </form>";
    }
    
    	/* Displays selection area for which guardians can pick-up student. */
 	private function displayGuardianPickupSelection() {
-   		return true;
-	}
+		echo "Which guardian/parent contacts are allowed to pick this
+				student up for lunch or at the end of daily programs?";
+ 	
+ 		$query = "SELECT guardian_id FROM guardians
+	    				WHERE user_id = :user_id";
+ 	
+ 		$query_params = array(':user_id' => $user_id);
+ 	
+ 		try {
+ 			$stmt = $db->prepare($query);
+ 			$result = $stmt->execute($query_params);
+ 		}
+ 		catch(PDOException $ex)  {
+ 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
+		   				</script>");
+ 		}
+ 		$rows = $stmt->fetchAll();
+ 	
+ 		if (empty($rows)) {
+ 			echo "<br /> <span class='error'>
+ 						No guardian/parent contacts registered. Please fill 
+ 						out the guardian and parent contact form whether or 
+ 						not student may leave on their own. 
+ 					</span>";
+ 		}
+ 		else {
+ 			// Select guardiands which are already allowed to pick-up student
+ 			$query = "SELECT guardian_id FROM students_guardians
+	    				WHERE student_id = :student_id";
+ 			
+ 			$query_params = array(':student_id' => $this->student_id);
+ 			
+ 			try {
+ 				$stmt = $db->prepare($query);
+ 				$result = $stmt->execute($query_params);
+ 			}
+ 			catch(PDOException $ex)  {
+ 				echo("<script>console.log('PHP: ".$ex->getMessage()."');
+		   				</script>");
+ 			}
+ 			
+ 			$guardians = $stmt->fetchAll();
+ 			
+ 			echo "<ul>";
+ 			foreach ($rows as $row) {
+ 				$guardian = new Guardian($row['guardian_id'], $db);
+ 				$checked = "";
+ 				if (isset($guardians[$row['guardian_id']])) {
+ 					$checked = "checked";
+ 				}
+ 				echo "<li>
+						<input class='regular' name='guardian_group[]'
+							value='".$guardian->getId()."' type='checkbox'
+							".$checked." />".$guardian->getName()."
+					</li>";
+ 			}
+ 			echo "</ul>";
+ 		}
+ 	}
 	  
    /* Print a html list of programs this student is enrolled in that
     * end in the future.*/
@@ -377,10 +434,11 @@ class Student {
 	   			".$text_field['photo_perm_label']."
 	   			<br /><br />
  				<input class='regular 'type='checkbox'
- 					name='leave_permission[]' id='leave_no' />
+ 					name='leave_permission[]' value='leave_no' />
  				".$text_field['leave_perm_no']."
+ 				<br />
  				<input class='regular 'type='checkbox'
- 					name='leave_permission[]' id='leave_yes' />
+ 					name='leave_permission[]' value='leave_yes' />
  				".$text_field['leave_perm_yes']."
  				<br /><br />";			
  		self::displayNewGuardianPickup($db, $user_id);

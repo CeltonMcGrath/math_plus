@@ -54,6 +54,14 @@
         undo_magic_quotes_gpc($_COOKIE); 
     } 
     
+    // Input tester
+    function test_input($data) {
+    	$data = trim($data);
+    	$data = stripslashes($data);
+    	$data = htmlspecialchars($data);
+    	return $data;
+    }
+    
     include 'config.php';
     
     header('Content-Type: text/html; charset=utf-8'); 
