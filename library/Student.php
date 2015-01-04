@@ -125,7 +125,9 @@ class Student {
 		   			".$this->last_name.", ".$this->first_name."
 		   		</label>
 		   		<article>";
-					$this->displayStudentForm();
+					echo $fg->studentForm($this->student_id, $this->preferred_name, $this->grade,
+			$this->allergies, $this->medical, $this->photo_permission, 
+			$this->leave_permission, $this->displayGuardianPickupSelection)
 					echo "<br />";
 		   			$this->displayFutureProgramList();
 		   			echo "<br />";
@@ -140,60 +142,9 @@ class Student {
 	   		</div>";
   	 }	
    
-	/* Displays student form for students.php*/
-	private function displayStudentForm() {
-		$text_field = $GLOBALS['text_field'];
-   		$photo_check = '';
-		if ($this->photo_permission) {
-   			$photo_check = 'checked';
-   		}
-		if ($this->permission_to_leave) {
-   			$leave_yes = 'checked';
-   			$leave_no = '';
-   		}
-   		else {
-   			$leave_yes = '';
-   			$leave_no = 'checked';
-   		}
-   		
-   		echo "
-   		<form action='students.php' method='post'> 
-   	    	<input type='hidden' name='student_id' value='$this->student_id'/>
-   			Preferred name: 
-   			<input type='text' name='preferred_name' 
-   				value='$this->preferred_name'/> 
-   			Grade:
-   			<input type='text' name='grade' value='$this->grade'/> 
-   			<br />
-	   		".$text_field['allergy_label']."
-   			<textarea name='allergies'>".$this->allergies."</textarea> 
-   			".$text_field['medical_label'].":
-   			<textarea name='medical'>".$this->medical."</textarea>
-   			<br />
-   			<input class='regular 'type='checkbox' name='photo_permission' 
-   				".$photo_check."/> ".$text_field['photo_perm_label']."   			 
-   			<br /><br /> 
-   			<input class='regular 'type='checkbox'
-   				name='leave_permission[]' value='leave_no' ".$leave_no." />
-   			".$text_field['leave_perm_no']."
-   			<br />
-   			<input class='regular 'type='checkbox'
-   				name='leave_permission[]' value='leave_yes' ".$leave_yes." />
-   			".$text_field['leave_perm_yes']."
-   			<br /><br />";
-   			$this->displayGuardianPickupSelection();	
-   			echo "<br /><br />
-	 		<input type='checkbox' class='regular' name='consent' 
-   					checked />
-	   		".$text_field['student_consent']."
-	 		<br /><br />
-	   		<input type='submit' value='Submit Changes' />
-	   	    </form>";
-   }
-   
    	/* Displays selection area for which guardians can pick-up student. */
 	private function displayGuardianPickupSelection() {
-		echo "Which guardian/parent contacts are allowed to pick this
+		$form = "Which guardian/parent contacts are allowed to pick this
 				student up for lunch or at the end of daily programs?";
  	
  		$query = "SELECT guardian_id FROM guardians
@@ -210,7 +161,7 @@ class Student {
  		}
  		$rows = $stmt->fetchAll();
  		if (empty($rows)) {
- 			echo "<br /><span class='error'>
+ 			$form .= "<br /><span class='error'>
  						No guardian/parent contacts registered. Please fill 
  						out the guardian and parent contact form whether or 
  						not student may leave on their own. 
@@ -241,13 +192,15 @@ class Student {
  				if (isset($guardians[$row['guardian_id']])) {
  					$checked = "checked";
  				}
- 				echo "<li>
+ 				$form .= "<li>
 						<input class='regular' name='guardian_group[]'
 							value='".$guardian->getId()."' type='checkbox'
 							".$checked." />".$guardian->getName()."
 					</li>";
  			}
- 			echo "</ul>";
+ 			$form .= "</ul>";
+ 			
+ 			return $form;
  		}
  	}
 	  
@@ -406,49 +359,9 @@ class Student {
  	
  	/* Displays empty student form. */
  	public static function displayEmptyStudentForm($db, $user_id) {
- 		$text_field = $GLOBALS['text_field'];
- 		echo "
-			<div class='contact'>
-    		<input class='accordion' type='checkbox' id='check-0' />
-    		<label for='check-0'>Add new student</label>
-    		<article>
-    			<form action='students.php' method='post'>
-	   	    	<input type='hidden' name='student_id' value='0'/>
-	   	    	First name:
-	   			<input type='text' name='first_name' />
-	   			Last name:
-	   			<input type='text' name='last_name' '/>
-	   			Preferred name:
-	   			<input type='text' name='preferred_name' />
-	   			Grade:
-	   			<input type='text' name='grade' />
-				<br />
-	   			".$text_field['allergy_label']."
-	   			<textarea name='allergies' row='3'></textarea>
-	   			".$text_field['medical_label']."
-	   			<textarea name='medical' row='3'></textarea>
-	   			<br />
-	   			<input class='regular 'type='checkbox'
-	   				name='photo_permission' />
-	   			".$text_field['photo_perm_label']."
-	   			<br /><br />
- 				<input class='regular 'type='checkbox'
- 					name='leave_permission[]' value='leave_no' />
- 				".$text_field['leave_perm_no']."
- 				<br />
- 				<input class='regular 'type='checkbox'
- 					name='leave_permission[]' value='leave_yes' />
- 				".$text_field['leave_perm_yes']."
- 				<br /><br />";			
- 		self::displayNewGuardianPickup($db, $user_id);
- 		echo "<br /><br />
-	 			<input type='checkbox' class='regular' name='consent' />
-	   			".$text_field['student_consent']."
-	 			<br /><br />
-	   			<input type='submit' value='Add new student' />
-	   	    	</form>
-    		</article>
-    	</div>";
+ 		echo $fg->studentForm(0, $preferred_name='', $grade ='',
+			$allergies='', $medical='', $photo_permission=false, 
+ 			$leave_permission=false, $guardian_group=array())
  	}
  	
  	/* Displays selection area for which guardians can pick-up
