@@ -76,7 +76,7 @@
 		<!-- jQuery -->
         <script src="http://code.jquery.com/jquery-latest.js"></script>
 		 <!-- Parsley -->
-        <script type="text/javascript" src="js/parsley.js"></script>
+        <script type="text/javascript" src="../public_html/parsley.js"></script>
         <style>
         	input.parsley-success
             {
@@ -117,10 +117,12 @@
 				<h1>Login</h1> 
 				<span class="error"><?php echo $login_error;?></span>
 				<br /><br />
-				<form action="login.php" method="post" data-validate="parsley">
+				<form action="login.php" method="post" 
+					id='form' data-validate="parsley">
 				    Email:<br /> 
 				    <input type="email" name="email" 
-				    	value="<?php echo $submitted_email; ?>" data-required="true"/>
+				    	value="<?php echo $submitted_email; ?>" 
+					data-parsley-trigger="change" required />
 				    <br /><br /> 
 				    Password:<br /> 
 				    <input type="password" name="password" value="" /> 
@@ -134,4 +136,8 @@
 			</div>
 		</section>
 	</body>
+
+	<script type="text/javascript">
+  		$('#form').parsley();
+	</script>
 </html>
