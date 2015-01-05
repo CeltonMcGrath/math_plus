@@ -123,36 +123,43 @@ class Form_Generator {
 		else {
 			$new = "
 	   	    	First name:
-	   			<input type='text' name='first_name' />
+	   			<input type='text' name='first_name' 
+					data-parsley-trigger='change' required/>
 	   			Last name:
-				<input type='text' name='last_name' '/>";
+				<input type='text' name='last_name' 
+					data-parsley-trigger='change' required/>";
 			$delete = '';
 			$submit_value = 'Submit';
 		}
 		// Return form	 
-		return "<form action='guardians.php' method='post'/>
+		return "<form action='guardians.php' method='post'
+				id='$guardian_id' data-validate='parsley' />
 				<input type='hidden' name='guardian_id'
-				value='$guardian_id'/>
+					value='$guardian_id'/>
 				$new
-				Primary phone: <input type='tel' name='phone_1'
-				value='$phone_1'/>
+				Primary phone: <input type='tel' name='phone_1' 
+					value='$phone_1'
+					data-parsley-trigger='change' required />
 				<br />
 				Secondary phone: <input type='tel' name='phone_2'
 				value='$phone_2'/>
 				<br />
-				Email: <input type='text' name='email'
-				value='$email'/>
+				Email: <input type='email' name='email' value='$email'
+					data-parsley-trigger='change' required />
 				<br />
 				$delete
 				<br />
 				<input type='submit' value='$submit_value' name='update' />
-			</form>";
+			</form>
+			<script type='text/javascript'>
+  				$('#'$guardian_id').parsley();
+			</script>";
 	}
 	
 	/* Returns html registration form for register.php */
 	public function registrationForm() {
 		return "<form action='register.php' method='post' 
-			id='form' data-validate='parsley'> 
+			id='form' data-validate='parsley' /> 
 			<span class='error'>*Required fields</span>
 			<br><br />				
 		    *Email:<br /> 
