@@ -130,42 +130,33 @@ class Form_Validator {
 		return $data;
 	}
 	
-	/* Returns 0 if each  value in POST array is valid, error code
+	/* Returns -1 if each  value in POST array is valid, error code
 	 * if not.*/
 	public function validateRegistrationPost($post) {
-		/*$emailEntry = $_POST['email'];
-    	
-        // Check for valid e-mail address 
-        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
-            $emailErr = "Valid email is required";
+		// Check for valid e-mail address 
+        if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) { 
+             return "Valid email is required";
         } 
         // Check for matching e-mail address
-        elseif ($_POST['email'] != $_POST['email2']) {
-        	$email2Err = "Email does not match.";
+        elseif ($post['email'] != $post['email2']) {
+        	return "Email does not match.";
         }
-        // Check for non-empty password
-        elseif(empty($_POST['password']))  { 
-            $passwordErr = "Password is required."; 
-        } 
         // Check for valid password
-        elseif (!validPassword($_POST['password'])) {
-        	$passwordErr = "Pass must contain at least 8 characters, contain 
-        			only letters, numbers or ...";
+        elseif (!validPassword($post['password'])) {
+        	return "Password must contain at 
+						least one number, one lowercase and one 
+						uppercase letter and be at least
+						at least six characters.";
         }
         // Check for matching password
-        elseif($_POST['password'] != $_POST['password2']) {
-        	$password2Err = "Passwords do not match.";
+        elseif($post['password'] != $post['password2']) {
+        	return "Passwords do not match.";
+        } 
+        else {
+        	return -1;
         }
-        // Check for uniqueness of email 
-        elseif (userExists($_POST['email'], $db)) {
-        	$errorPhrase = "This email is already in use.";
-        }*/
-		return 0;
 	}
-	
-	
-	
-	
+		
 	// Input tester
 	function strip_input($data) {
 		$data = trim($data);

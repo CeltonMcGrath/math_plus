@@ -151,7 +151,42 @@ class Form_Generator {
 	
 	/* Returns html registration form for register.php */
 	public function registrationForm() {
-		
+		return "<form action='register.php' method='post' 
+			id='form' data-validate='parsley'> 
+			<span class='error'>*Required fields</span>
+			<br><br />				
+		    Email:<br /> 
+		    <input type='email' name='email' id='email'
+		    	data-parsley-trigger='change' required /> 
+		    <br /><br /> 
+		    Re-enter your email:<br /> 
+		    <input type='email' name='email2'
+		    	data-parsley-trigger='change' required   
+		    	data-parsley-equalto='#email'/> 
+		    <br /><br /> 
+		    Password:<br /> 
+		    <input type='password' name='password' id='password'
+		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
+		    	required 
+		    	data-parsley-error-message='Password must contain at 
+				least one number, one lowercase and one 
+				uppercase letter and be at least
+				at least six characters.' 
+		    /> 
+		    <br /><br /> 
+		    Re-enter password:<br /> 
+		    <input type='password' name='password2' 
+		    	data-parsley-trigger='change' required   
+		    	data-parsley-equalto='#password' /> 
+		    <br /><br />
+		    Would you like receive email notifications about upcoming
+		    programs?
+		    <br />
+		    <input type='checkbox' class='regular' 
+		    	name='listserv' checked>
+		    <br /><br />
+		    <input type='submit' value='Register' /> 
+		</form>";
 	}
 	
 	/* Returns html login form for login.php*/

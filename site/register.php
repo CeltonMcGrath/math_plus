@@ -3,7 +3,10 @@
     require("../library/common.php");   
     include '../library/user_registration/user_register.php';
     include '../library/Form_Validator.php';
-
+	include '../library/forms/Form_Generator.php';
+	
+	$fg = new Form_Generator();
+	
     $error = '';
     $success = '';
     
@@ -16,6 +19,11 @@
     	}
 	else {
 		$data = $form_validator->sanitizeRegistrationPost($_POST);
+		// Check for uniqueness of email
+		if (userExists($data['email'], $db)) {
+			$error = "This email is already in use.";
+		}
+        else {
         	if (addUser($data['email'], $data['password'], $data['listserv'], 
         			$db)) {
         		$success = "Registration a success. 
@@ -53,42 +61,7 @@
 				<span class="error"><?php echo $error?></span>
 				<span class="success"><?php echo $success?></span>
 				<br />
-				<form action="register.php" method="post" 
-					id='form' data-validate="parsley"> 
-					<span class="error">*Required fields</span>
-					<br><br />				
-				    Email:<br /> 
-				    <input type="email" name="email" id="email"
-				    	data-parsley-trigger="change" required /> 
-				    <br /><br /> 
-				    Re-enter your email:<br /> 
-				    <input type="email" name="email2"
-				    	data-parsley-trigger="change" required   
-				    	data-parsley-equalto="#email"/> 
-				    <br /><br /> 
-				    Password:<br /> 
-				    <input type="password" name="password" id="password"
-				    	pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" 
-				    	required 
-				    	data-parsley-error-message="Password must contain at 
-						least one number, one lowercase and one 
-						uppercase letter and be at least
-						at least six characters" 
-				    /> 
-				    <br /><br /> 
-				    Re-enter password:<br /> 
-				    <input type="password" name="password2" 
-				    	data-parsley-trigger="change" required   
-				    	data-parsley-equalto="#password" /> 
-				    <br /><br />
-				    Would you like receive email notifications about upcoming
-				    programs?
-				    <br />
-				    <input type="checkbox" class="regular" 
-				    	name="listserv" checked>
-				    <br /><br />
-				    <input type="submit" value="Register" /> 
-				</form>				
+				<?php echo $fg->registrationForm(); ?>		
 			</div>
 			<div class="login-extra">
 				<a href="login.php">Return to login</a>

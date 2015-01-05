@@ -66,7 +66,7 @@
 	}
 	
 	function validPassword($password) {
-		return True;
+		return preg_match($password, '/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/');
 	}
 ?> 
 
