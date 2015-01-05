@@ -115,7 +115,7 @@ class Form_Generator {
 				Delete:
 				<input type='radio' name='delete'
 				value='yes'/> Yes
-				<input type='radio' name='delete' value='no' checked/> No"
+				<input type='radio' name='delete' value='no' checked/> No";
 			$submit_value = "Update contact";
 		}
 		// Display settings for new guardian form
@@ -136,10 +136,10 @@ class Form_Generator {
 				Email: <input type='text' name='email'
 				value='$email'/>
 				<br />
-				'$delete'
+				$delete
 				<br />
 				<input type='submit' value='$submit_value' name='update' />
-			</form>"
+			</form>";
 	}
 	
 	/* Returns html registration form for register.php */
