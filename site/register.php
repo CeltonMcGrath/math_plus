@@ -14,9 +14,9 @@
     	if ($result != -1) {
     		$error = $result;
     	}
-		else {
-			$data = $form_validator->sanitizeRegistrationPost($_POST);
-        	if (addUser(data['email'], data['password'], data['listserv'], 
+	else {
+		$data = $form_validator->sanitizeRegistrationPost($_POST);
+        	if (addUser($data['email'], $data['password'], $data['listserv'], 
         			$db)) {
         		$success = "Registration a success. 
         				An activation link has been sent to your email.
@@ -64,16 +64,16 @@
 				    Re-enter your email:<br /> 
 				    <input type="email" name="email2"
 				    	data-parsley-trigger="change" required   
-				    	data-parsley-equalto="#email1"/> 
+				    	data-parsley-equalto="#email"/> 
 				    <br /><br /> 
 				    Password:<br /> 
 				    <input type="password" name="password" id="password"
-				    	pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$" 
+				    	pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" 
 				    	required 
-				    	data-required-message="Password must be at least 4 
-				    		characters, no more than 8 characters, and 
-				    		must include at least one upper case letter, 
-				    		one lower case letter, and one numeric digit." 
+				    	data-parsley-error-message="Password must contain at 
+						least one number, one lowercase and one 
+						uppercase letter and be at least
+						at least six characters" 
 				    /> 
 				    <br /><br /> 
 				    Re-enter password:<br /> 
@@ -85,7 +85,7 @@
 				    programs?
 				    <br />
 				    <input type="checkbox" class="regular" 
-				    	name="listserv" checked>Yes
+				    	name="listserv" checked>
 				    <br /><br />
 				    <input type="submit" value="Register" /> 
 				</form>				
