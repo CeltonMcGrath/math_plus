@@ -126,11 +126,6 @@ class Guardian {
 	}
 	
 	/*Returns the id of this guardian */
-	public function getId() {
-		return $this->guardian_id;
-	}
-	
-	/*Returns the id of this guardian */
 	public function getFirstName() {
 		return $this->first_name;
 	}

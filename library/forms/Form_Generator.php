@@ -111,6 +111,7 @@ class Form_Generator {
 			$phone_1, $phone_2, $email) {
 		// Display settings for already registered guardian form
 		if ($guardian_id) {
+			$new = '';
 			$delete = "
 				Delete:
 				<input type='radio' name='delete'
@@ -120,6 +121,11 @@ class Form_Generator {
 		}
 		// Display settings for new guardian form
 		else {
+			$new = "
+	   	    	First name:
+	   			<input type='text' name='first_name' />
+	   			Last name:
+				<input type='text' name='last_name' '/>";
 			$delete = '';
 			$submit_value = 'Submit';
 		}
@@ -127,6 +133,7 @@ class Form_Generator {
 		return "<form action='guardians.php' method='post'/>
 				<input type='hidden' name='guardian_id'
 				value='$guardian_id'/>
+				$new
 				Primary phone: <input type='tel' name='phone_1'
 				value='$phone_1'/>
 				<br />

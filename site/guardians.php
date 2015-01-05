@@ -75,11 +75,11 @@
 				foreach($rows as $row):
 					$guardian = new Guardian($row['guardian_id'], $db);
 					$label = $guardian->getName();
-					$article = $hg->accordionBox($guardian->getId(), 
+					$article = $fg->guardianForm($guardian->getId(), 
 						$guardian->getFirstName(), $guardian->getLastName(), 
 						$guardian->getPrimaryPhone(), $guardian->getSecondPhone(), 
 						$guardian->getEmail());
-					echo $hg->accordionBox($guardian->guardian_id, $label, $article);
+					echo $hg->accordionBox($guardian->getId(), $label, $article);
 			    endforeach; ?>
 			</section>
 	</section>
