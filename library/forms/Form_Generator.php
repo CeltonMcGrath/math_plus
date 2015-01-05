@@ -131,8 +131,8 @@ class Form_Generator {
 			$delete = '';
 			$submit_value = 'Submit';
 		}
-		// Return form	 
-		return "<form action='guardians.php' method='post'
+		// Return form	
+		$form = "<form action='guardians.php' method='post'
 				id='$guardian_id' data-validate='parsley' />
 				<input type='hidden' name='guardian_id'
 					value='$guardian_id'/>
@@ -152,8 +152,10 @@ class Form_Generator {
 				<input type='submit' value='$submit_value' name='update' />
 			</form>
 			<script type='text/javascript'>
-  				$('#'$guardian_id').parsley();
-			</script>";
+  				$('#";
+		$form .= $guardian_id;
+		$form .= "' ).parsley(); </script>";
+		return $form;
 	}
 	
 	/* Returns html registration form for register.php */
