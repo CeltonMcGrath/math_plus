@@ -73,7 +73,42 @@
 			@import url(../public_html/style.css);
 			@import url(../public_html/main.css);
 		</style>
-		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
+		<!-- jQuery -->
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+		 <!-- Parsley -->
+        <script type="text/javascript" src="js/parsley.js"></script>
+        <style>
+        	input.parsley-success
+            {
+              color: #468847 !important;
+              background-color: #DFF0D8 !important;
+              border: 1px solid #D6E9C6 !important;
+            }
+            input.parsley-error
+            {
+              color: #B94A48 !important;
+              background-color: #F2DEDE !important;
+              border: 1px solid #EED3D7 !important;
+            }
+ 
+            input
+            {
+                width: 150px;
+                margin: 0 2px !important;
+            }
+ 
+            ul.parsley-error-list
+            {
+                font-size: 11px;
+                margin: 2px;
+                list-style-type:none;
+            }
+ 
+            ul.parsley-error-list li
+            {
+                line-height: 11px;
+            }
+    	</style>
 	</head>
 	
 	<body>
@@ -82,10 +117,10 @@
 				<h1>Login</h1> 
 				<span class="error"><?php echo $login_error;?></span>
 				<br /><br />
-				<form action="login.php" method="post">
+				<form action="login.php" method="post" data-validate="parsley">
 				    Email:<br /> 
 				    <input type="email" name="email" 
-				    	value="<?php echo $submitted_email; ?>" />
+				    	value="<?php echo $submitted_email; ?>" data-required="true"/>
 				    <br /><br /> 
 				    Password:<br /> 
 				    <input type="password" name="password" value="" /> 

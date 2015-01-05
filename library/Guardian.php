@@ -125,27 +125,27 @@ class Guardian {
 		return $this->guardian_id;
 	}
 	
-	/*Returns the id of this guardian */
+	/*Returns the first name of this guardian */
 	public function getFirstName() {
 		return $this->first_name;
 	}
 	
-	/*Returns the id of this guardian */
+	/*Returns the last name of this guardian */
 	public function getLastName() {
 		return $this->last_name;
 	}
 	
-	/*Returns the id of this guardian */
+	/*Returns the primary phone number  of this guardian */
 	public function getPrimaryPhone() {
 		return $this->phone_1;
 	}
 	
-	/*Returns the id of this guardian */
+	/*Returns the secondary phone number of this guardian */
 	public function getSecondPhone() {
 		return $this->phone_2;
 	}
 	
-	/*Returns the id of this guardian */
+	/*Returns the email of this guardian */
 	public function getEmail() {
 		return $this->email;
 	}
