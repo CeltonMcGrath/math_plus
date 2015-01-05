@@ -5,8 +5,11 @@ class Form_Validator {
 	private $student_simple_sanitize = array('student_id', 'first_name', 
 		'last_name', 'preferred_name', 'grade', 'allergies', 'medical' 
 	);
+	
 	private $guardian_simple_sanitize = array('guardian_id', 'first_name', 
 			'last_name', 'email', 'phone_1', 'phone_2', 'delete');
+	
+	private $registration_simple_sanitize = array('email', 'password');
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
@@ -109,6 +112,59 @@ class Form_Validator {
 			return -1;
 		}	
 	}
+	
+	/* -----------------------------------------------------
+	 * Form validation for register.php
+	 * -----------------------------------------------------*/
+	
+	/* Sanitizes each value of guardian $_POST. */
+	public function sanitizeRegistrationPost($post) {
+		$data = array();
+		// Salinize text inputs
+		foreach ($this->registration_simple_sanitize as $key) {
+			if (isset($post[$key])) {
+				$data[$key] = htmlspecialchars($post[$key]);
+			}
+		}
+		$data['listserv'] = isset($post['listserv']);
+		return $data;
+	}
+	
+	/* Returns 0 if each  value in POST array is valid, error code
+	 * if not.*/
+	public function validateRegistrationPost($post) {
+		/*$emailEntry = $_POST['email'];
+    	
+        // Check for valid e-mail address 
+        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { 
+            $emailErr = "Valid email is required";
+        } 
+        // Check for matching e-mail address
+        elseif ($_POST['email'] != $_POST['email2']) {
+        	$email2Err = "Email does not match.";
+        }
+        // Check for non-empty password
+        elseif(empty($_POST['password']))  { 
+            $passwordErr = "Password is required."; 
+        } 
+        // Check for valid password
+        elseif (!validPassword($_POST['password'])) {
+        	$passwordErr = "Pass must contain at least 8 characters, contain 
+        			only letters, numbers or ...";
+        }
+        // Check for matching password
+        elseif($_POST['password'] != $_POST['password2']) {
+        	$password2Err = "Passwords do not match.";
+        }
+        // Check for uniqueness of email 
+        elseif (userExists($_POST['email'], $db)) {
+        	$errorPhrase = "This email is already in use.";
+        }*/
+		return 0;
+	}
+	
+	
+	
 	
 	// Input tester
 	function strip_input($data) {
