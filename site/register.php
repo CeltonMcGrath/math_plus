@@ -3,9 +3,9 @@
     require("../library/common.php");   
     include '../library/user_registration/user_register.php';
     include '../library/Form_Validator.php';
-	include '../library/forms/Form_Generator.php';
+    include '../library/forms/Form_Generator.php';
 	
-	$fg = new Form_Generator();
+    $fg = new Form_Generator();
 	
     $error = '';
     $success = '';
@@ -23,19 +23,20 @@
 		if (userExists($data['email'], $db)) {
 			$error = "This email is already in use.";
 		}
-        else {
-        	if (addUser($data['email'], $data['password'], $data['listserv'], 
+        	else {
+        		if (addUser($data['email'], $data['password'], $data['listserv'], 
         			$db)) {
-        		$success = "Registration a success. 
+        			$success = "Registration a success. 
         				An activation link has been sent to your email.
         				 You must activitate your account via this link. 
         				Please check your spam/junk folders.";
-        	}
-        	else {
-        		$error = "Registration failed. 
+        		}
+        		else {
+        			$error = "Registration failed. 
         				Please try again or contact administrator.";
+        		}
         	}
-        }
+    	 }
     }
 ?> 
 
@@ -58,8 +59,8 @@
 		<section class="container">
 			<div class="login">
 				<h1>Register</h1> 
-				<span class="error"><?php echo $error?></span>
-				<span class="success"><?php echo $success?></span>
+				<span class="error"><?php echo $error; ?></span>
+				<span class="success"><?php echo $success; ?></span>
 				<br />
 				<?php echo $fg->registrationForm(); ?>		
 			</div>
@@ -73,3 +74,4 @@
   		$('#form').parsley();
 	</script>
 </html>
+

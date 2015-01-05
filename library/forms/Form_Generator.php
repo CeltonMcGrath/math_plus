@@ -155,16 +155,16 @@ class Form_Generator {
 			id='form' data-validate='parsley'> 
 			<span class='error'>*Required fields</span>
 			<br><br />				
-		    Email:<br /> 
+		    *Email:<br /> 
 		    <input type='email' name='email' id='email'
 		    	data-parsley-trigger='change' required /> 
 		    <br /><br /> 
-		    Re-enter your email:<br /> 
+		    *Re-enter your email:<br /> 
 		    <input type='email' name='email2'
 		    	data-parsley-trigger='change' required   
 		    	data-parsley-equalto='#email'/> 
 		    <br /><br /> 
-		    Password:<br /> 
+		    *Password:<br /> 
 		    <input type='password' name='password' id='password'
 		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
 		    	required 
@@ -174,7 +174,7 @@ class Form_Generator {
 				at least six characters.' 
 		    /> 
 		    <br /><br /> 
-		    Re-enter password:<br /> 
+		    *Re-enter password:<br /> 
 		    <input type='password' name='password2' 
 		    	data-parsley-trigger='change' required   
 		    	data-parsley-equalto='#password' /> 
