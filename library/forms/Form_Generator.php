@@ -11,9 +11,11 @@ class Form_Generator {
 		if ($student_id == 0) {
 			$new = "
 	   	    	First name:
-	   			<input type='text' name='first_name' />
+	   			<input type='text' name='first_name' 
+					data-parsley-trigger='change' required/>
 	   			Last name:
-				<input type='text' name='last_name' '/>";
+				<input type='text' name='last_name' 
+					data-parsley-trigger='change' required/>";
 			$leave_yes = '';
 			$leave_no = '';	
 			$consent_check = '';	
@@ -38,14 +40,15 @@ class Form_Generator {
 			$photo_check = 'checked';
 		}		
 		
-		return "
-		<form action='students.php' method='post'>
+		$form = "<form action='students.php' method='post'
+				id='$guardian_id' data-validate='parsley' />
 			<input type='hidden' name='student_id' value='$student_id'/>
 			".$new."
 			Preferred name:
 			<input type='text' name='preferred_name' value='$preferred_name'/>
 			Grade:
-			<input type='text' name='grade' value='$grade'/>
+			<input type='text' name='grade' value='$grade'
+				data-parsley-trigger='change' required/>
 			<br />
 			".$text_field['allergy_label']."
 			<textarea name='allergies'>".$allergies."</textarea>
@@ -65,10 +68,17 @@ class Form_Generator {
    			<br /><br />".$this->guardianSelectionForm($guardian_group)."
    			<br /><br />
 	 		<input type='checkbox' class='regular' name='consent' 
-   					".$consent_check." /> ".$text_field['student_consent']."
-	 		<br /><br />
+   					".$consent_check." 
+   					data-parsley-trigger='change' required/> 
+   			".$text_field['student_consent']."
+	 		<br />
 	   		<input type='submit' value='Submit Changes' />
-		</form>";
+		</form>
+		<script type='text/javascript'>
+  				$('#";
+		$form .= $student_id;
+		$form .= "' ).parsley(); </script>";
+		return $form;
 	}
 	
 	/* Returns html guardian selection form for students.php
@@ -161,29 +171,28 @@ class Form_Generator {
 	/* Returns html registration form for register.php */
 	public function registrationForm() {
 		return "<form action='register.php' method='post' 
-			id='form' data-validate='parsley' /> 
+			id='registration_form' data-validate='parsley'> 
 			<span class='error'>*Required fields</span>
-			<br><br />				
-		    *Email:<br /> 
+			<br />				
+		    *Email:
 		    <input type='email' name='email' id='email'
 		    	data-parsley-trigger='change' required /> 
-		    <br /><br /> 
+		    <br />
 		    *Re-enter your email:<br /> 
 		    <input type='email' name='email2'
 		    	data-parsley-trigger='change' required   
 		    	data-parsley-equalto='#email'/> 
-		    <br /><br /> 
-		    *Password:<br /> 
+		    <br />
+		    *Password: 
 		    <input type='password' name='password' id='password'
 		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
 		    	required 
 		    	data-parsley-error-message='Password must contain at 
 				least one number, one lowercase and one 
 				uppercase letter and be at least
-				at least six characters.' 
-		    /> 
-		    <br /><br /> 
-		    *Re-enter password:<br /> 
+				at least six characters.' /> 
+		    <br /> 
+		    *Re-enter password:
 		    <input type='password' name='password2' 
 		    	data-parsley-trigger='change' required   
 		    	data-parsley-equalto='#password' /> 
@@ -193,14 +202,88 @@ class Form_Generator {
 		    <br />
 		    <input type='checkbox' class='regular' 
 		    	name='listserv' checked>
-		    <br /><br />
+		    <br />
 		    <input type='submit' value='Register' /> 
-		</form>";
+		</form>
+		<script type='text/javascript'>
+  			$('#registration_form').parsley();
+		</script>";
 	}
 	
 	/* Returns html login form for login.php*/
 	public function loginForm() {
 	
 	}
+	
+	/* Returns html email update form for edit_account.php */
+	public function emailUpdateForm($currentEmail) {
+		return "<form action='edit_account.php' method='post'
+				id='email_update_form' data-validate='parsley'>
+				<input type='hidden' name='update' value='email' />
+			    Current email: '$currentEmail'>
+			    <br />
+			    New email: 
+			    <input type='email' name='email' 
+			    data-parsley-trigger='change' required />
+			    <br />
+			    Re-enter new email:<br /> 
+			    <input type='email' name='email2' 
+			    data-parsley-trigger='change' required />
+			    <br />
+			    <input type='submit' value='Update email' /> 
+			</form>
+			<script type='text/javascript'>
+  				$('#email_update_form').parsley();
+			</script>";
+	}
+	
+	/* Returns html password update form for edit_account.php */
+	public function passwordUpdateForm() {
+		return "<form action='edit_account.php' method='post'
+				id='pw_update_form' data-validate='parsley'>
+				<input type='hidden' name='update' value='password' />
+			    Current password:<br /> 
+			    <input type='password' name='oldPassword' value='' 
+				data-parsley-trigger='change' required />
+			    <br /> 
+			    New password:
+		    	<input type='password' name='password' id='password'
+		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
+		    	required 
+		    	data-parsley-error-message='Password must contain at 
+				least one number, one lowercase and one 
+				uppercase letter and be at least
+				at least six characters.' 
+		    	/> 
+		   	 	<br />
+		    	Re-enter new password:
+		    	<input type='password' name='password2' 
+		    	data-parsley-trigger='change' required   
+		    	data-parsley-equalto='#password' /> 
+		    	<br />
+			    <br /> 
+			    <input type='submit' value='Update password' /> 
+			</form>
+			<script type='text/javascript'>
+  				$('#pw_update_form').parsley();
+			</script>";
+	}
+	
+	/* Returns html listserv update form for edit_account.php */
+	public function listservUpdateForm($currentSettings) {
+		if ($currentSettings) {
+			$checked = 'checked';
+		}
+		return '<form action='edit_account.php' method='post'> 
+				<input type='hidden' name='update' value='listserv' />
+				<input type='checkbox' class='regular' 
+		    		name='listserv' '$checked' /> 
+		    	I would like receive email notifications about 
+				upcoming programs.
+		    	<br />
+			    <input type='submit' value='Update mailing list settings' /> 
+			</form>';
+	}
+
 }
    

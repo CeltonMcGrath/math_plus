@@ -70,8 +70,6 @@
 		</section>
 	</section>
 	
-	<script type="text/javascript">
-  		$('#form').parsley();
-	</script>
+	
 </html>
 

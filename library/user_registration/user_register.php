@@ -65,10 +65,5 @@
 		return sendActivationEmail($email, $activation, "new user");
 	}
 	
-	function validPassword($password) {
-		//return preg_match($password, '/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/');
-		return true;
-	}
-
 ?> 
 

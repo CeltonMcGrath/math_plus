@@ -97,7 +97,7 @@
 		return sendActivationEmail($email, $activation, "update");
 	}
 	
-	function correctPassword() {
+	function correctPassword($user_id, $test_password, $db) {
 		/* Returns true iff password is correct. */
 		
 		return True;

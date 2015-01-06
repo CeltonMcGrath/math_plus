@@ -7,8 +7,7 @@
     $db_error = False;
     
     // Check if login form submitted
-    if(!empty($_POST)) 
-    { 
+    if(!empty($_POST)) { 
         // Get credentials from database 
         $query = "SELECT user_id, email, password, salt, status
             FROM users 

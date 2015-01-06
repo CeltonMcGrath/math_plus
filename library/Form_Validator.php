@@ -2,14 +2,17 @@
 
 class Form_Validator {
 
-	private $student_simple_sanitize = array('student_id', 'first_name', 
+	private $student_whitelist = array('student_id', 'first_name', 
 		'last_name', 'preferred_name', 'grade', 'allergies', 'medical' 
 	);
 	
-	private $guardian_simple_sanitize = array('guardian_id', 'first_name', 
+	private $guardian_whitelist = array('guardian_id', 'first_name', 
 			'last_name', 'email', 'phone_1', 'phone_2', 'delete');
 	
-	private $registration_simple_sanitize = array('email', 'password');
+	private $registration_whitelist = array('email', 'password');
+	
+	private $account_update_whitelist = array('email', 'email2', 'oldPassword',
+			 'newPassword', 'newPassword2');
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
@@ -17,13 +20,7 @@ class Form_Validator {
 	
 	/* Sanitizes each value of student $_POST. */
 	public function sanitizeStudentPost($post) {
-		$data = array();
-		// Salinize text inputs
-		foreach ($this->student_simple_sanitize as $key) {
-			if (isset($post[$key])) {
-				$data[$key] = htmlspecialchars($post[$key]);
-			}
-		}
+		$data = $this->sanitize($student_whitelist, $post);
 		// Initialize checkbox group
 		if (!isset($post['guardian_group'])) {
 			$data['guardian_group'] = array();
@@ -79,14 +76,7 @@ class Form_Validator {
 	
 	/* Sanitizes each value of guardian $_POST. */
 	public function sanitizeGuardianPost($post) {
-		$data = array();
-		// Salinize text inputs
-		foreach ($this->guardian_simple_sanitize as $key) {
-			if (isset($post[$key])) {
-				$data[$key] = htmlspecialchars($post[$key]);
-			}
-		}
-		return $data;
+		return $this->sanitize($guardian_whitelist, $post);
 	}
 	
 	/* Returns 0 if each  value in POST array is valid, error code
@@ -117,15 +107,9 @@ class Form_Validator {
 	 * Form validation for register.php
 	 * -----------------------------------------------------*/
 	
-	/* Sanitizes each value of guardian $_POST. */
+	/* Cleans registration form $_POST  */
 	public function sanitizeRegistrationPost($post) {
-		$data = array();
-		// Salinize text inputs
-		foreach ($this->registration_simple_sanitize as $key) {
-			if (isset($post[$key])) {
-				$data[$key] = htmlspecialchars($post[$key]);
-			}
-		}
+		$data = $this->sanitize($registration_whitelist, $post);
 		$data['listserv'] = isset($post['listserv']);
 		return $data;
 	}
@@ -142,7 +126,7 @@ class Form_Validator {
         	return "Email does not match.";
         }
         // Check for valid password
-        elseif (!validPassword($post['password'])) {
+        elseif (!$this->validPassword($post['password'])) {
         	return "Password must contain at 
 						least one number, one lowercase and one 
 						uppercase letter and be at least
@@ -157,14 +141,76 @@ class Form_Validator {
         }
 	}
 		
-	// Input tester
-	function strip_input($data) {
+
+	
+	/* -----------------------------------------------------
+	 * Form validation for edit_account.php
+	 * -----------------------------------------------------*/
+	
+	/* Returns -1 if each  value in POST array is valid, error code
+	 * if not.*/
+	public function validateAccountUpdatePost($post) {
+		// Check for valid email.
+		if ($post['update']=='email') {
+			if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+				return "Invalid email.";
+			}
+			// Check for matching emails
+			elseif (!isset($_POST['email2']) ||
+					($_POST['email']!=$_POST['email2'])) {
+				return "Emails do not match.";
+			}
+		} else if ($post['update']=='password') {
+			//  Check for valid format of proposed password
+			elseif (!isset($_POST['newPassword']) ||
+					!validPassword($_POST['newPassword'])) {
+				$passwordError = "Invalid password.";
+			}
+			// Check for matching passwords
+			elseif (!isset($_POST['newPassword2']) &&
+					$_POST['newPassword'] != $_POST['newPassword2']) {
+				$passwordError = "Passwords do not match.";
+			}
+		}
+		return -1;
+	}
+	
+	
+	/* Returns -1 if each  value in POST array is valid, error code
+	 * if not.*/
+	public function sanitizeAccountUpdatePost($post) {
+		$data = $this->sanitize($account_update_whitelist, $post);
+		return $data;
+	}
+	
+	/* -----------------------------------------------------
+	 *  Helper functions
+	 * -----------------------------------------------------*/
+	
+	private function strip_input($data) {
 		$data = trim($data);
 		$data = stripslashes($data);
 		$data = htmlspecialchars($data);
 		return $data;
 	}
 	
+	// Check validity of password.
+	private function validPassword($password) {
+		//return preg_match($password, '/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/');
+		return true;
+	}
 	
+	/* Apply htmlspecialchars to safe keys in dangerous input */
+	private function sanitize($safe_keys, $dangerous_input) {
+		$data = array();
+		// Salinize text inputs
+		foreach ($safe_keys as $key) {
+			if (isset($post[$key])) {
+				$data[$key] = htmlspecialchars($dangerous_input[$key]);
+			}
+		}
+		return $data;
+	}	
+
 }
    
