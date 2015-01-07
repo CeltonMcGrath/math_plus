@@ -5,7 +5,7 @@
     $host = "localhost"; 
     $dbname = "login_system"; 
         
-    $public_area = array("login", "forgot_password", "register");
+    $public_area = array("login", "forgot_password", "register", "user_activation");
 
     // Communicate with the database via UTF-8 
     $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'); 

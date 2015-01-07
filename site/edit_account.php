@@ -15,7 +15,7 @@
     // Check if form has been submitted
     if(!empty($_POST)) {
     	$form_validator = new Form_Validator();
-    	$result = $form_validator->validateRegistrationPost($_POST);
+    	$result = $form_validator->validateAccountUpdatePost($_POST);
     	if ($result != -1) {
     		$error = $result;
     	}
@@ -42,7 +42,7 @@
     		elseif ($data['update']=='password') {
     			//Check old password
     			if (!correctPassword($data['oldPassword'])) {
-    				$error = "Incorrect credentials."
+    				$error = "Incorrect credentials.";
     			}
     			else {
     				//Update passworld
@@ -79,13 +79,13 @@
 				'<a href="students.php">Manage student and programs</a>', '');
 			//Email updater
 			echo $hg->accordionBox('email', 'Update email address', 
-				fg->emailUpdateForm());
+				$fg->emailUpdateForm($_SESSION['user']['email']));
 			//Password updater
 			echo $hg->accordionBox('password', 'Update password', 
 				$fg->passwordUpdateForm());
 			//Listserv updater
 			echo $hg->accordionBox('listserv', 'Update mailing list settings', 
-				$fg->listservUpdateForm($_SESSION['user']['email']));
+				$fg->listservUpdateForm(true));
 			?>
 		</section>
 	</section>

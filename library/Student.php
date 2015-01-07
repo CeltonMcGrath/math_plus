@@ -303,7 +303,7 @@ class Student {
  			
  		foreach($rows as $row):
  			echo "<li>".$row['program_name']." 
- 				(".$row['programs.start_date']."-".$row['programs.end_date'].")
+ 				(".$row['start_date']."-".$row['end_date'].")
  				</li>";
  		endforeach;
  		echo "</ul>";

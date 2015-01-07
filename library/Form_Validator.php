@@ -7,12 +7,12 @@ class Form_Validator {
 	);
 	
 	private $guardian_whitelist = array('guardian_id', 'first_name', 
-			'last_name', 'email', 'phone_1', 'phone_2', 'delete');
+			'last_name', 'email', 'phone_1', 'phone_2');
 	
 	private $registration_whitelist = array('email', 'password');
 	
 	private $account_update_whitelist = array('email', 'email2', 'oldPassword',
-			 'newPassword', 'newPassword2');
+			 'newPassword', 'newPassword2', 'update');
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
@@ -20,7 +20,7 @@ class Form_Validator {
 	
 	/* Sanitizes each value of student $_POST. */
 	public function sanitizeStudentPost($post) {
-		$data = $this->sanitize($student_whitelist, $post);
+		$data = $this->sanitize($this->student_whitelist, $post);
 		// Initialize checkbox group
 		if (!isset($post['guardian_group'])) {
 			$data['guardian_group'] = array();
@@ -76,7 +76,9 @@ class Form_Validator {
 	
 	/* Sanitizes each value of guardian $_POST. */
 	public function sanitizeGuardianPost($post) {
-		return $this->sanitize($guardian_whitelist, $post);
+		$data = $this->sanitize($this->guardian_whitelist, $post);
+		$data['delete'] = isset($post['delete']);
+		return $data;
 	}
 	
 	/* Returns 0 if each  value in POST array is valid, error code
@@ -109,7 +111,7 @@ class Form_Validator {
 	
 	/* Cleans registration form $_POST  */
 	public function sanitizeRegistrationPost($post) {
-		$data = $this->sanitize($registration_whitelist, $post);
+		$data = $this->sanitize($this->registration_whitelist, $post);
 		$data['listserv'] = isset($post['listserv']);
 		return $data;
 	}
@@ -160,9 +162,9 @@ class Form_Validator {
 					($_POST['email']!=$_POST['email2'])) {
 				return "Emails do not match.";
 			}
-		} else if ($post['update']=='password') {
+		} elseif ($post['update']=='password') {
 			//  Check for valid format of proposed password
-			elseif (!isset($_POST['newPassword']) ||
+			if (!isset($_POST['newPassword']) ||
 					!validPassword($_POST['newPassword'])) {
 				$passwordError = "Invalid password.";
 			}
@@ -179,7 +181,10 @@ class Form_Validator {
 	/* Returns -1 if each  value in POST array is valid, error code
 	 * if not.*/
 	public function sanitizeAccountUpdatePost($post) {
-		$data = $this->sanitize($account_update_whitelist, $post);
+		$data = $this->sanitize($this->account_update_whitelist, $post);
+		if (isset($post['listserv'])) {
+			$data['listserv'] = isset($post['listserv']);
+		}
 		return $data;
 	}
 	
@@ -205,7 +210,7 @@ class Form_Validator {
 		$data = array();
 		// Salinize text inputs
 		foreach ($safe_keys as $key) {
-			if (isset($post[$key])) {
+			if (isset($dangerous_input[$key])) {
 				$data[$key] = htmlspecialchars($dangerous_input[$key]);
 			}
 		}
@@ -213,4 +218,4 @@ class Form_Validator {
 	}	
 
 }
-   
+?> 

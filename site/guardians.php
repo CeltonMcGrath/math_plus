@@ -20,7 +20,7 @@
     	}
     	else {
     		$data = $form_validator->sanitizeGuardianPost($_POST);
-    		if ($data['guardian_id']==0) {
+    		if ($data['guardian_id']=='0') {
     			/* 0 indicates new guardian request. */
     			Guardian::createGuardian($_SESSION['user']['user_id'],
     			$data['first_name'], $data['last_name'],
@@ -30,8 +30,8 @@
     		}
     		else {
     			/* Update or delete guardian contact */
-    			if ($data['delete']=="yes") {
-    				Guardian::deleteGuardian($_POST['guardian_id'], $db);
+    			if ($data['delete']) {
+    				Guardian::deleteGuardian($data['guardian_id'], $db);
     				$success = "Guardian deleted.";
     			}
     			else {

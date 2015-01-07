@@ -41,7 +41,7 @@ class Form_Generator {
 		}		
 		
 		$form = "<form action='students.php' method='post'
-				id='$guardian_id' data-validate='parsley' />
+				id='$student_id' data-validate='parsley' />
 			<input type='hidden' name='student_id' value='$student_id'/>
 			".$new."
 			Preferred name:
@@ -122,11 +122,8 @@ class Form_Generator {
 		// Display settings for already registered guardian form
 		if ($guardian_id) {
 			$new = '';
-			$delete = "
-				Delete:
-				<input type='radio' name='delete'
-				value='yes'/> Yes
-				<input type='radio' name='delete' value='no' checked/> No";
+			$delete = "<input type='checkbox' class='regular' name='delete'
+					/> Delete";
 			$submit_value = "Update contact";
 		}
 		// Display settings for new guardian form
@@ -220,15 +217,16 @@ class Form_Generator {
 		return "<form action='edit_account.php' method='post'
 				id='email_update_form' data-validate='parsley'>
 				<input type='hidden' name='update' value='email' />
-			    Current email: '$currentEmail'>
+			    Current email: '$currentEmail'
 			    <br />
 			    New email: 
-			    <input type='email' name='email' 
+			    <input type='email' name='email' id='email' 
 			    data-parsley-trigger='change' required />
 			    <br />
 			    Re-enter new email:<br /> 
 			    <input type='email' name='email2' 
-			    data-parsley-trigger='change' required />
+			    data-parsley-trigger='change' required 
+			    data-parsley-equalto='#email' />
 			    <br />
 			    <input type='submit' value='Update email' /> 
 			</form>
@@ -271,10 +269,11 @@ class Form_Generator {
 	
 	/* Returns html listserv update form for edit_account.php */
 	public function listservUpdateForm($currentSettings) {
+		$checked='';
 		if ($currentSettings) {
 			$checked = 'checked';
 		}
-		return '<form action='edit_account.php' method='post'> 
+		return "<form action='edit_account.php' method='post'> 
 				<input type='hidden' name='update' value='listserv' />
 				<input type='checkbox' class='regular' 
 		    		name='listserv' '$checked' /> 
@@ -282,8 +281,9 @@ class Form_Generator {
 				upcoming programs.
 		    	<br />
 			    <input type='submit' value='Update mailing list settings' /> 
-			</form>';
+			</form>";
 	}
 
 }
-   
+
+?>   
