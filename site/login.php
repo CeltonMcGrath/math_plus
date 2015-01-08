@@ -9,28 +9,25 @@
     // Check if login form submitted
     if(!empty($_POST)) { 
         if (User::userExists($_POST['email'], $db)) {
-        	$user = new User($_POST['email']);
-        	if ($user->correctPassword($_POST['password']) && $user->status == 1) {
+        	$user = new User($_POST['email'], $db);
+        	if ($user->correctPassword($_POST['password']) && $user->getStatus() == 1) {
         		// Login successful.
         		// Only store user id and email in session variable.
-        		unset($row['salt']);
-        		unset($row['password']);
-        		unset($row['status']);
-        		$_SESSION['user'] = $row;
+        		$_SESSION['user'] = array('user_id'=>$user->getId(), 'email'=>$_POST['email']);
         		
         		// Redirect the user to the private members-only page.
         		header("Location: splash.php");
         		die("Logging in...");
         	}
-        	elseif ($user->correctPassword($_POST['password']) && $user->status == 1) {
-        		$login_error = "Account not activated.";
+        	elseif ($user->correctPassword($_POST['password']) && $user->getStatus() == 0) {
+        		$error = "Account not activated.";
         	}
         	else {
-        		$login_error = "Incorrect username and/or password.";
+        		$error = "Incorrect username and/or password.";
         	}
         }
         else {
-        	$login_error = "Incorrect username and/or password.";
+        	$error = "Incorrect username and/or password.";
         }
         $submitted_email = htmlentities($_POST['email'], ENT_QUOTES, 'UTF-8');
     }    
@@ -62,7 +59,7 @@
 				    <input type="submit" value="Login" />
 				</form> 				
 			</div>
-			<div id="navbar">
+			<div class="login-extra">
 				<a href="register.php">Register</a>
 				<a href="forgot_password.php">Forgot password</a>
 			</div>

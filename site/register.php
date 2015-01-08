@@ -1,7 +1,7 @@
 <?php
     // First we execute our common code to connection to the database and start the session 
-    require("../library/common.php");   
-    include '../library/user_registration/user_register.php';
+    require('../library/common.php');   
+    include '../library/User.php';
     include '../library/Form_Validator.php';
     include '../library/forms/Form_Generator.php';
 	

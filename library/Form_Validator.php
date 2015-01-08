@@ -12,7 +12,7 @@ class Form_Validator {
 	private $registration_whitelist = array('email', 'password');
 	
 	private $account_update_whitelist = array('email', 'email2', 'oldPassword',
-			 'newPassword', 'newPassword2', 'update');
+			 'newPassword', 'newPassword2', 'listserv', 'update');
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
@@ -154,32 +154,30 @@ class Form_Validator {
 	public function validateAccountUpdatePost($post) {
 		// Check for valid email.
 		if ($post['update']=='email') {
-			if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+			if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
 				return "Invalid email.";
 			}
 			// Check for matching emails
-			elseif (!isset($_POST['email2']) ||
-					($_POST['email']!=$_POST['email2'])) {
+			elseif (!isset($post['email2']) ||
+					($post['email']!=$post['email2'])) {
 				return "Emails do not match.";
 			}
 		} elseif ($post['update']=='password') {
 			//  Check for valid format of proposed password
-			if (!isset($_POST['newPassword']) ||
-					!validPassword($_POST['newPassword'])) {
+			if (!isset($post['newPassword']) ||
+					!validPassword($post['newPassword'])) {
 				$passwordError = "Invalid password.";
 			}
 			// Check for matching passwords
-			elseif (!isset($_POST['newPassword2']) &&
-					$_POST['newPassword'] != $_POST['newPassword2']) {
+			elseif (!isset($post['newPassword2']) &&
+					$post['newPassword'] != $post['newPassword2']) {
 				$passwordError = "Passwords do not match.";
 			}
 		}
 		return -1;
 	}
 	
-	
-	/* Returns -1 if each  value in POST array is valid, error code
-	 * if not.*/
+	/* Sanitizes post array */
 	public function sanitizeAccountUpdatePost($post) {
 		$data = $this->sanitize($this->account_update_whitelist, $post);
 		if (isset($post['listserv'])) {

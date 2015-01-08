@@ -1,5 +1,5 @@
 <?php
-class Guardian {
+class User {
 	
    private $user_id;
    private $email;
@@ -9,13 +9,13 @@ class Guardian {
    private $status;  
  
    public function __construct($input, $db) {
-   		if (filter_var($input, FILTER_VALIDATE_EMAIL)) {
+   		$this->database = $db;
+		if (filter_var($input, FILTER_VALIDATE_EMAIL)) {
    			$this->email = $input;
    			$query = "SELECT user_id, password, salt, listserv, status
 	    		FROM users
 	    		WHERE email = :email";  			 
-   			$query_params = array(':email' => $this->email);
-   			
+   			$query_params = array(':email' => $this->email);  			
    		}
    		else {
    			$this->user_id = $input;
@@ -41,7 +41,7 @@ class Guardian {
 	   		$this->user_id = $row['user_id'];
 	   	}
 		
-	   	$this->hasedPassword = $row['password']; 
+	   	$this->hashedPassword = $row['password']; 
 	   	$this->salt = $row['salt'];
 	   	$this->listserv = $row['listserv']; 
 	   	$this->status = $row['status']; 
@@ -91,9 +91,9 @@ class Guardian {
 	public function updatePassword($newPassword) {
 		//Generate new salt and hashed password
 		$newSalt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-		$newHashedPassword = hash('sha256', $newPassword . $salt);
+		$newHashedPassword = hash('sha256', $newPassword . $newSalt);
 			for($round = 0; $round < 65536; $round++) {
-				$newHashedPassword = hash('sha256', $password . $salt);
+				$newHashedPassword = hash('sha256', $newHashedPassword . $newSalt);
 			}
 			
 		// Initial query parameter values
@@ -107,7 +107,7 @@ class Guardian {
 		);
 		
 		try	{
-			$stmt = $db->prepare($query);
+			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex) {
@@ -130,7 +130,7 @@ class Guardian {
 		);
 		
 		try {
-			$stmt = $db->prepare($query);
+			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		}	
 		catch(PDOException $ex) {
@@ -152,7 +152,7 @@ class Guardian {
 				':user_id' => $this->user_id
 		);
 		try {
-			$stmt = $db->prepare($query);
+			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		} catch(PDOException $ex) {
 			error_log($ex->getMessage());
@@ -166,7 +166,7 @@ class Guardian {
 				$testHashedPassword =
 					hash('sha256', $testHashedPassword.$this->salt);
 			}
-		return $this->hashedPassword === $testPassword;
+		return $this->hashedPassword === $testHashedPassword;
 	}
 	
 	/* Resets users password and sends temporary password email. */
@@ -179,12 +179,12 @@ class Guardian {
 				$password = hash('sha256', $password . $salt);
 			}
 		
-		$this->salt = salt;
+		$this->salt = $salt;
 		$this->hashedPassword = $password;
 			
 		$query_params = array(
-				':password' => $hashedPassword,
-				':salt' => $salt,
+				':password' => $this->hashedPassword,
+				':salt' => $this->salt,
 				':email' => $this->email
 		);	
 		$query = "
@@ -194,14 +194,14 @@ class Guardian {
 		";
 	
 		try {
-			$stmt = $db->prepare($query);
+			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex) {
 			error_log($ex->getMessage());
 		}
 		include 'send_mail.php';
-		return sendTemporaryPassword($email, $temp);
+		return sendTemporaryPassword($this->email, $temp);
 	}
 	
 	/*Returns True iff the user exists in the database*/
@@ -226,8 +226,18 @@ class Guardian {
 			return False;
 		}
 	}
+
+	public function getId() {
+		return $this->user_id;
+	}
+
+	public function getStatus() {
+		return $this->status;
+	}
 	
-	
+	public function getListserv() {
+		return $this->listserv;
+	}	
 }
 
 ?>

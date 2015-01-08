@@ -1,13 +1,13 @@
 <?php 
     require("../library/common.php"); 
-    include '../library/user_registration/user_register.php';
-    include '../library/user_registration/user_maintenance.php';
+    include '../library/User.php';
     include '../library/Form_Validator.php';
     include '../library/forms/Form_Generator.php';
     include '../library/forms/html_Generator.php';
     
     $fg = new Form_Generator();
     $hg = new html_Generator();
+    $user = new User($_SESSION['user']['user_id'], $db);
     
     $error = '';
     $success = '';
@@ -24,13 +24,12 @@
     		// Check for type of updates
     		if ($data['update']=='email') {
     			//Check if user exists
-    			if (userExists($data['email'], $db)) {
+    			if (User::userExists($data['email'], $db)) {
     				$error = "This email is already in use.";
     			}
     			else {
     				// Update email
-    				updateEmail($_SESSION['user']['user_id'], $data['email'], 
-    					$db);
+				$user->updateEmail($data['email']);
     				$success = "Email successfully updated.
     						An activation link has been sent to your email.
     						Please close your browser and your account will be
@@ -41,21 +40,19 @@
     		// Password update
     		elseif ($data['update']=='password') {
     			//Check old password
-    			if (!correctPassword($data['oldPassword'])) {
+    			if (!$user->correctPassword($data['oldPassword'])) {
     				$error = "Incorrect credentials.";
     			}
     			else {
     				//Update passworld
-    				updatePassword($_SESSION['user']['user_id'],
-    				$data['newPassword'], $db);
+    				$user->updatePassword($data['newPassword']);
     				$success = "Password successfully updated.
     						Use your new password for your next login.";
     			}    			
     		}
     		// Listserv setting update
     		else {
-    			updateListserv($_SESSION['user']['user_id'], $data['listserv'], 
-    				$db);
+    			$user->updateListserv($data['listserv']); 
     			$success = "Mailing list settings successfuly updated.";
     		}
     	}
@@ -85,7 +82,7 @@
 				$fg->passwordUpdateForm());
 			//Listserv updater
 			echo $hg->accordionBox('listserv', 'Update mailing list settings', 
-				$fg->listservUpdateForm(true));
+				$fg->listservUpdateForm($user->getListserv()));
 			?>
 		</section>
 	</section>
