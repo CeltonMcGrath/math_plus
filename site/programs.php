@@ -6,7 +6,6 @@
     	//Redirect to students.php
     	header("Location: students.php");
     	die("Redirecting to students page.");
-    	
     }
     
     $student = new Student($_POST['student_id'], $db);

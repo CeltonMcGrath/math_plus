@@ -41,8 +41,7 @@ class Student {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex) {
-	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+	   		error_log($ex->getMessage());
 	   	}
 	   	$row = $stmt->fetch();
 	   	
@@ -88,8 +87,7 @@ class Student {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex) {
-	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+	   		error_log($ex->getMessage());
 	   	}
 	   	
 	   	// Update guardian permissions for student
@@ -172,8 +170,7 @@ class Student {
  			$result = $stmt->execute($query_params);
  		}
  		catch(PDOException $ex)  {
- 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-		   		</script>");
+ 			error_log($ex->getMessage());
  		} 			
  		$rows = $stmt->fetchAll();
  	
@@ -221,7 +218,7 @@ class Student {
  	 		$result = $stmt->execute($query_params);
  	 		}
  	 		catch(PDOException $ex)  {
- 	 		error_log($ex->getMessage());
+ 	 			error_log($ex->getMessage());
  	 		}
  	 		$rows_guardians = $stmt->fetchAll();
  	
@@ -259,8 +256,7 @@ class Student {
  			$stmt = $this->database->prepare($query);
  			$result = $stmt->execute($query_params);
  		} catch(PDOException $ex) {
- 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   			</script>");
+ 			error_log($ex->getMessage());
  		}
  		$rows = $stmt->fetchAll();
  			
@@ -296,8 +292,7 @@ class Student {
  			$stmt = $this->database->prepare($query);
  			$result = $stmt->execute($query_params);
  		} catch(PDOException $ex) {
- 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   			</script>");
+ 			error_log($ex->getMessage());
  		}
  		$rows = $stmt->fetchAll();
  			
@@ -326,8 +321,7 @@ class Student {
  			$stmt = $this->database->prepare($query);
  			$result = $stmt->execute();
  		} catch(PDOException $ex) {
- 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+ 			error_log($ex->getMessage());
  		}	
  		$programRows = $stmt->fetchAll();
 		
@@ -375,8 +369,7 @@ class Student {
  			$stmt = $this->database->prepare($query);
  			$result = $stmt->execute($query_params);
  		} catch(PDOException $ex) {
- 			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+ 			error_log($ex->getMessage());
  		}
  		$row = $stmt->fetch();
  		
@@ -415,8 +408,7 @@ class Student {
 			$stmt = $db->prepare ( $query );
 			$result = $stmt->execute ( $query_params );
 		} catch ( PDOException $ex ) {
-			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+			error_log($ex->getMessage());
 		}
 		//Update guardian permissions
 		self::updateGuardianGroup($selected_guardians, $s_id, $db);
@@ -438,8 +430,7 @@ class Student {
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex)	{
-			echo("<script>console.log('PHP: DELETE".$ex->getMessage()."');
-	   				</script>");
+			error_log($ex->getMessage());
 		}
 		echo("<script>console.log('PHP: DELETE')</script>");;
 		// Add new student guardian permissions for each guardian
@@ -457,9 +448,7 @@ class Student {
 				$result = $stmt->execute($query_params);
 			}
 			catch(PDOException $ex) {
-				echo("<script>console.log('PHP: REPLACE ".$student_id."
-				 	".$guardian_id." ".$ex->getMessage()." ');
-		   				</script>");
+				error_log($ex->getMessage());
 			}
 		}	
 	}

@@ -1,66 +1,38 @@
 <?php 
-    require("../library/common.php"); 
+    require("../library/common.php");
+    include '../library/User.php'; 
     
     // Redisplay user email if they have a login email.
     $submitted_email = '';
-    $login_error = '';
-    $db_error = False;
+    $error = '';
     
     // Check if login form submitted
     if(!empty($_POST)) { 
-        // Get credentials from database 
-        $query = "SELECT user_id, email, password, salt, status
-            FROM users 
-            WHERE email = :email"; 
-        // The parameter values 
-        $query_params = array( 
-            ':email' => $_POST['email']
-        ); 
-         
-        try { 
-            // Execute the query against the database 
-            $stmt = $db->prepare($query); 
-            $result = $stmt->execute($query_params); 
-        } 
-        catch(PDOException $ex) {  
-            $db_error = True; 
-        } 
-         
-        // Retrieve the user data from the database. If $row is false, then the email 
-        // they entered is not registered. 
-        if (!$db_error) {
-        	$row = $stmt->fetch();
+        if (User::userExists($_POST['email'], $db)) {
+        	$user = new User($_POST['email']);
+        	if ($user->correctPassword($_POST['password']) && $user->status == 1) {
+        		// Login successful.
+        		// Only store user id and email in session variable.
+        		unset($row['salt']);
+        		unset($row['password']);
+        		unset($row['status']);
+        		$_SESSION['user'] = $row;
+        		
+        		// Redirect the user to the private members-only page.
+        		header("Location: splash.php");
+        		die("Logging in...");
+        	}
+        	elseif ($user->correctPassword($_POST['password']) && $user->status == 1) {
+        		$login_error = "Account not activated.";
+        	}
+        	else {
+        		$login_error = "Incorrect username and/or password.";
+        	}
         }
-        // If the user exists, then validate user data. Otherwise, reject login.
-        if($row) { 
-            // Check if password match.
-            $check_password = hash('sha256', $_POST['password'] . $row['salt']); 
-            for($round = 0; $round < 65536; $round++) { 
-                $check_password = hash('sha256', $check_password . $row['salt']); 
-            }              
-            if($check_password === $row['password'] && $row['status'] == 1) { 
-            	// Login successful.
-            	// Only store user id and email in session variable.
-                unset($row['salt']); 
-	            unset($row['password']); 
-	            unset($row['status']);
-	            $_SESSION['user'] = $row; 
-	             
-	            // Redirect the user to the private members-only page. 
-	            header("Location: splash.php"); 
-	            die("Logging in..."); 
-            } 
-            elseif ($row['status'] == 0) {
-            	$login_error = "Account not activated.";
-            }
-            else {
-            	$login_error = "Incorrect username and/or password.";
-            }
-        } 
         else {
         	$login_error = "Incorrect username and/or password.";
-        } 
-        $submitted_email = htmlentities($_POST['email'], ENT_QUOTES, 'UTF-8'); 
+        }
+        $submitted_email = htmlentities($_POST['email'], ENT_QUOTES, 'UTF-8');
     }    
 ?> 
 
@@ -77,7 +49,7 @@
 		<section class="container">
 			<div class="login">
 				<h1>Login</h1> 
-				<span class="error"><?php echo $login_error;?></span>
+				<span class="error"><?php echo $error;?></span>
 				<br /><br />
 				<form action="login.php" method="post" ">
 				    Email:<br /> 
@@ -90,7 +62,7 @@
 				    <input type="submit" value="Login" />
 				</form> 				
 			</div>
-			<div class="login-extra">
+			<div id="navbar">
 				<a href="register.php">Register</a>
 				<a href="forgot_password.php">Forgot password</a>
 			</div>

@@ -30,8 +30,7 @@ class Program {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex) {
-	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+	   		error_log($ex->getMessage());
 	   	}
 	   	$row = $stmt->fetch();
 	   	
@@ -61,17 +60,17 @@ class Program {
 	    		WHERE program_id = :program_id';
 	   	
 	   	$query_params = array(':program_id' => $this->program_id);
-	   	$result = 0; 
+	   	$result = 0;
 	   	try {
 	   		$stmt = $this->database->prepare($query);
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex) {
-	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+	   		error_log($ex->getMessage());
 	   	}
+	   	$row = $stmt->fetch();
 	   	
-	   	return $this->capacity - $result;
+	   	return $this->capacity - $row['COUNT(*)'];
  	}
 	
  	/* Displays program article for programs.php */

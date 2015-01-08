@@ -29,8 +29,7 @@ class Cart {
 	   		$stmt = $this->database->prepare($query);
 	   		$result = $stmt->execute($query_params);
 	   	} catch ( PDOException $ex ) {
-			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+			error_log($ex->getMessage());
 		}
 	   	$row = $stmt->fetch();
 	    
@@ -55,8 +54,7 @@ class Cart {
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex) {
-			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+			error_log($ex->getMessage());
 		}
 		$this->contents = array();
 	}
@@ -139,8 +137,7 @@ class Cart {
 			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		} catch ( PDOException $ex ) {
-			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+			error_log($ex->getMessage());
 		}
 		$row = $stmt->fetch();
 		return $row['price'];
@@ -186,8 +183,7 @@ class Cart {
 			$result = $stmt->execute($query_params);
 		}
 		catch(PDOException $ex) {
-			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+			error_log($ex->getMessage());
 		}
 		
 		foreach ($this->contents as $cart_item) {
@@ -208,9 +204,6 @@ class Cart {
 				$result = $stmt->execute($query_params);
 			}
 			catch(PDOException $ex) {
-				/*echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");*/
-				error_log($transactionId);
 				error_log($ex->getMessage());
 			}
 			
@@ -228,8 +221,7 @@ class Cart {
 					$stmt = $this->database->prepare ( $query );
 					$result = $stmt->execute ( $query_params );
 				} catch ( PDOException $ex ) {
-					echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+					error_log($ex->getMessage());
 				}
 			}
 		}
@@ -268,8 +260,7 @@ class Cart {
 			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		} catch ( PDOException $ex ) {
-			echo("<script>console.log('PHP validBursary: ".$ex->getMessage()."');
-	   				</script>");
+			error_log($ex->getMessage());
 		}
 		$row = $stmt->fetch();
 		if (empty($row)) {
@@ -297,8 +288,7 @@ class Cart {
 			$stmt = $this->database->prepare ( $query );
 			$result = $stmt->execute ( $query_params );
 		} catch ( PDOException $ex ) {
-			echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+			error_log($ex->getMessage());
 		}
 	}
 	

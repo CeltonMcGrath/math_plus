@@ -27,7 +27,7 @@ class Guardian {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex) {
-	   		return False;
+	   		error_log($ex->getMessage());
 	   	}
 	   	$row = $stmt->fetch();
 	   	
@@ -65,7 +65,7 @@ class Guardian {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex) {
-	   		return False;
+	   		error_log($ex->getMessage());
 	   	}
 	   	return True;
    }
@@ -89,7 +89,7 @@ class Guardian {
 			$stmt = $db->prepare ( $query );
 			$result = $stmt->execute ( $query_params );
 		} catch ( PDOException $ex ) {
-			return False;
+			error_log($ex->getMessage());
 		}
 		return True;
 	}
@@ -109,8 +109,7 @@ class Guardian {
 	   		$result = $stmt->execute($query_params);
 	   	}
 	   	catch(PDOException $ex)	{
-	   		echo("<script>console.log('PHP: ".$ex->getMessage()."');
-	   				</script>");
+	   		error_log($ex->getMessage());
 	   	}
 	   	return True;
 	}

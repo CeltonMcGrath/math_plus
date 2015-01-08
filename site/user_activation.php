@@ -29,13 +29,11 @@
 				$stmt = $db->prepare($query);
 				$result = $stmt->execute($query_params);
 			}
-			catch(PDOException $ex)
-			{
-				// Note: On a production website, you should not output $ex->getMessage().
-				// It may provide an attacker with helpful information about your code.
-				die("Failed to run query: " . $ex->getMessage());
+			catch(PDOException $ex) {
+				echo("<script>console.log('PHP: ".$ex->getMessage()."');
+	   				</script>");
 			}
-			$msg="Your account is now activated. Click <a href='".$public_dir."login.php'>here</a> to login."; 	
+			$msg="Your account is now activated. Click <a href='login.php'>here</a> to login."; 	
 		}
 		else{
 			$msg ="Activation unsuccessful.";

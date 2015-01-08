@@ -1,34 +1,27 @@
 <?php
     // First we execute our common code to connection to the database and start the session 
     require("../library/common.php");   
-    include '../library/user_registration/user_register.php';
+    include '../library/User.php';
     
-    $successPhrase = "";
-    $errorPhrase = "";
+    $success = "";
+    $error = "";
     
-    if(!empty($_POST))
-    {	
+    if(!empty($_POST)) {	
     	$email = $_POST['email'];
     	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    		$errorPhrase = "Please enter a valid email.";
+    		$error = "Please enter a valid email.";
     	}
-    	elseif (!userexists($email, $db)) {
-    		$errorPhrase = "This email is not registered.";
+    	elseif (!User::userexists($email, $db)) {
+    		$error = "This email is not registered.";
     	}
     	else {
-    		if (resetPassword($email, $db)) {
-    			$successPhrase = "An email has been sent to your email address 
+    		$user = new User($email, $db);
+    		$user->resetPassword(){
+    		$success = "An email has been sent to your email address 
     					with a temporarypassword. Please login with your 
     					temporary password and change it.
     					(Check your junk/ spam folders.)";
-    			
-    		}
-    		else {
-    			$errorPhrase = "Oops something went wrong! Please try again or 
-    					contact site administrator.";
-    		}
     	}
-    	
     }
 ?> 
 
@@ -46,12 +39,12 @@
 		<section class="container">
 			<div class="login">
 				<form action="forgot_password.php" method="post"> 
-				    Please enter your email:<br /> 
+				    Please enter your email:
 				    <input type="text" name="email" value="" />
 				    <br /> 
-				    <span class="success"><?php echo $successPhrase?></span>
-					<span class="error"><?php echo $errorPhrase?></span>
-				    <br /><br /> 
+				    <span class="success"><?php echo $success ?></span>
+					<span class="error"><?php echo $error ?></span>
+				    <br />
 				    <input type="submit" value="Reset password" />
 				</form>
 			</div>
