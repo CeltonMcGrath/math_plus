@@ -17,26 +17,18 @@
     	if ($result != -1) {
     		$error = $result;
     	}
-	else {
-		$data = $form_validator->sanitizeRegistrationPost($_POST);
-		// Check for uniqueness of email
-		if (userExists($data['email'], $db)) {
-			$error = "This email is already in use.";
-		}
+		else {
+			$data = $form_validator->sanitizeRegistrationPost($_POST);
+			// Check for uniqueness of email
+			if (userExists($data['email'], $db)) {
+				$error = "This email is already in use.";
+			}
         	else {
-        		if (addUser($data['email'], $data['password'], $data['listserv'], 
-        			$db)) {
-        			$success = "Registration a success. 
-        				An activation link has been sent to your email.
-        				 You must activitate your account via this link. 
-        				Please check your spam/junk folders.";
-        		}
-        		else {
-        			$error = "Registration failed. 
-        				Please try again or contact administrator.";
-        		}
+        		$_SESSION['registration_data'] = $data;
+        		header("Location: registration_terms.php");
+        		die("Read the user terms and conditions.");
         	}
-    	 }
+	    }
     }
 ?> 
 
@@ -55,20 +47,20 @@
 		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
 	</head>
 	
-	<section class="content">
-		<section class="container">
-			<div class="login">
-				<h1>Register</h1> 
-				<span class="error"><?php echo $error; ?></span>
-				<span class="success"><?php echo $success; ?></span>
-				<br />
-				<?php echo $fg->registrationForm(); ?>		
-			</div>
-			<div class="login-extra">
-				<a href="login.php">Return to login</a>
-			</div>
-		</section>
+
+	<section class="container">
+		<div class="login">
+			<h1>Register</h1> 
+			<span class="error"><?php echo $error; ?></span>
+			<span class="success"><?php echo $success; ?></span>
+			<br />
+			<?php echo $fg->registrationForm(); ?>		
+		</div>
+		<div class="login-extra">
+			<a href="login.php">Return to login</a>
+		</div>
 	</section>
+
 	
 	
 </html>

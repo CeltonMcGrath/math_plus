@@ -200,7 +200,7 @@ class Form_Generator {
 		    <input type='checkbox' class='regular' 
 		    	name='listserv' checked>
 		    <br />
-		    <input type='submit' value='Register' /> 
+		    <input type='submit' value='Continue' /> 
 		</form>
 		<script type='text/javascript'>
   			$('#registration_form').parsley();
