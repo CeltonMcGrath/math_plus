@@ -5,7 +5,7 @@
     $host = "localhost"; 
     $dbname = "login_system"; 
         
-    $public_area = array("login", "forgot_password", "register", "user_activation");
+    $public_area = array("login", "forgot_password", "register", "registration_terms", "user_activation");
 
     // Communicate with the database via UTF-8 
     $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'); 
@@ -67,7 +67,8 @@
     	if (!preg_match('/'.$public_area[0].'/', $_SERVER['REQUEST_URI']) &
     		!preg_match('/'.$public_area[1].'/', $_SERVER['REQUEST_URI']) &
     		!preg_match('/'.$public_area[2].'/', $_SERVER['REQUEST_URI'])
-		& !preg_match('/'.$public_area[3].'/', $_SERVER['REQUEST_URI'])) {
+		& !preg_match('/'.$public_area[3].'/', $_SERVER['REQUEST_URI']) 
+    	 	& !preg_match('/'.$public_area[4].'/', $_SERVER['REQUEST_URI']) ) {
     			header("Location: /math_plus/site/login.php");
     			die("Redirecting to login page.");
     	}

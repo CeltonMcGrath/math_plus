@@ -20,7 +20,7 @@
 		else {
 			$data = $form_validator->sanitizeRegistrationPost($_POST);
 			// Check for uniqueness of email
-			if (userExists($data['email'], $db)) {
+			if (User::userExists($data['email'], $db)) {
 				$error = "This email is already in use.";
 			}
         	else {

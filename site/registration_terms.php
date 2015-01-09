@@ -1,6 +1,7 @@
 <?php 
     require("../library/common.php");
-	  
+
+		  
     if(!empty($_POST)) {
     	$data = $_SESSION['registration_data'];
     	if (addUser($data['email'], $data['password'], $data['listserv'],
@@ -33,9 +34,11 @@
 	</head>
 	<body>
 		<section class="container">
-			<h1>Terms and conditions</h1> 
-			<div class="scroll">	
-				<?php echo $terms?><			
+			<div class='login'>
+				<h1>Terms and conditions</h1> 
+				<div class="scroll">	
+					<?php echo $terms?><			
+				</div>
 			</div>
 			<div class="login-extra">
 				<form action='register.php' method='post' >
