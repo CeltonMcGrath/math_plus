@@ -245,7 +245,7 @@ class Form_Generator {
 				data-parsley-trigger='change' required />
 			    <br /> 
 			    New password:
-		    	<input type='password' name='password' id='password'
+		    	<input type='password' name='newPassword' id='password'
 		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
 		    	required 
 		    	data-parsley-error-message='Password must contain at 
@@ -255,7 +255,7 @@ class Form_Generator {
 		    	/> 
 		   	 	<br />
 		    	Re-enter new password:
-		    	<input type='password' name='password2' 
+		    	<input type='password' name='newPassword2' 
 		    	data-parsley-trigger='change' required   
 		    	data-parsley-equalto='#password' /> 
 		    	<br />
@@ -276,7 +276,7 @@ class Form_Generator {
 		return "<form action='edit_account.php' method='post'> 
 				<input type='hidden' name='update' value='listserv' />
 				<input type='checkbox' class='regular' 
-		    		name='listserv' '$checked' /> 
+		    		name='listserv' $checked /> 
 		    	I would like receive email notifications about 
 				upcoming programs.
 		    	<br />

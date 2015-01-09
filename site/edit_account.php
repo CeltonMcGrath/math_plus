@@ -11,7 +11,6 @@
     
     $error = '';
     $success = '';
-    
     // Check if form has been submitted
     if(!empty($_POST)) {
     	$form_validator = new Form_Validator();

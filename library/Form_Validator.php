@@ -12,7 +12,7 @@ class Form_Validator {
 	private $registration_whitelist = array('email', 'password');
 	
 	private $account_update_whitelist = array('email', 'email2', 'oldPassword',
-			 'newPassword', 'newPassword2', 'listserv', 'update');
+			 'newPassword', 'newPassword2', 'update');
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
@@ -165,7 +165,7 @@ class Form_Validator {
 		} elseif ($post['update']=='password') {
 			//  Check for valid format of proposed password
 			if (!isset($post['newPassword']) ||
-					!validPassword($post['newPassword'])) {
+					!$this->validPassword($post['newPassword'])) {
 				$passwordError = "Invalid password.";
 			}
 			// Check for matching passwords
@@ -180,9 +180,7 @@ class Form_Validator {
 	/* Sanitizes post array */
 	public function sanitizeAccountUpdatePost($post) {
 		$data = $this->sanitize($this->account_update_whitelist, $post);
-		if (isset($post['listserv'])) {
-			$data['listserv'] = isset($post['listserv']);
-		}
+		$data['listserv'] = isset($post['listserv']);
 		return $data;
 	}
 	

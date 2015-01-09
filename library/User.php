@@ -118,7 +118,7 @@ class User {
 	/* Updates users email, deactivates account and sends activation email. */
 	public function updateEmail ($newEmail) {
 		// Generate new activation key
-		$newActivation = hash('sha256', $email.time());
+		$newActivation = hash('sha256', $newEmail.time());
 		
 		$query = "UPDATE users
 				SET email = :email, activation = :activation, status = '0'
@@ -137,9 +137,10 @@ class User {
 			error_log($ex->getMessage());
 		}
 		
+		$this->email = $newEmail;
 		// Send activation email
 		include 'send_mail.php';
-		return sendActivationEmail($email, $activation, "update");
+		return sendActivationEmail($this->email, $newActivation, "update");
 	}
 	
 	/* Updates users lisetserv setting */
@@ -157,6 +158,7 @@ class User {
 		} catch(PDOException $ex) {
 			error_log($ex->getMessage());
 		}
+		$this->listserv = $newSetting;
 	}
 	
 	/* Returns true iff password is correct. */

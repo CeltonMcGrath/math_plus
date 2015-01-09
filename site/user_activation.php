@@ -17,7 +17,7 @@
 			$result = $stmt->execute($query_params); 
 		}
 		catch(PDOException $ex) {
-			die("Activation unsuccessful");
+			error_log($ex->getMessage());
 		}
 		
 		$row = $stmt->fetch();
