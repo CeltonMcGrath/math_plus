@@ -6,30 +6,47 @@
     $submitted_email = '';
     $error = '';
     
-    // Check if login form submitted
+	
     if(!empty($_POST)) { 
-        if (User::userExists($_POST['email'], $db)) {
-        	$user = new User($_POST['email'], $db);
-        	if ($user->correctPassword($_POST['password']) && $user->getStatus() == 1) {
-        		// Login successful.
-        		// Only store user id and email in session variable.
-        		$_SESSION['user'] = array('user_id'=>$user->getId(), 'email'=>$_POST['email']);
-        		
-        		// Redirect the user to the private members-only page.
-        		header("Location: splash.php");
-        		die("Logging in...");
-        	}
-        	elseif ($user->correctPassword($_POST['password']) && $user->getStatus() == 0) {
-        		$error = "Account not activated.";
+    	if ($_POST['operation']=='login') {
+    		if (User::userExists($_POST['email'], $db)) {
+    			$user = new User($_POST['email'], $db);
+    			if ($user->correctPassword($_POST['password']) && $user->getStatus() == 1) {
+    				// Login successful.
+    				// Only store user id and email in session variable.
+    				$_SESSION['user'] = array('user_id'=>$user->getId(), 'email'=>$_POST['email']);
+    		
+    				// Redirect the user to the private members-only page.
+    				header("Location: splash.php");
+    				die("Logging in...");
+    			}
+    			elseif ($user->correctPassword($_POST['password']) && $user->getStatus() == 0) {
+    				$error = "Account not activated.";
+    			}
+    			else {
+    				$error = "Incorrect username and/or password.";
+    			}
+    		}
+    		else {
+    			$error = "Incorrect username and/or password.";
+    		}
+    		$submitted_email = htmlentities($_POST['email'], ENT_QUOTES, 'UTF-8');
+    	}
+        elseif ($_POST['operation']=='register') {
+        	$data = $_SESSION['registration_data'];
+        	unset($_SESSION['registration_data']);
+        	if (addUser($data['email'], $data['password'], 
+        			$data['listserv'], $db)) {
+        				$error = "Registration a success.
+        				An activation link has been sent to your email.
+        				 You must activitate your account via this link.
+        				Please check your spam/junk folders.";
         	}
         	else {
-        		$error = "Incorrect username and/or password.";
-        	}
-        }
-        else {
-        	$error = "Incorrect username and/or password.";
-        }
-        $submitted_email = htmlentities($_POST['email'], ENT_QUOTES, 'UTF-8');
+        		$error = "Registration failed.
+        				Please try again or contact administrator.";
+        	}	
+        }   		
     }    
 ?> 
 
@@ -49,6 +66,7 @@
 				<span class="error"><?php echo $error;?></span>
 				<br /><br />
 				<form action="login.php" method="post" ">
+					<input type="hidden" name="operation" value="login" >
 				    Email:<br /> 
 				    <input type="email" name="email" 
 				    	value="<?php echo $submitted_email; ?>" />

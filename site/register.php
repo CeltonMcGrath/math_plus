@@ -46,8 +46,6 @@
         <script type="text/javascript" src="../public_html/parsley.js"></script>
 		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
 	</head>
-	
-
 	<section class="container">
 		<div class="login">
 			<h1>Register</h1> 
@@ -59,9 +57,6 @@
 		<div class="login-extra">
 			<a href="login.php">Return to login</a>
 		</div>
-	</section>
-
-	
-	
+	</section>	
 </html>
 

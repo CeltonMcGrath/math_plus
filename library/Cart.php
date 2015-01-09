@@ -146,13 +146,25 @@ class Cart {
 	/* Adds programs and student to cart. */  
 	public function addPrograms($student_id, $selectedPrograms) {
 		foreach ($selectedPrograms as $program_id) {
-			array_push($this->contents, 
-    		array('student_id' => $student_id,
-    		'program_id' => $program_id, 
-    		'bursary_id' => -1));
+			if (!$this->searchCart($student_id, $program_id)) {
+				array_push($this->contents, array('student_id' => $student_id,
+					'program_id' => $program_id,
+					'bursary_id' => -1));
+			}
 		}
 		$this->syncDatabase();  	
     		return true;
+	}
+	
+	/* Returns true iff student-program id combo found in cart. */
+	private function searchCart($student_id, $program_id) {
+		foreach ($this->contents as $cart_item) {
+			if ($cart_item['program_id']==$program_id && 
+					$cart_item['student_id']==$student_id) {
+						return true;
+					}	
+		}
+		return false;
 	}
    
 	/* Deletes program in cart in position $index. */

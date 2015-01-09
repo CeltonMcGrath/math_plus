@@ -1,9 +1,11 @@
 <?php
 	/*Code from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14*/
-
+	include 'config.php';
+	
 	function sendActivationEmail($email, $activation, $reason) {
 		/* Returns true iff activation email successfully sent.*/
-		$link = "http://54.174.128.163/math_plus/public/user_registration/user_activation.php?activation=".$activation;
+		$text_field = $GLOBALS['text_field'];
+		$link = $text_field['base_url']."user_activation.php?activation=".$activation;
 		if ($reason == "new user") {
 			$subject = "Math+ registration activation";
 			$body = "Thanks for registering with Math+. 
@@ -21,7 +23,9 @@
 	function sendTemporaryPassword($email, $password) {
 		/* Returns true iff temporary password email successfully sent.*/
 		$subject = "Math+ registration - temporary password";
-		$body = $password;
+		$body = "Your password for the Math+ registration site has been 
+				reset to".$password." Please login with this password and 
+				change your password on the account management panel.";
 		return sendMail($email, $subject, $body);
 	}
 	

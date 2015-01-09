@@ -1,21 +1,17 @@
 <?php 
     require("../library/common.php");
 
+	$error = "";
 		  
     if(!empty($_POST)) {
-    	$data = $_SESSION['registration_data'];
-    	if (addUser($data['email'], $data['password'], $data['listserv'],
-    			$db)) {
-    				$success = "Registration a success.
-        				An activation link has been sent to your email.
-        				 You must activitate your account via this link.
-        				Please check your spam/junk folders.";
-    			}
-    			else {
-    				$error = "Registration failed.
-        				Please try again or contact administrator.";
-    			}
-    	
+    	if (isset($_POST['terms'])) {
+    		header("Location: login.php");
+    		die("Registering...");
+    	}
+    	else {
+    		$error = "You must agree to these terms and conditions to use
+    				register.";
+    	}
     }
     else {
     	$terms = file_get_contents("../resources/user_terms_and_conditions.txt");
@@ -41,8 +37,12 @@
 				</div>
 			</div>
 			<div class="login-extra">
+				<span class="error"><?php echo $error ?></span>
 				<form action='register.php' method='post' >
+				<input type="hidden" name="operation" value="register" >
 				<input type='checkbox' class='regular' name='terms' >
+				I agree to the terms and conditions stated above.
+				<input type="submit" value="Register" />
 				</form>
 			</div>
 		</section>

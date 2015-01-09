@@ -3,10 +3,10 @@
 class Form_Generator {
 
 	/* Returns html student form for students.php */
-	public function studentForm($student_id, $preferred_name, $grade,
-			$allergies, $medical, $photo_permission, $leave_permission, 
-			$guardian_group) {
-
+	public function studentForm($student_id, $preferred_name, $gender,
+		$birthdate, $grade, $allergies, $medical, $perm_leave, $perm_lunch,
+		$perm_photo, $cellphone, $getGuardianGroup()) {
+		
 		//Display settings for new contact form
 		if ($student_id == 0) {
 			$new = "
@@ -16,6 +16,8 @@ class Form_Generator {
 	   			Last name:
 				<input type='text' name='last_name' 
 					data-parsley-trigger='change' required/>";
+			$boy_check = '';
+			$girl_check = '';
 			$leave_yes = '';
 			$leave_no = '';	
 			$consent_check = '';	
@@ -46,6 +48,13 @@ class Form_Generator {
 			".$new."
 			Preferred name:
 			<input type='text' name='preferred_name' value='$preferred_name'/>
+			Gender:
+			<input type='checkbox' name='gender[]' value='boy' $boy_checked />
+			<input type='checkbox' name='gender[]' value='girl' $girl_checked />
+			Birthdate (yyyy-mm-dd):
+			<input type='text' name='birthdate' 
+		    	pattern='^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$' 
+		    	required />
 			Grade:
 			<input type='text' name='grade' value='$grade'
 				data-parsley-trigger='change' required/>

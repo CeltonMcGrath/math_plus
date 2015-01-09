@@ -6,16 +6,20 @@ include 'forms/html_Generator.php';
 
 class Student {
 
-	private $student_id; //integer
-	private $user_id; //integer
-	private $first_name; //string
-	private $last_name; //string
-	private $preferred_name; //string
-	private $grade; //string
+	private $student_id; //integer, required
+	private $user_id; //integer, required
+	private $first_name; //string, required
+	private $last_name; //string, required
+	private $preferred_name; //string, optional
+	private $gender; //string, 'boy' or 'girl', optional
+	private $birthdate; //string (yyyy-mm-dd), required
+	private $grade; //string, required
 	private $allergies; //string
 	private $medical; //string	
-	private $permission_to_leave; //boolean
-	private $photo_permission; //boolean
+	private $perm_leave; //0 - no (must be picked up), 1-yes
+	private $perm_lunch; //0 - no, 1-yes, 2-pick up for lunch
+	private $perm_photo; //0 - no, 1-yes&age18, 2-yes&guardianconsent
+	private $cellphone; //string, 
 	private $database; //database connection
  
 	/*---------------------------------------------------------------
@@ -28,15 +32,15 @@ class Student {
    		$this->database = $db;
    		
    		/*Retrieves student data from db.*/
-	   	$query = 'SELECT user_id, first_name, last_name, preferred_name, grade, 
-	   			allergies, medical, permission_to_leave, photo_permission
+	   	$query = 'SELECT user_id, first_name, last_name, preferred_name, 
+	   			gender, birthdate, grade, allergies, medical, perm_leave, 
+	   			perm_photo, perm_photo, cellphone
 	   			FROM students
 	    		WHERE student_id = :student_id';
 	   	
 	   	$query_params = array(':student_id' => $this->student_id);
 	   	 
 	   	try {
-	   		// Execute the query against the database
 	   		$stmt = $this->database->prepare($query);
 	   		$result = $stmt->execute($query_params);
 	   	}
@@ -49,40 +53,47 @@ class Student {
 	   	$this->first_name = $row['first_name']; 
 	   	$this->last_name = $row['last_name']; 
 	   	$this->preferred_name = $row['preferred_name']; 
+	   	$this->gender = $row['gender'];
+	   	$this->birthdate = $row['birthdate'];
 	   	$this->grade = $row['grade']; 
 	   	$this->allergies = $row['allergies']; 
 	   	$this->medical = $row['medical'];
-	   	$this->permission_to_leave = $row['permission_to_leave'];
-	   	$this->photo_permission = $row['photo_permission'];
+	   	$this->perm_leave = $row['perm_leave'];
+	   	$this->perm_lunch = $row['perm_lunch'];
+	   	$this->perm_photo = $row['perm_photo'];
+	   	$this->cell = $row['cellphone'];
    }
 
 	/*Creates student contact in database.*/
 	public static function createStudent($u_id, $f_name,
-   		$l_name, $p_name, $gr, $all, $med, $perm_leave, 
-   		$perm_photo, $selected_guardians, $db) {	    
+   		$l_name, $p_name, $gr, $all, $med, $p_leave, $p_lunch,
+   		$p_photo, $c_phone, $selected_guardians, $db) {	    
    		
 		$query = "INSERT INTO students (user_id, first_name, last_name, 
-   				preferred_name, grade, allergies, medical, permission_to_leave,
-   				photo_permission) 
+				preferred_name, gender, birthdate, grade, allergies, medical, 
+				perm_leave, perm_lunch, perm_photo, perm_photo, cellphone) 
 	   			VALUES
-				(:user_id, :first_name, :last_name, 
-   				:preferred_name, :grade, :allergies, :medical, 
-   				:permission_to_leave, :photo_permission)";
+				(:user_id, :first_name, :last_name, :preferred_name, 
+	   			:gender, :birthdate, :grade, :allergies, :medical, :perm_leave, 
+	   			:perm_lunch, :perm_photo, :cellphone)";
 	   	 
 		$query_params = array(
 	   			':user_id' => $u_id,
 	   			':first_name' => $f_name,
 	   			':last_name' => $l_name,
 	   			':preferred_name' => $p_name,
+				':gender' => $gender,
+				':birthdate' => $birthdate,
 	   			':grade' => $gr,
 	   			':allergies' => $all,
 	   			':medical' => $med,
-	   			':permission_to_leave' => $perm_leave,
-	   			':photo_permission' => $perm_photo
+	   			':perm_leave' => $perm_leave,
+				':perm_lunch' => $perm_lunch,
+	   			':photo_permission' => $perm_photo,
+				':cellphone' => $c_phone
 	   	);
 	   	
 	   	try	{
-	   		// Execute the query against the database
 	   		$stmt = $db->prepare($query);
 	   		$result = $stmt->execute($query_params);
 	   	}
@@ -131,9 +142,11 @@ class Student {
 		   			".$this->last_name.", ".$this->first_name."
 		   		</label>
 		   		<article>";
-					echo $fg->studentForm($this->student_id, $this->preferred_name, 
-						$this->grade, $this->allergies, $this->medical, 
-						$this->photo_permission, $this->permission_to_leave, 
+					echo $fg->studentForm($this->student_id, 
+						$this->preferred_name, $this->gender, 
+						$this->birthdate, $this->grade, $this->allergies, 
+						$this->medical, $this->perm_leave, $this->perm_lunch,
+						$this->perm_photo, $cellphone,
 						$this->getGuardianGroup());
 					echo "<br />";
 		   			$this->displayFutureProgramList();
