@@ -5,7 +5,7 @@ class Form_Generator {
 	/* Returns html student form for students.php */
 	public function studentForm($student_id, $preferred_name, $gender,
 		$birthdate, $grade, $allergies, $medical, $perm_leave, $perm_lunch,
-		$perm_photo, $cellphone, $getGuardianGroup()) {
+		$perm_photo, $cellphone, $guardian_group) {
 		
 		//Display settings for new contact form
 		if ($student_id == 0) {

@@ -53,13 +53,13 @@ class User {
 		
 		//Hash password
 		$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-		$password = hash('sha256', $password . $salt);
+		$password = hash('sha256', $pw . $salt);
 			// Hash password several more times
 			for($round = 0; $round < 65536; $round++) {
 				$password = hash('sha256', $password . $salt);
 			}
 		// Generate activation key
-		$activation = hash('sha256', $email.time());
+		$activation = hash('sha256', $em.time());
 
 		
 		$query = "INSERT INTO users 
@@ -68,11 +68,11 @@ class User {
 					(:email, :password, :salt, :activation, :listserv)";
 				
 		$query_params = array(
-			':email' => $email,
+			':email' => $em,
 			':password' => $password,
 			':salt' => $salt,
 			':activation' => $activation,
-			':listserv' => $listserv
+			':listserv' => $list
 		);
 		
 		try {
@@ -84,7 +84,7 @@ class User {
 		}
 		
 		include 'send_mail.php';
-		return sendActivationEmail($email, $activation, "new user");
+		return sendActivationEmail($em, $activation, "new user");
 	}
 	
 	/* Updates users password */

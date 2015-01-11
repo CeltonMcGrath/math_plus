@@ -32,22 +32,22 @@
     		}
     		$submitted_email = htmlentities($_POST['email'], ENT_QUOTES, 'UTF-8');
     	}
-        elseif ($_POST['operation']=='register') {
-        	$data = $_SESSION['registration_data'];
-        	unset($_SESSION['registration_data']);
-        	if (addUser($data['email'], $data['password'], 
-        			$data['listserv'], $db)) {
-        				$error = "Registration a success.
-        				An activation link has been sent to your email.
-        				 You must activitate your account via this link.
-        				Please check your spam/junk folders.";
-        	}
-        	else {
-        		$error = "Registration failed.
+    } elseif(isset($_SESSION['registration_data'])) {
+        $data = $_SESSION['registration_data'];
+        unset($_SESSION['registration_data']);
+        if (User::createUser($data['email'], $data['password'], 
+        		$data['listserv'], $db)) {
+        			$error = "Registration a success.
+        			An activation link has been sent to your email.
+        			 You must activitate your account via this link.
+        			Please check your spam/junk folders.";
+        }
+        else {
+        	$error = "Registration failed.
         				Please try again or contact administrator.";
-        	}	
-        }   		
-    }    
+        }	
+     }   		
+   
 ?> 
 
 <html>
@@ -63,10 +63,10 @@
 		<section class="container">
 			<div class="login">
 				<h1>Login</h1> 
-				<span class="error"><?php echo $error;?></span>
+				<span class="error"><?php echo $error ?></span>
 				<br /><br />
 				<form action="login.php" method="post" ">
-					<input type="hidden" name="operation" value="login" >
+				    <input type="hidden" name="operation" value="login" />
 				    Email:<br /> 
 				    <input type="email" name="email" 
 				    	value="<?php echo $submitted_email; ?>" />

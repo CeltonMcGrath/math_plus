@@ -211,10 +211,11 @@ class Student {
 		
 		$id = '0';
 		$label = 'Add new student';
-		$article = $fg->studentForm(0, $preferred_name='', $grade ='',
- 				$allergies='', $medical='', $photo_permission=false,
- 				$leave_permission=false, $guardian_group);
- 		echo $hg->accordionBox($id, $label, $article); 
+		$article = $fg->studentForm(0, $preferred_name='', $birthdate='', $gender='',  $grade ='',
+ 				$allergies='', $medical='', $perm_leave='', $perm_photo='', $perm_lunch='',
+ 				$guardian_group);
+ 	
+		echo $hg->accordionBox($id, $label, $article); 
  	}
  	
  	/* Retrieves guardians associated with this user.
