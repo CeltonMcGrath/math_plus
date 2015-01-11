@@ -10,10 +10,10 @@ class Form_Generator {
 		//Display settings for new contact form
 		if ($student_id == 0) {
 			$new = "
-	   	    	First name:
+	   	    	*First name:
 	   			<input type='text' name='first_name' 
 					data-parsley-trigger='change' required/>
-	   			Last name:
+	   			*Last name:
 				<input type='text' name='last_name' 
 					data-parsley-trigger='change' required/>";
 			$boy_check = '';
@@ -84,14 +84,14 @@ class Form_Generator {
 			".$new."
 			Preferred name:
 			<input type='text' name='preferred_name' value='$preferred_name'/>
-			Birthdate (yyyy-mm-dd):
+			*Birthdate (yyyy-mm-dd):
 			<input type='text' name='birthdate' 
 		    	pattern='^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$' 
 		    	required />
 			Gender:
 			<input type='checkbox' name='gender[]' value='boy' $boy_check />
 			<input type='checkbox' name='gender[]' value='girl' $girl_check />
-			Grade:
+			*Grade:
 			<input type='text' name='grade' value='$grade'
 				data-parsley-trigger='change' required/>
 			<br />
@@ -100,11 +100,14 @@ class Form_Generator {
 			".$text_field['medical_label']."
 			<textarea name='medical'>".$medical."</textarea>
 			<hr>	
-			".$text_field['perm_leave']."
-			<input 'type='radio' name='perm_leave' 
-	   				value='No' $leave_no_check />
-			<input 'type='radio' name='perm_leave' 
-	   				value='Yes' $leave_yes_check />	
+			".$text_field['perm_leave']." (*)
+			<br />
+			<input 'type='radio' name='perm_leave' value='0' 
+				id='$student_id leave-0' $leave_no_check />
+			<label for='$student_id leave-0'>No</label>
+			<input 'type='radio' name='perm_leave' value='1'
+				id='$student_id leave-1' $leave_yes_check />
+			<label for='$student_id leave-1'>Yes</label>	
    			<hr>
    			".$text_field['perm_lunch']."
 			<input type='radio' name='perm_leave' 
