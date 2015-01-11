@@ -18,21 +18,13 @@
     		$data = $form_validator->sanitizeStudentPost($_POST);
     		if ($data['student_id']==0) {
     			/* 0 indicates new student request. */
-    			Student::createStudent($_SESSION['user']['user_id'],
-    				$data['first_name'], $data['last_name'],
-    				$data['preferred_name'], $data['grade'], 
-    				$data['allergies'], $data['medical'], 
-    				$data['leave_permission'], $data['photo_permission'], 
-    				$data['guardian_group'], $db);
+    			Student::createStudent(
+    				$_SESSION['user']['user_id'], $data, $db);
     				$success = "Student successfully created.";
     		}
     		else {
     			/* Update student contact */
-    			Student::updateStudent($data['student_id'],
-    				$data['preferred_name'], $data['grade'], 
-    				$data['allergies'], $data['medical'], 
-    				$data['leave_permission'], $data['photo_permission'], 
-    				$data['guardian_group'], $db);
+    			Student::updateStudent($data, $db);
     				$success = "Student successfully updated.";
     		}
     	}
@@ -64,7 +56,7 @@
 					$stmt = $db->prepare ( $query );
 					$result = $stmt->execute ( $query_params );
 				} catch ( PDOException $ex ) {
-					die ( "Failed to run query: " . $ex->getMessage () );
+					error_log($ex->getMessage ());
 				}
 				$rows = $stmt->fetchAll();
 				

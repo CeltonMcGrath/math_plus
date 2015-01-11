@@ -3,7 +3,7 @@
 class Form_Validator {
 
 	private $student_whitelist = array('student_id', 'first_name', 
-		'last_name', 'preferred_name', 'grade', 'allergies', 'medical' 
+		'last_name', 'preferred_name', 'birthdate', 'gender', 'grade', 'allergies', 'medical' 
 	);
 	
 	private $guardian_whitelist = array('guardian_id', 'first_name', 
@@ -21,17 +21,25 @@ class Form_Validator {
 	/* Sanitizes each value of student $_POST. */
 	public function sanitizeStudentPost($post) {
 		$data = $this->sanitize($this->student_whitelist, $post);
-		// Initialize checkbox group
+		// Initialize guardian group checkbox group
 		if (!isset($post['guardian_group'])) {
 			$data['guardian_group'] = array();
 		}
 		else {
 			$data['guardian_group'] = $post['guardian_group'];
 		}
+		// Leave permission
+		if ($post['perm_lunch']=='No') {
+			$data['perm_leave']=0;
+		}
+		else {
+			$data['perm_leave']=1;
+		}
+		$post['perm_lunch'];
+		// Lunch permission
+		$data['perm_lunch']  = $post['perm_lunch'];
 		// Photo permission
-		$data['photo_permission'] = isset($post['photo_permission']);
-		// Set permission to leave
-		$data['leave_permission'] = ($post['leave_permission'][0]=='leave_yes');
+		$data['perm_photo'] = $post['perm_photo'];
 		
 		return $data;
 	}
@@ -39,27 +47,26 @@ class Form_Validator {
 	/* Returns 0 if each  value in POST array is valid, error code
 	 * if not.*/
 	public function validateStudentPost($post) {
+		// Check for empty values 
+		if (!isset($post['first_name']) || !isset($post['last_name']) 
+				|| !isset($post['birthdate'])) {
+			return "Please enter a first name, last name and birthdate."			
+		}
 		// Check first name
-		if (isset($post['first_name']) && $this->strip_input($post['first_name'])==''){
+		if ($this->strip_input($post['first_name'])==''){
 			return "Please enter a non-empty first name.";
 		}
 		// Check last name
-		elseif (isset($post['last_name']) && $this->strip_input($post['last_name'])==""){
+		elseif ($this->strip_input($post['last_name'])==""){
 			return "Please enter a non-empty last name.";
 		}
+		// Check birth date 
+		/*elseif (isset($post['last_name']) && $this->strip_input($post['last_name'])==""){
+			return "Please enter a non-empty last name.";
+		}*/
 		// Check for entered grade
 		elseif ($this->strip_input($post['grade'])=="") {
 			return "Please enter valid grade.";
-		}
-		// Check if permission to leave was indicated at all
-		elseif (!isset($post['leave_permission'])) {
-			return "Please indicate whether or not student may leave programs 
-				on their own.";
-		}
-		// Check user has not checked both leave permission boxes
-		elseif (count($post['leave_permission'])>1) {
-			return "Please indicate whether or not student may leave programs 
-				on their own.";
 		}
 		// Check user has checked consent box
 		elseif (!isset($post['consent'])) {

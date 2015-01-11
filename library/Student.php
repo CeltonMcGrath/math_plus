@@ -11,8 +11,8 @@ class Student {
 	private $first_name; //string, required
 	private $last_name; //string, required
 	private $preferred_name; //string, optional
-	private $gender; //string, 'boy' or 'girl', optional
 	private $birthdate; //string (yyyy-mm-dd), required
+	private $gender; //string, 'boy' or 'girl', optional
 	private $grade; //string, required
 	private $allergies; //string
 	private $medical; //string	
@@ -33,7 +33,7 @@ class Student {
    		
    		/*Retrieves student data from db.*/
 	   	$query = 'SELECT user_id, first_name, last_name, preferred_name, 
-	   			gender, birthdate, grade, allergies, medical, perm_leave, 
+	   			birthdate, gender, grade, allergies, medical, perm_leave, 
 	   			perm_photo, perm_photo, cellphone
 	   			FROM students
 	    		WHERE student_id = :student_id';
@@ -53,44 +53,42 @@ class Student {
 	   	$this->first_name = $row['first_name']; 
 	   	$this->last_name = $row['last_name']; 
 	   	$this->preferred_name = $row['preferred_name']; 
-	   	$this->gender = $row['gender'];
 	   	$this->birthdate = $row['birthdate'];
+	   	$this->gender = $row['gender'];
 	   	$this->grade = $row['grade']; 
 	   	$this->allergies = $row['allergies']; 
 	   	$this->medical = $row['medical'];
 	   	$this->perm_leave = $row['perm_leave'];
 	   	$this->perm_lunch = $row['perm_lunch'];
 	   	$this->perm_photo = $row['perm_photo'];
-	   	$this->cell = $row['cellphone'];
+	   	$this->cellphone = $row['cellphone'];
    }
 
 	/*Creates student contact in database.*/
-	public static function createStudent($u_id, $f_name,
-   		$l_name, $p_name, $gr, $all, $med, $p_leave, $p_lunch,
-   		$p_photo, $c_phone, $selected_guardians, $db) {	    
+	public static function createStudent($u_id, $data, $db) {	    
    		
 		$query = "INSERT INTO students (user_id, first_name, last_name, 
-				preferred_name, gender, birthdate, grade, allergies, medical, 
-				perm_leave, perm_lunch, perm_photo, perm_photo, cellphone) 
+				preferred_name, birthdate, gender, grade, allergies, medical, 
+				perm_leave, perm_lunch, perm_photo, cellphone) 
 	   			VALUES
 				(:user_id, :first_name, :last_name, :preferred_name, 
-	   			:gender, :birthdate, :grade, :allergies, :medical, :perm_leave, 
+	   			:birthdate, :gender, :grade, :allergies, :medical, :perm_leave, 
 	   			:perm_lunch, :perm_photo, :cellphone)";
 	   	 
 		$query_params = array(
 	   			':user_id' => $u_id,
-	   			':first_name' => $f_name,
-	   			':last_name' => $l_name,
-	   			':preferred_name' => $p_name,
-				':gender' => $gender,
-				':birthdate' => $birthdate,
-	   			':grade' => $gr,
-	   			':allergies' => $all,
-	   			':medical' => $med,
-	   			':perm_leave' => $perm_leave,
-				':perm_lunch' => $perm_lunch,
-	   			':photo_permission' => $perm_photo,
-				':cellphone' => $c_phone
+	   			':first_name' => $data['first_name'],
+	   			':last_name' => $data['last_name'],
+	   			':preferred_name' => $data['preferred_name'],
+				':gender' => $data['gender'],
+				':birthdate' => $data['birthdate'],
+	   			':grade' => $data['grade'],
+	   			':allergies' => $data['allergies'],
+	   			':medical' => $data['medical'],
+	   			':perm_leave' => $data['perm_leave'],
+				':perm_lunch' => $data['perm_lunch'],
+	   			':photo_permission' => $data['perm_photo'],
+				':cellphone' => $data['cellphone']
 	   	);
 	   	
 	   	try	{
@@ -143,9 +141,9 @@ class Student {
 		   		</label>
 		   		<article>";
 					echo $fg->studentForm($this->student_id, 
-						$this->preferred_name, $this->gender, 
-						$this->birthdate, $this->grade, $this->allergies, 
-						$this->medical, $this->perm_leave, $this->perm_lunch,
+						$this->preferred_name, $this->birthdate, $this->gender, 
+						$this->grade, $this->allergies, $this->medical, 
+						$this->perm_leave, $this->perm_lunch,
 						$this->perm_photo, $cellphone,
 						$this->getGuardianGroup());
 					echo "<br />";

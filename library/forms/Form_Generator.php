@@ -3,8 +3,8 @@
 class Form_Generator {
 
 	/* Returns html student form for students.php */
-	public function studentForm($student_id, $preferred_name, $gender,
-		$birthdate, $grade, $allergies, $medical, $perm_leave, $perm_lunch,
+	public function studentForm($student_id, $preferred_name, $birthdate, 
+		$gender, $grade, $allergies, $medical, $perm_leave, $perm_lunch,
 		$perm_photo, $cellphone, $guardian_group) {
 		
 		//Display settings for new contact form
@@ -18,21 +18,61 @@ class Form_Generator {
 					data-parsley-trigger='change' required/>";
 			$boy_check = '';
 			$girl_check = '';
-			$leave_yes = '';
-			$leave_no = '';	
-			$consent_check = '';	
+			$leave_yes_check = '';
+			$leave_no_check = 'checked';
+			$lunch_leave_check ='';
+			$lunch_stay_check = 'checked';
+			$lunch_pickup_check = '';
+			$photo_18_check = '';
+			$photo_guardian_check = '';
+			$photo_no_check = 'checked';
+			$consent_check = '';
 		}
 		//Display settings for registered contact form
 		else {
+			// Do not redisplay name fields
 			$new = "";
+			// Load gender checkboxes
+			$boy_check = '';
+			$girl_check = '';
+			if ($gender=='boy') {
+				$boy_check = 'checked';
+			}
+			elseif ($gender =='girl') {
+				$girl_check = 'checked';
+			}
+			// Load leave permission radio buttons
+			$leave_yes_check = '';
+			$leave_no_check = '';
 			if ($leave_permission) {
-				$leave_yes = 'checked';
-				$leave_no = '';
+				$leave_yes_check = 'checked';
 			}
 			else {
-				$leave_yes = '';
-				$leave_no = 'checked';
+				$leave_no_check = 'checked';
 			}
+			//Load lunch permission settings
+			$lunch_leave_check ='';
+			$lunch_stay_check = '';
+			$lunch_pickup_check = '';
+			if ($perm_lunch==0) {
+				$lunch_stay_check = 'checked';
+			} elseif($perm_lunch==1){
+				$lunch_leave_check ='checked';
+			} else {
+				$lunch_pickup_check = 'checked';
+			}
+			//Load photo permission settings
+			$photo_18_check = '';
+			$photo_guardian_check = '';
+			$photo_no_check = '';
+			if ($perm_photo==0) {
+				$photo_no_check = 'checked';
+			} elseif($perm_lunch==1){
+				$photo_18_check ='checked';
+			} else {
+				$photo_guardian_check = 'checked';
+			}
+			// Use must agree to use consent
 			$consent_check = 'checked';
 		}
 		//Display settings for both contact types
@@ -48,13 +88,13 @@ class Form_Generator {
 			".$new."
 			Preferred name:
 			<input type='text' name='preferred_name' value='$preferred_name'/>
-			Gender:
-			<input type='checkbox' name='gender[]' value='boy' $boy_checked />
-			<input type='checkbox' name='gender[]' value='girl' $girl_checked />
 			Birthdate (yyyy-mm-dd):
 			<input type='text' name='birthdate' 
 		    	pattern='^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$' 
 		    	required />
+			Gender:
+			<input type='checkbox' name='gender[]' value='boy' $boy_check />
+			<input type='checkbox' name='gender[]' value='girl' $girl_check />
 			Grade:
 			<input type='text' name='grade' value='$grade'
 				data-parsley-trigger='change' required/>
@@ -63,19 +103,37 @@ class Form_Generator {
 			<textarea name='allergies'>".$allergies."</textarea>
 			".$text_field['medical_label']."
 			<textarea name='medical'>".$medical."</textarea>
-	   		<br />
-			<input class='regular 'type='checkbox' name='photo_permission'
-	   				".$photo_check."/> ".$text_field['photo_perm_label']."
-   			<br /><br />
-   			<input class='regular 'type='checkbox' name='leave_permission[]' 
-	   				value='leave_no' ".$leave_no." />
-   			".$text_field['leave_perm_no']."
-   			<br />
-   			<input class='regular 'type='checkbox' name='leave_permission[]' 
-   					value='leave_yes' ".$leave_yes." />
-   			".$text_field['leave_perm_yes']."
-   			<br /><br />".$this->guardianSelectionForm($guardian_group)."
-   			<br /><br />
+			<hr>	
+			".$text_field['perm_leave']."
+			<input 'type='radio' name='perm_leave' 
+	   				value='No' $leave_no_check />
+			<input 'type='radio' name='perm_leave' 
+	   				value='Yes' $leave_yes_check />	
+   			<hr>
+   			".$text_field['perm_lunch']."
+			<input 'type='radio' name='perm_leave' 
+	   				value='No' $lunch_stay_check />
+			<input 'type='radio' name='perm_leave' 
+	   				value='Yes' $lunch_leave_check />	
+	   		<input 'type='radio' name='perm_leave' 
+	   				value='Pickup for lunch' $lunch_pickup_check />
+   			<hr>
+			".$text_field['perm_photo']."
+			<input 'type='radio' name='perm_leave' 
+	   				value='1' 
+	   				$photo_18_check />
+	   		This student is eighteen years of age or over and consents
+			<input 'type='radio' name='perm_leave' 
+	   				value='2' 
+	   				$photo_guardian_check />	
+	   		I am the parent/guardian of the participant and I consent
+	   		<input 'type='radio' name='perm_leave' 
+	   				value='0' 
+	   				$photo_no_check />
+	   		I do not consent
+   			<hr>
+   			".$this->guardianSelectionForm($guardian_group)."
+   			<hr>
 	 		<input type='checkbox' class='regular' name='consent' 
    					".$consent_check." 
    					data-parsley-trigger='change' required/> 
