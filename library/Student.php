@@ -211,7 +211,7 @@ class Student {
 		$label = 'Add new student';
 		$article = $fg->studentForm(0, $preferred_name='', $birthdate='', $gender='',  $grade ='',
  				$allergies='', $medical='', $perm_leave='', $perm_photo='', $perm_lunch='',
- 				$guardian_group);
+ 				$cellphone='', $guardian_group);
  	
 		echo $hg->accordionBox($id, $label, $article); 
  	}

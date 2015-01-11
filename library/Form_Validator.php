@@ -50,7 +50,7 @@ class Form_Validator {
 		// Check for empty values 
 		if (!isset($post['first_name']) || !isset($post['last_name']) 
 				|| !isset($post['birthdate'])) {
-			return "Please enter a first name, last name and birthdate."			
+			return "Please enter a first name, last name and birthdate.";	
 		}
 		// Check first name
 		if ($this->strip_input($post['first_name'])==''){

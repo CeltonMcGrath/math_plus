@@ -77,10 +77,6 @@ class Form_Generator {
 		}
 		//Display settings for both contact types
 		$text_field = $GLOBALS['text_field'];
-		$photo_check = '';
-		if ($photo_permission) {
-			$photo_check = 'checked';
-		}		
 		
 		$form = "<form action='students.php' method='post'
 				id='$student_id' data-validate='parsley' />
@@ -111,23 +107,23 @@ class Form_Generator {
 	   				value='Yes' $leave_yes_check />	
    			<hr>
    			".$text_field['perm_lunch']."
-			<input 'type='radio' name='perm_leave' 
+			<input type='radio' name='perm_leave' 
 	   				value='No' $lunch_stay_check />
-			<input 'type='radio' name='perm_leave' 
+			<input type='radio' name='perm_leave' 
 	   				value='Yes' $lunch_leave_check />	
-	   		<input 'type='radio' name='perm_leave' 
+	   		<input type='radio' name='perm_leave' 
 	   				value='Pickup for lunch' $lunch_pickup_check />
    			<hr>
 			".$text_field['perm_photo']."
-			<input 'type='radio' name='perm_leave' 
+			<input type='radio' name='perm_leave' 
 	   				value='1' 
 	   				$photo_18_check />
 	   		This student is eighteen years of age or over and consents
-			<input 'type='radio' name='perm_leave' 
+			<input type='radio' name='perm_leave' 
 	   				value='2' 
 	   				$photo_guardian_check />	
 	   		I am the parent/guardian of the participant and I consent
-	   		<input 'type='radio' name='perm_leave' 
+	   		<input type='radio' name='perm_leave' 
 	   				value='0' 
 	   				$photo_no_check />
 	   		I do not consent
