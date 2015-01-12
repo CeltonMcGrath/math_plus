@@ -34,7 +34,7 @@ class Student {
    		/*Retrieves student data from db.*/
 	   	$query = 'SELECT user_id, first_name, last_name, preferred_name, 
 	   			birthdate, gender, grade, allergies, medical, perm_leave, 
-	   			perm_photo, perm_photo, cellphone
+	   			perm_lunch, perm_photo, cellphone
 	   			FROM students
 	    		WHERE student_id = :student_id';
 	   	
@@ -87,7 +87,7 @@ class Student {
 	   			':medical' => $data['medical'],
 	   			':perm_leave' => $data['perm_leave'],
 				':perm_lunch' => $data['perm_lunch'],
-	   			':photo_permission' => $data['perm_photo'],
+	   			':perm_photo' => $data['perm_photo'],
 				':cellphone' => $data['cellphone']
 	   	);
 	   	
@@ -101,7 +101,7 @@ class Student {
 	   	
 	   	// Update guardian permissions for student
 	    $student_id = $db->lastInsertId();	
-	    self::updateGuardianGroup($selected_guardians, $student_id, $db);
+	    self::updateGuardianGroup($data['guardian_group'], $student_id, $db);
 	   	return True;
    }
   	
@@ -396,25 +396,33 @@ class Student {
  		
  	/* Updates database records related to student and returns true 
  	 * iff update successful. */
-	public static function updateStudent($s_id, $p_name, 
-    				$gr, $all, $med, $leave_perm, $photo_perm, 
-		$selected_guardians, $db) {
+	public static function updateStudent($s_id, $data, $db) {
 		//Update students table
 		$query = "UPDATE students
-	    		SET preferred_name = :preferred_name, grade = :grade, 
-					allergies = :allergies, medical = :medical,
-					photo_permission = :photo_permission,
-					permission_to_leave = :permission_to_leave
+	    		SET preferred_name = :preferred_name, 
+					birthdate = :birthdate,
+					gender = :gender,
+					grade = :grade, 
+					allergies = :allergies, 
+					medical = :medical,
+					perm_photo = :perm_photo,
+					perm_leave = :perm_leave,
+					perm_lunch = :perm_lunch,
+					cellphone = :cellphone
 	    		WHERE student_id = :student_id";
 		
 		$query_params = array (
-				':preferred_name' => $p_name,
-				':grade' => $gr,
-				':allergies' => $all,
-				':medical' => $med,
-				'photo_permission' => $photo_perm,
-				'permission_to_leave' => $leave_perm,
-				'student_id' => $s_id
+				':preferred_name' => $data['preferred_name'],
+				':birthdate' => $data['birthdate'],
+				':grade' => $data['grade'],
+				':gender' => $data['gender'],
+				':allergies' => $data['allergies'],
+				':medical' => $data['medical'],
+				':perm_photo' => $data['perm_photo'],
+				':perm_leave' => $data['perm_leave'],
+				':perm_lunch' => $data['perm_lunch'],
+				':cellphone' => $data['cellphone'],
+				':student_id' => $data['student_id']
 		);
 		
 		try {
@@ -424,7 +432,7 @@ class Student {
 			error_log($ex->getMessage());
 		}
 		//Update guardian permissions
-		self::updateGuardianGroup($selected_guardians, $s_id, $db);
+		self::updateGuardianGroup($data['guardian_group'], $s_id, $db);
 		
 		return True;
 	}

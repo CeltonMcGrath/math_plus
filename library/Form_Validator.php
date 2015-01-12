@@ -4,11 +4,10 @@ class Form_Validator {
 
 	private $student_whitelist = array('student_id', 'first_name', 
 		'last_name', 'preferred_name', 'birthdate', 'gender', 'grade', 
-		'allergies', 'medical', 'cellphone', 'perm_photo', 'perm_lunch'
+		'allergies', 'medical', 'cellphone', 'perm_photo', 'perm_lunch',
 			'perm_leave');
 	
-	private $student_non_empty = array('student_id', 'first_name', 
-		'last_name', 'birthdate', 'grade', 'perm_photo', 'perm_lunch'
+	private $student_non_empty = array('student_id', 'birthdate', 'grade', 'perm_photo', 'perm_lunch',
 			'perm_leave');
 	
 	private $guardian_whitelist = array('guardian_id', 'first_name', 
@@ -32,7 +31,7 @@ class Form_Validator {
 		}
 		else {
 			$data['guardian_group'] = $post['guardian_group'];
-		}		
+		}
 		return $data;
 	}
 	
@@ -46,8 +45,7 @@ class Form_Validator {
 			}
 		}
 		// Check for valid birth date 
-		if (!preg_match('^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$', 
-				$post['birthdate'])) {
+		if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $post['birthdate'])) {
 			return "Please enter a valid birthdate.";
 		}
 		// Check user has checked consent box

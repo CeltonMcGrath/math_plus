@@ -49,7 +49,7 @@ class Form_Generator {
 			// Load leave permission radio buttons
 			$leave_yes_check = '';
 			$leave_no_check = '';
-			if ($leave_permission) {
+			if ($perm_leave) {
 				$leave_yes_check = 'checked';
 			}
 			else {
@@ -90,16 +90,16 @@ class Form_Generator {
 			Preferred name:
 			<input type='text' name='preferred_name' value='$preferred_name'/>
 			*Birthdate (yyyy-mm-dd):
-			<input type='text' name='birthdate' 
+			<input type='text' name='birthdate'  value='$birthdate' 
 		    	pattern='^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$' 
 		    	required />
 			Gender:
-			<input type='checkbox' name='gender' value='boy' $boy_check />
-			<input type='checkbox' name='gender' value='girl' $girl_check />
+			<input type='checkbox' name='gender' value='boy' $boy_check /> Boy
+			<input type='checkbox' name='gender' value='girl' $girl_check /> Girl
 			<br />
 			*Grade:
 			<input type='text' name='grade' value='$grade'
-				data-parsley-trigger='change' required/>
+				data-parsley-trigger='change' required />
 			Cellphone:
 			<input type='text' name='cellphone' value='$cellphone'/>
 			<br />

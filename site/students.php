@@ -24,7 +24,7 @@
     		}
     		else {
     			/* Update student contact */
-    			Student::updateStudent($data, $db);
+    			Student::updateStudent($_SESSION['user']['user_id'], $data, $db);
     				$success = "Student successfully updated.";
     		}
     	}
