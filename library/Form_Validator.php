@@ -3,8 +3,13 @@
 class Form_Validator {
 
 	private $student_whitelist = array('student_id', 'first_name', 
-		'last_name', 'preferred_name', 'birthdate', 'gender', 'grade', 'allergies', 'medical' 
-	);
+		'last_name', 'preferred_name', 'birthdate', 'gender', 'grade', 
+		'allergies', 'medical', 'cellphone', 'perm_photo', 'perm_lunch'
+			'perm_leave');
+	
+	private $student_non_empty = array('student_id', 'first_name', 
+		'last_name', 'birthdate', 'grade', 'perm_photo', 'perm_lunch'
+			'perm_leave');
 	
 	private $guardian_whitelist = array('guardian_id', 'first_name', 
 			'last_name', 'email', 'phone_1', 'phone_2');
@@ -27,46 +32,23 @@ class Form_Validator {
 		}
 		else {
 			$data['guardian_group'] = $post['guardian_group'];
-		}
-		// Leave permission
-		if ($post['perm_lunch']=='No') {
-			$data['perm_leave']=0;
-		}
-		else {
-			$data['perm_leave']=1;
-		}
-		$post['perm_lunch'];
-		// Lunch permission
-		$data['perm_lunch']  = $post['perm_lunch'];
-		// Photo permission
-		$data['perm_photo'] = $post['perm_photo'];
-		
+		}		
 		return $data;
 	}
 	
 	/* Returns 0 if each  value in POST array is valid, error code
 	 * if not.*/
 	public function validateStudentPost($post) {
-		// Check for empty values 
-		if (!isset($post['first_name']) || !isset($post['last_name']) 
-				|| !isset($post['birthdate'])) {
-			return "Please enter a first name, last name and birthdate.";	
+		// Check for non-empty values:
+		foreach ($this->student_non_empty as $key) {
+			if (!isset($post[$key])) {
+				return "Please enter all required values.";
+			}
 		}
-		// Check first name
-		if ($this->strip_input($post['first_name'])==''){
-			return "Please enter a non-empty first name.";
-		}
-		// Check last name
-		elseif ($this->strip_input($post['last_name'])==""){
-			return "Please enter a non-empty last name.";
-		}
-		// Check birth date 
-		/*elseif (isset($post['last_name']) && $this->strip_input($post['last_name'])==""){
-			return "Please enter a non-empty last name.";
-		}*/
-		// Check for entered grade
-		elseif ($this->strip_input($post['grade'])=="") {
-			return "Please enter valid grade.";
+		// Check for valid birth date 
+		if (!preg_match('^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$', 
+				$post['birthdate'])) {
+			return "Please enter a valid birthdate.";
 		}
 		// Check user has checked consent box
 		elseif (!isset($post['consent'])) {

@@ -144,7 +144,7 @@ class Student {
 						$this->preferred_name, $this->birthdate, $this->gender, 
 						$this->grade, $this->allergies, $this->medical, 
 						$this->perm_leave, $this->perm_lunch,
-						$this->perm_photo, $cellphone,
+						$this->perm_photo, $this->cellphone,
 						$this->getGuardianGroup());
 					echo "<br />";
 		   			$this->displayFutureProgramList();
@@ -209,8 +209,9 @@ class Student {
 		
 		$id = '0';
 		$label = 'Add new student';
-		$article = $fg->studentForm(0, $preferred_name='', $birthdate='', $gender='',  $grade ='',
- 				$allergies='', $medical='', $perm_leave='', $perm_photo='', $perm_lunch='',
+		$article = $fg->studentForm(0, $preferred_name='', $birthdate='', 
+				$gender='',  $grade ='', $allergies='', $medical='', 
+				$perm_leave='', $perm_photo='', $perm_lunch='',
  				$cellphone='', $guardian_group);
  	
 		echo $hg->accordionBox($id, $label, $article); 

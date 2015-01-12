@@ -16,16 +16,21 @@ class Form_Generator {
 	   			*Last name:
 				<input type='text' name='last_name' 
 					data-parsley-trigger='change' required/>";
+			// No gender specified
 			$boy_check = '';
 			$girl_check = '';
+			// Default leave setting
 			$leave_yes_check = '';
 			$leave_no_check = 'checked';
+			// Default lunch setting
 			$lunch_leave_check ='';
 			$lunch_stay_check = 'checked';
 			$lunch_pickup_check = '';
+			// Default photo permiss
 			$photo_18_check = '';
 			$photo_guardian_check = '';
 			$photo_no_check = 'checked';
+			// Consent check
 			$consent_check = '';
 		}
 		//Display settings for registered contact form
@@ -89,51 +94,50 @@ class Form_Generator {
 		    	pattern='^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$' 
 		    	required />
 			Gender:
-			<input type='checkbox' name='gender[]' value='boy' $boy_check />
-			<input type='checkbox' name='gender[]' value='girl' $girl_check />
+			<input type='checkbox' name='gender' value='boy' $boy_check />
+			<input type='checkbox' name='gender' value='girl' $girl_check />
 			<br />
 			*Grade:
 			<input type='text' name='grade' value='$grade'
 				data-parsley-trigger='change' required/>
+			Cellphone:
+			<input type='text' name='cellphone' value='$cellphone'/>
 			<br />
 			".$text_field['allergy_label']."
-			<textarea name='allergies'>".$allergies."</textarea>
+			<textarea name='allergies'>$allergies</textarea>
 			".$text_field['medical_label']."
-			<textarea name='medical'>".$medical."</textarea>
+			<textarea name='medical'>$medical</textarea>
 			<hr>	
 			".$text_field['perm_leave']." (*)
 			<br />
-			<input type='radio' name='perm_leave' value='0' 
-				id='$student_id leave-0' $leave_no_check />
+			<input type='radio' name='perm_leave' value='0' $leave_no_check />
 			No<br />
-			<input type='radio' name='perm_leave' value='1'
-				id='$student_id leave-1' $leave_yes_check />
-   			
+			<input type='radio' name='perm_leave' value='1' $leave_yes_check />	
 			Yes<hr>
-   			".$text_field['perm_lunch']."
-			<input type='radio' name='perm_leave' 
+   			".$text_field['perm_lunch']." (*)
+			<input type='radio' name='perm_lunch' 
 	   				value='0' $lunch_stay_check />No
 			<br />
-			<input type='radio' name='perm_leave' 
+			<input type='radio' name='perm_lunch' 
 	   				value='1' $lunch_leave_check />Yes
 			<br />	
-	   		<input type='radio' name='perm_leave' 
+	   		<input type='radio' name='perm_lunch' 
 	   				value='2' $lunch_pickup_check />
 				Someone may pickup
    			<hr>
-			".$text_field['perm_photo']."
+			".$text_field['perm_photo']." (*)
 			<br />
-			<input type='radio' name='perm_leave' 
+			<input type='radio' name='perm_photo' 
 	   				value='1' 
 	   				$photo_18_check />
 	   		This student is eighteen years of age or over and consents
 			<br />
-			<input type='radio' name='perm_leave' 
+			<input type='radio' name='perm_photo' 
 	   				value='2' 
 	   				$photo_guardian_check />	
 	   		I am the parent/guardian of the participant and I consent
 			<br />
-	   		<input type='radio' name='perm_leave' 
+	   		<input type='radio' name='perm_photo' 
 	   				value='0' 
 	   				$photo_no_check />
 	   		I do not consent
