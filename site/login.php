@@ -5,6 +5,7 @@
     // Redisplay user email if they have a login email.
     $submitted_email = '';
     $error = '';
+    $success = '';
     
 	
     if(!empty($_POST)) { 
@@ -37,7 +38,7 @@
         unset($_SESSION['registration_data']);
         if (User::createUser($data['email'], $data['password'], 
         		$data['listserv'], $db)) {
-        			$error = "Registration a success.
+        			$success = "Registration a success.
         			An activation link has been sent to your email.
         			 You must activitate your account via this link.
         			Please check your spam/junk folders.";
@@ -64,6 +65,7 @@
 			<div class="login">
 				<h1>Login</h1> 
 				<span class="error"><?php echo $error ?></span>
+				<span class="success"><?php echo $success ?></span>
 				<br /><br />
 				<form action="login.php" method="post" ">
 				    <input type="hidden" name="operation" value="login" />

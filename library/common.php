@@ -69,7 +69,7 @@
     		!preg_match('/'.$public_area[2].'/', $_SERVER['REQUEST_URI'])
 		& !preg_match('/'.$public_area[3].'/', $_SERVER['REQUEST_URI']) 
     	 	& !preg_match('/'.$public_area[4].'/', $_SERVER['REQUEST_URI']) ) {
-    			header("Location: /math_plus/site/login.php");
+    			header("Location: login.php");
     			die("Redirecting to login page.");
     	}
     }

@@ -4,9 +4,9 @@
 		<title>Math+ Registration</title>
 		<!--  CSS -->
 		<style type="text/css">
-			@import url(/math_plus/public_html/style.css);
-			@import url(/math_plus/public_html/main.css);
-			@import url(/math_plus/public_html/contacts.css);
+			@import url(../public_html/style.css);
+			@import url(../public_html/main.css);
+			@import url(../public_html/contacts.css);
 		</style>
 		<!-- jQuery -->
         <script src="http://code.jquery.com/jquery-latest.js"></script>
