@@ -28,6 +28,12 @@
 	border-radius: 3px;
 }
 
+div.scroll {
+	max-height: 500px; 
+	background: white;
+    overflow: scroll;
+}
+
 input[type=text], input[type=email], input[type=password], 
 	input[type=tel], input[type=submit] {
 	-webkit-appearance: none; -moz-appearance: none;
@@ -55,7 +61,5 @@ textarea {
 	padding: 5px 5px 5px 5px;
 }
 
-.content ul {
-	list-style-type: circle;
-}
+
 

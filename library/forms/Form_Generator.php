@@ -107,13 +107,18 @@ class Form_Generator {
 			<textarea name='allergies'>$allergies</textarea>
 			".$text_field['medical_label']."
 			<textarea name='medical'>$medical</textarea>
+			<br />
 			<hr>	
+			<br />
 			".$text_field['perm_leave']." (*)
 			<br />
 			<input type='radio' name='perm_leave' value='0' $leave_no_check />
 			No<br />
 			<input type='radio' name='perm_leave' value='1' $leave_yes_check />	
-			Yes<hr>
+			Yes
+			<br />
+			<hr>	
+			<br />
    			".$text_field['perm_lunch']." (*)
 			<input type='radio' name='perm_lunch' 
 	   				value='0' $lunch_stay_check />No
@@ -124,7 +129,9 @@ class Form_Generator {
 	   		<input type='radio' name='perm_lunch' 
 	   				value='2' $lunch_pickup_check />
 				Someone may pickup
-   			<hr>
+   			<br />
+			<hr>	
+			<br />
 			".$text_field['perm_photo']." (*)
 			<br />
 			<input type='radio' name='perm_photo' 
@@ -141,9 +148,13 @@ class Form_Generator {
 	   				value='0' 
 	   				$photo_no_check />
 	   		I do not consent
-   			<hr>
+   			<br />
+			<hr>	
+			<br />
    			".$this->guardianSelectionForm($guardian_group)."
-   			<hr>
+   			<br />
+			<hr>	
+			<br />
 	 		<input type='checkbox' class='regular' name='consent' 
    					".$consent_check." 
    					data-parsley-trigger='change' required/> 
@@ -261,10 +272,11 @@ class Form_Generator {
 		    <input type='password' name='password' id='password'
 		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
 		    	required 
-		    	data-parsley-error-message='Password must contain at 
+		    	data-parsley-error-message='Invalid password.' /> 
+			<p>Password must contain at 
 				least one number, one lowercase and one 
 				uppercase letter and be at least
-				at least six characters.' /> 
+				at least six characters.</p>
 		    <br /> 
 		    *Re-enter password:
 		    <input type='password' name='password2' 
@@ -325,11 +337,11 @@ class Form_Generator {
 		    	<input type='password' name='newPassword' id='password'
 		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
 		    	required 
-		    	data-parsley-error-message='Password must contain at 
+		    	data-parsley-error-message='Invalid password.' /> 
+				<p>Password must contain at 
 				least one number, one lowercase and one 
 				uppercase letter and be at least
-				at least six characters.' 
-		    	/> 
+				at least six characters.</p>
 		   	 	<br />
 		    	Re-enter new password:
 		    	<input type='password' name='newPassword2' 
