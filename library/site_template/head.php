@@ -14,6 +14,6 @@
         <script type="text/javascript" src="../public_html/parsley.js"></script>
 		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
 		<!--  Favicon -->
-		<link rel="icon" href="math_plus/library/public_html/favicon.ico" 
+		<link rel="icon" href="../public_html/favicon.ico" 
 			type="image/x-icon">
 	</head>
