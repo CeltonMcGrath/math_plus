@@ -78,6 +78,5 @@
 		        	<a href="forgot_password.php">Forgot your password?</a>
 			 </form>	 
     	</div>
-    	
 	</body>
 </html>

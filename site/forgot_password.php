@@ -26,31 +26,23 @@
 ?> 
 
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Math+ Registration</title>
-		<style type="text/css">
-			@import url(../public_html/style.css);
-			@import url(../public_html/main.css);
-		</style>
-		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
-	</head>
+	<?php include '../library/site_template/head_public_area.php'?>
 	<body>
-		<section class="container">
-			<div class="login">
-				<form action="forgot_password.php" method="post"> 
-				    Please enter your email:
-				    <input type="text" name="email" value="" />
-				    <br /> 
-				    <span class="success"><?php echo $success ?></span>
-					<span class="error"><?php echo $error ?></span>
-				    <br />
-				    <input type="submit" value="Reset password" />
-				</form>
-			</div>
-			<div class="login-extra">
-				<a href="login.php">Return to login</a>
-			</div>
-		</section>
+		<div class="container">
+			<form class="form-signin" action="forgot_password.php" 
+				method="post" >
+			    <h2 class="form-signin-heading">Please enter your email</h2>
+			    <h5 class="form-signin-heading">
+		        	<?php echo $error; echo $success ?>
+		        </h5>
+			    <label for="inputEmail" class="sr-only">Email address</label>
+			        <input type="email" id="inputEmail" class="form-control" 
+			        	placeholder="Email address" name='email'
+			        	required autofocus>
+			    <button class="btn btn-lg btn-primary btn-block" 
+			        	type="submit">Reset my password</button>
+			     <a href="login.php">Return to login</a>
+			 </form>
+		</div>
 	</body>
 </html>
