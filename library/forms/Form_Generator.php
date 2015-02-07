@@ -260,7 +260,7 @@ class Form_Generator {
 				id='registration_form' data-validate='parsley' >
 		    <h2 class='form-signin-heading'>Create an account</h2>
 		    <h5 class='form-signin-heading'>
-		    	$error $success
+		    	
 		    </h5>		
 			<h5 class='form-signin-heading'>*Required fields</h5>
 			<br />	
@@ -387,5 +387,4 @@ class Form_Generator {
 	}
 
 }
-
-?>   
+?>

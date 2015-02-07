@@ -13,38 +13,30 @@
     				register.";
     	}
     }
-    else {
-    	$terms = file_get_contents("../resources/user_terms_and_conditions.txt");
-    }
-   
+    
+    $terms = file_get_contents("../resources/user_terms_and_conditions.txt"); 
 ?> 
 
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Math+ Registration</title>
-		<style type="text/css">
-			@import url(../public_html/style.css);
-			@import url(../public_html/main.css);
-		</style>
-	</head>
+	<?php include '../library/site_template/head_public_area.php' ?>
 	<body>
-		<section class="container">
-			<div class='login'>
-				<h1>Terms and conditions</h1> 
-				<div class="scroll">	
+		<div class="container" >
+		      <form class="form-signin" action='registration_terms.php' 
+		      		method='post' >
+		        <h2 class="form-signin-heading">Terms & Conditions</h2>
+		        <div class="scroll" style="background: white; max-height: 70%; overflow: scroll;">	
 					<?php echo $terms ?>			
 				</div>
-			</div>
-			<div class="login-extra">
-				<span class='error'><?php echo $error ?></span>
-				<form action='registration_terms.php' method='post' >
-				<input type="hidden" name='operation' value='register'/>
-				<input type='checkbox' name='terms'/>
+		        <input type="hidden" name='operation' value='register'/>
+		        <h5 class="form-signin-heading">
+		        	<?php echo $error?>
+		        </h5>
+		        <label for="inputEmail" class="sr-only">Email address</label>
+		        <input type='checkbox' name='terms'/>
 				I agree to the terms and conditions stated above.
-				<input type="submit" value="Register" />
-				</form>
-			</div>
-		</section>
+		        <button class="btn btn-lg btn-primary btn-block" 
+		        	type="submit">Complete registration</button>
+			 </form>	 
+    	</div>
 	</body>
 </html>

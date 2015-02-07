@@ -51,7 +51,7 @@
 ?> 
 
 <html>
-	<?php include '../library/site_template/head_public_area.php'?>
+	<?php include '../library/site_template/head_public_area.php' ?>
 	<body>
 		<div class="container">
 		      <form class="form-signin" action="login.php" method="post" >

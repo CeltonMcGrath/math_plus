@@ -33,9 +33,9 @@
 ?> 
 
 <html>
-	<?php include '../library/site_template/head_public_area.php'?>
-	<div class="container">
-		<?php echo $fg->registrationForm($error, $success); ?>		
+	<?php include '../library/site_template/head_public_area.php'; ?>
+	<div class='container'>
+		<?php echo $fg->registrationForm($error, $success) ?>		
 	</div>	
 </html>
 
