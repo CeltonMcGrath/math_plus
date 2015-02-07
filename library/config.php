@@ -15,7 +15,7 @@
 	$emailSenderName = 'Celton McGrath';	
 	
 	// Site information
-	$siteHost = "localhost:8888/math_plus/";
+	$siteHost = "54.174.128.163/math_plus/";
 
 	
 ?>

@@ -1,2 +1,3 @@
 
-user_registration/PHPMailer/
+library/PHPMailer
+library/config.php
