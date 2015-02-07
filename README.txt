@@ -3,7 +3,7 @@
 			built for Math+ @ UofT - mathplus.math.utoronto.edu
 #------------------------------------------------------------------------------#
 
-Last updated January 16th, 2015
+Last updated February 7th, 2015
 
 Introduction
 ------------
