@@ -6,18 +6,14 @@
     <meta name="author" content="">
     <link rel="icon" href="../public_html/favicon.ico">	
     <title>Math+ | Enrichment program management</title>
-
+	
 	<!-- jQuery -->
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         
-		<!-- Parsley -->
-        <script type="text/javascript" src="../public_html/parsley.js"></script>
-		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
-		
-	    <!-- Bootstrap core CSS -->
-    	<link href="../public_html/bootstrap-3.3.2-dist/css/bootstrap.min.css" 
+    <!-- Bootstrap core CSS -->
+    <link href="../public_html/bootstrap-3.3.2-dist/css/bootstrap.min.css" 
     		rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../public_html/public_area.css" rel="stylesheet">
-</head>
+    <link href="../public_html/navbar-fixed-top.css" rel="stylesheet">
+  </head>

@@ -1,11 +1,17 @@
 <?php 
-    require("../library/common.php"); 
-    include '../library/site_template/head.php';
-    include '../library/site_template/header.php';    
-	
-    echo "<section class='content'>";
-	include '../resources/splash_content.php';		
-	echo "</section>";	
-	include '../library/site_template/footer.php';
-	echo "</html>";
+    require("../library/common.php");    
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <?php include '../library/site_template/head_private_area.php' ?>
+  <body>
+	<?php include '../library/site_template/navbar.php' ?>   
+    <div class="container">
+      <div class="jumbotron">
+        <?php include '../resources/splash_content.php'; ?>
+      </div>
+    </div>
+    <?php include '../library/site_template/body_end.php' ?>
+  </body>
+</html>

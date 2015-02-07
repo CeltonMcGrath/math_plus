@@ -1,4 +1,4 @@
-<p>Welcome to the registration system for the Math+ programs offered by the Department of Mathematics at the University of Toronto.</p>
+<h3>Welcome to the registration system for the Math+ programs offered by the Department of Mathematics at the University of Toronto.</h3>
 
 <br />
 
