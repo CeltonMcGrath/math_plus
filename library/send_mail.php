@@ -1,11 +1,11 @@
 <?php
-	/*Code from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14*/
-	include 'config.php';
+	/*Code from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14*/	
 	
 	function sendActivationEmail($email, $activation, $reason) {
 		/* Returns true iff activation email successfully sent.*/
+		include 'config.php';
 		$text_field = $GLOBALS['text_field'];
-		$link = $text_field['base_url']."user_activation.php?activation=".$activation;
+		$link = $siteHost."/site/user_activation.php?activation=".$activation;
 		if ($reason == "new user") {
 			$subject = "Math+ registration activation";
 			$body = "Thanks for registering with Math+. 
@@ -31,22 +31,22 @@
 	
 	function sendMail($to, $subject, $body) {
 		/* Returns true iff email is successfully sent.*/
-		
+		include 'config.php';
 		require 'PHPMailer/PHPMailerAutoload.php';
-		$from       = "mcgrathcelton@gmail.com";
+		$from       = $emailAccount;
 		$mail       = new PHPMailer();
 		$mail->IsSMTP(true);            // use SMTP
 		$mail->IsHTML(true);
 		
 		$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
 		$mail->SMTPAuth = true; // authentication enabled
-		$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+		$mail->SMTPSecure = $emailSMTPSecure; // secure transfer enabled REQUIRED for GMail
 		
-		$mail->Host       = "smtp.gmail.com"; // SMTP host
-		$mail->Port       =  465;                    // set the SMTP port
-		$mail->Username   = "mcgrathcelton@gmail.com";  // SMTP  username
-		$mail->Password   = "partition67";  // SMTP password
-		$mail->SetFrom($from, 'Celton McGrath');
+		$mail->Host       = $emailHost; // SMTP host
+		$mail->Port       = $emailPort;                    // set the SMTP port
+		$mail->Username   = $emailUsername;  // SMTP  username
+		$mail->Password   = $emailPassword;  // SMTP password
+		$mail->SetFrom($from, $emailSenderName);
 		$mail->Subject    = $subject;
 		$mail->MsgHTML($body);
 		$address = $to;

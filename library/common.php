@@ -1,9 +1,5 @@
 <?php 
-    // These variables define the connection information for your MySQL database 
-    $username = "root"; 
-    $password = "sp2014"; 
-    $host = "localhost"; 
-    $dbname = "math_plus"; 
+	include 'config.php'; 
         
     $public_area = array("login", "forgot_password", "register", "registration_terms", "user_activation");
 
@@ -54,7 +50,23 @@
         undo_magic_quotes_gpc($_COOKIE); 
     } 
     
-    include 'config.php';
+    // Initialize fields
+    
+    $query = "SELECT * FROM fields";
+    
+    try {
+    	$stmt = $db->prepare($query);
+    	$result = $stmt->execute();
+    } catch ( PDOException $ex ) {
+    	echo("<script>console.log('PHP: ".$ex->getMessage()."')
+	   				</script>");
+    }
+    $rows = $stmt->fetchAll();
+    $GLOBALS['text_field'] = array();
+    foreach ($rows as $row):
+    	$GLOBALS['text_field'][$row['name']] = $row['text'];
+    endforeach;
+    
     
     header('Content-Type: text/html; charset=utf-8'); 
      
