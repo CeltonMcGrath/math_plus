@@ -254,42 +254,55 @@ class Form_Generator {
 	}
 	
 	/* Returns html registration form for register.php */
-	public function registrationForm() {
-		return "<form action='register.php' method='post' 
-			id='registration_form' data-validate='parsley'> 
-			<span class='error'>*Required fields</span>
-			<br />				
-		    *Email:
-		    <input type='email' name='email' id='email'
-		    	data-parsley-trigger='change' required /> 
+	public function registrationForm($error, $success) {
+		return "
+			<form class='form-signin' action='register.php' method='post' 
+				id='registration_form' data-validate='parsley' >
+		    <h2 class='form-signin-heading'>Create an account</h2>
+		    <h5 class='form-signin-heading'>
+		    	$error $success
+		    </h5>		
+			<h5 class='form-signin-heading'>*Required fields</h5>
+			<br />	
+		   	<label for='email' class='sr-only'>*Email address</label>
+		    <input type='email' id='email' class='form-control' 
+		        	placeholder='Email address' name='email'
+		        	data-parsley-trigger='change'
+		        	required autofocus />		    	
 		    <br />
-		    *Re-enter your email:<br /> 
-		    <input type='email' name='email2'
-		    	data-parsley-trigger='change' required   
-		    	data-parsley-equalto='#email'/> 
+		    <label for='email' class='sr-only'>*Re-enter your email</label>
+		    <input type='email' id='email2' class='form-control' 
+		        	placeholder='Email address' name='email2'
+		        	data-parsley-trigger='change' required   
+		    		data-parsley-equalto='#email' autofocus />
 		    <br />
-		    *Password: 
-		    <input type='password' name='password' id='password'
-		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
-		    	required 
-		    	data-parsley-error-message='Invalid password.' /> 
-			<p>Password must contain at 
+		    <label for='password' class='sr-only'>*Password</label>
+		    <input type='password' id='password' class='form-control' 
+		        name='password' autofocus required 
+		    		pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
+		    		data-parsley-error-message='Invalid password.'/>		
+		    <p>Password must contain at 
 				least one number, one lowercase and one 
 				uppercase letter and be at least
-				at least six characters.</p>
+				at least six characters.
+		    </p>	
 		    <br /> 
-		    *Re-enter password:
-		    <input type='password' name='password2' 
+		    <label for='password2' class='sr-only'>*Re-enter password</label>
+		    <input type='password' name='password2' class='form-control'
 		    	data-parsley-trigger='change' required   
 		    	data-parsley-equalto='#password' /> 
 		    <br /><br />
 		    Would you like receive email notifications about upcoming
 		    programs?
 		    <br />
-		    <input type='checkbox' class='regular' 
-		    	name='listserv' checked>
+		    <div class='checkbox'>
+				<input type='checkbox' class='regular' name='listserv' checked>
+		    </div>
 		    <br />
-		    <input type='submit' value='Continue' /> 
+		    <button class='btn btn-lg btn-primary btn-block' 
+		        	type='submit'>Continue</button>
+		    <br />
+		    <a href='login.php'>Return to login</a>
 		</form>
 		<script type='text/javascript'>
   			$('#registration_form').parsley();

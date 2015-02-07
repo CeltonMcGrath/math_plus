@@ -5,8 +5,7 @@
     // Redisplay user email if they have a login email.
     $submitted_email = '';
     $error = '';
-    $success = '';
-    
+    $success = ''; 
 	
     if(!empty($_POST)) { 
     	if ($_POST['operation']=='login') {
@@ -52,37 +51,33 @@
 ?> 
 
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Math+ Registration</title>
-		<style type="text/css">
-			@import url(../public_html/style.css);
-			@import url(../public_html/main.css);
-		</style>
-	</head>
+	<?php include '../library/site_template/head_public_area.php'?>
 	<body>
-		<section class="container">
-			<div class="login">
-				<h1>Login</h1> 
-				<span class="error"><?php echo $error ?></span>
-				<span class="success"><?php echo $success ?></span>
-				<br /><br />
-				<form action="login.php" method="post" ">
-				    <input type="hidden" name="operation" value="login" />
-				    Email:<br /> 
-				    <input type="email" name="email" 
-				    	value="<?php echo $submitted_email; ?>" />
-				    <br /><br /> 
-				    Password:<br /> 
-				    <input type="password" name="password" value="" /> 
-				    <br /><br /> 
-				    <input type="submit" value="Login" />
-				</form> 				
-			</div>
-			<div class="login-extra">
-				<a href="register.php">Register</a>
-				<a href="forgot_password.php">Forgot password</a>
-			</div>
-		</section>
+		<div class="container">
+		      <form class="form-signin" action="login.php" method="post" >
+		        <h2 class="form-signin-heading">Please sign in</h2>
+		        <input type=hidden name='operation' value='login' />
+		        <h5 class="form-signin-heading">
+		        	<?php echo $error; echo $success ?>
+		        </h5>
+		        <label for="inputEmail" class="sr-only">Email address</label>
+		        <input type="email" id="inputEmail" class="form-control" 
+		        	placeholder="Email address" name='email'
+		        	value="<?php echo $submitted_email ?>" 
+		        	required autofocus>
+		        <label for="inputPassword" class="sr-only">Password</label>
+		        <input type="password" id="inputPassword" class="form-control" 
+		        	name="password" placeholder="Password" required>
+		        <button class="btn btn-lg btn-primary btn-block" 
+		        	type="submit">Sign in</button>
+			 </form>
+		     <form class="form-signin" action="register.php">
+		     	<button class="btn btn-lg btn-primary btn-block" 
+		        	type="submit">Register</button>
+		        	<br />
+		        	<a href="forgot_password.php">Forgot your password?</a>
+			 </form>	 
+    	</div>
+    	
 	</body>
 </html>

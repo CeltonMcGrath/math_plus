@@ -3,7 +3,7 @@
     $username = "root"; 
     $password = "sp2014"; 
     $host = "localhost"; 
-    $dbname = "login_system"; 
+    $dbname = "math_plus"; 
         
     $public_area = array("login", "forgot_password", "register", "registration_terms", "user_activation");
 
