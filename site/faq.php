@@ -1,6 +1,7 @@
 <?php 
     require("../library/common.php");     
     include '../library/Guardian.php';
+    include '../library/forms/html_Generator.php';
        
 	/* Load FAQ items from database */
     $query = "SELECT * FROM faq";
@@ -14,25 +15,28 @@
 	   				</script>");
     }
     $rows = $stmt->fetchAll();
-    
-    include '../library/site_template/head.php';
-    include '../library/site_template/header.php';
-?> 
-	<section class="content">
-		<h1>Frequently asked questions</h1>
-			<section id="accordion">
+    $hg = new html_Generator();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <?php include '../library/site_template/head_private_area.php' ?>
+  <body>
+	<?php include '../library/site_template/navbar.php' ?>   
+    <div class="container">
+      <div class="jumbotron">
+        <h3>Frequently asked questions</h3>
+        	<div class="accordion" id="accordion">
 			<?php 
 			foreach($rows as $row):
-				echo "<div class='contact'>
-					<input class='accordion' type='checkbox' 
-    					id='".$row['id']."' />
-					<label for='".$row['id']."'>".$row['question']."</label>
-					<article><p>".$row['answer']."</p></article>
-				</div>";	
+				echo $hg->bootstrapAccordion($row['id'], $row['question'], $row['answer']);	
 			endforeach;
-			?>					
-			</section>
-	</section>
-	<?php include '../library/site_template/footer.php';?>
+			?>	
+			</div>
+      </div>
+    </div>
+    
+    <?php include '../library/site_template/body_end.php' ?>
+  </body>
 </html>
 

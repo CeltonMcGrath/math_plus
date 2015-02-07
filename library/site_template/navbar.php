@@ -12,7 +12,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="splash.php">Home</a></li>
+            <li><a href="splash.php">Home</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -27,7 +27,7 @@
             </li>
             <li><a href="cart.php">Cart</a></li>
             <li><a href="faq.php">FAQ</a></li>
-            
+            <li><a href="code_of_conduct.php">Code of Conduct</a></li>           
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="logout.php">Logout</a></li>
