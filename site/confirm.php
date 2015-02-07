@@ -1,52 +1,37 @@
 <?php 
     require("../library/common.php"); 
-    
-    include '../library/site_template/head.php';
-    include '../library/site_template/header.php';
-    echo "
-    <section class='content'>
-    	<p>Click the button below to pay and finalize your registration. 
-    		After your payment, complete the process by navigating to the 
-    		home page.</p>
-	    <form action='checkout.php' METHOD='POST'>
-			<input type='hidden' name='cart_total' 
-    			value=".$_POST['cart_total']." />
-			<input type='image' name='paypal_submit' id='paypal_submit'
-	        	src='https://www.paypal.com/en_US/i/btn/btn_dg_pay_w_paypal.gif'
-	        	border='0' align='top' alt='Pay with PayPal'/>
-		</form>
-    </section>";
-    include '../library/site_template/footer.php';
-    ?>
-    
-    
-    <!-- Add Digital goods in-context experience.  -->
-	<script 
-		src='https://www.paypalobjects.com/js/external/dg.js' 
-		type='text/javascript'>
-	</script>
-	<script>
-		var dg = new PAYPAL.apps.DGFlow(
-		{
-			trigger: 'paypal_submit',
-			expType: 'instant'
-		});
-	</script>
+	if (!empty($_POST)) {
+		$order_id = $_POST['response_order_id'];
+		$reponse_code = ;
+		$date_stamp = ; // yyyy-mm-dd
+		$time_stamp = ; // ##:##:##
+		$bank_approval_code = ; #
+		$result = ; // 1=approved, 0=declined/incomplete
+		$trans_name = ; //purchase, preauth, cavv_purchase, cavv_preauth
+		$cardholder = ; //cardholdersname
+		$charge_total = ; // (40) with two decimals
+		$
 		
+		$cart = new Cart($_SESSION['user']['user_id'], $db);
+		$cart->registerStudents($transactionId, $orderTime, $amt);
+	}
+	else {
+		header("Location: cart.php");
+		die("Redirecting to shopping cart.");
+	}   
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <?php include '../library/site_template/head_private_area.php' ?>
+  <body>
+	<?php include '../library/site_template/navbar.php' ?>   
+    <div class="container">
+      <div class="jumbotron">
+        <h3>Successful program registration information here.</h3>
+      </div>
+    </div>
+    <?php include '../library/site_template/body_end.php' ?>
+  </body>
 </html>
 
-<?php /*	<script>
-		alert("Payment Cancelled"); 
-		 // add relevant message above or remove the line if not required
-		window.onload = function(){
-			 if(window.opener){
-				 window.close();
-			} 
-			 else{
-				 if(top.dg.isOpen() == true){
-		              top.dg.closeFlow();
-		              return true;
-		          }
-		     }                              
-		};                             
-	</script> */?>

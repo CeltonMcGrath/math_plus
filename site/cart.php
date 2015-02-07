@@ -58,12 +58,21 @@
 				value='Apply bursary to selected program'/>
 			<article> Total: ".number_format($total, 2)."</article>
        	</form>
-		<br />
-		<form method='post' action='confirm.php'>
-			<input type='hidden' name='cart_total' 
-				value='".$total."'/>
-        	<input type='submit' value='Pay and register'/>
-       	</form>";			
+		<br />";
+		if ($total > 0) {
+			echo "<FORM METHOD='POST' 
+					ACTION='https://esqa.moneris.com/HPPDP/index.php'> 
+				<INPUT TYPE='HIDDEN' NAME='ps_store_id' VALUE='XU4D4tore1'> 
+				<INPUT TYPE='HIDDEN' NAME='hpp_key' VALUE='hpHQNQ99HJ28'>
+				<INPUT TYPE='HIDDEN' NAME='charge_total' VALUE=".$total.">
+				<!--MORE OPTIONAL VARIABLES CAN BE DEFINED HERE -->
+				<INPUT TYPE='SUBMIT' NAME='SUBMIT' 
+					VALUE='Click to proceed to Secure Page'>
+			</FORM>";
+		}
+		else {
+			// Go to confirm
+		}					
     }  
     else {
 		echo '<h1>Your cart is empty. 
