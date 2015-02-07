@@ -5,7 +5,7 @@
 		/* Returns true iff activation email successfully sent.*/
 		include 'config.php';
 		$text_field = $GLOBALS['text_field'];
-		$link = $siteHost."/site/user_activation.php?activation=".$activation;
+		$link = $siteHost."site/user_activation.php?activation=".$activation;
 		if ($reason == "new user") {
 			$subject = "Math+ registration activation";
 			$body = "Thanks for registering with Math+. 

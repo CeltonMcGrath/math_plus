@@ -62,7 +62,7 @@
 		<form method='post' action='confirm.php'>
 			<input type='hidden' name='cart_total' 
 				value='".$total."'/>
-        	<input type='submit' value='Proceed to payment'/>
+        	<input type='submit' value='Pay and register'/>
        	</form>";			
     }  
     else {
