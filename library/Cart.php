@@ -178,7 +178,7 @@ class Cart {
 	/* Registers students in programs and empties cart.
 	 * Called upon successful payment. */
 	public function registerStudents($data) {
-		$order_id = $_POST['response_order_id'];
+		/*$order_id = $_POST['response_order_id'];
 		$reponse_code = ;
 		$date_stamp = ; // yyyy-mm-dd
 		$time_stamp = ; // ##:##:##
@@ -187,7 +187,7 @@ class Cart {
 		$trans_name = ; //purchase, preauth, cavv_purchase, cavv_preauth
 		$cardholder = ; //cardholdersname
 		$charge_total = ; // (40) with two decimals
-		$
+		$*/
 		
 		// Create transaction
 		$query = "INSERT INTO transactions (transaction_id, user_id, date, amount)

@@ -81,7 +81,7 @@
 						$guardian->getFirstName(), $guardian->getLastName(), 
 						$guardian->getPrimaryPhone(), $guardian->getSecondPhone(), 
 						$guardian->getEmail());
-					echo $hg->bootsrapAccordion($guardian->getId(), $label, $article);
+					echo $hg->bootstrapAccordion($guardian->getId(), $label, $article);
 			    endforeach; ?>	
 		</div>	  		    
     </div>    
