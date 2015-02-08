@@ -17,6 +17,8 @@ class Form_Validator {
 	
 	private $account_update_whitelist = array('email', 'email2', 'oldPassword',
 			 'newPassword', 'newPassword2', 'update');
+	
+	private $transaction_whitelist = array();
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
@@ -168,6 +170,15 @@ class Form_Validator {
 	public function sanitizeAccountUpdatePost($post) {
 		$data = $this->sanitize($this->account_update_whitelist, $post);
 		$data['listserv'] = isset($post['listserv']);
+		return $data;
+	}
+	
+
+	/* -----------------------------------------------------
+	 * Form validation for confirm.php
+	 * -----------------------------------------------------*/	
+	public function sanitizeTransactionDetails($post) {
+		$data = $this->sanitize($this->transaction_whitelist, $post);
 		return $data;
 	}
 	

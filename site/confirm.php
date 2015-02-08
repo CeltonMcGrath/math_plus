@@ -1,19 +1,16 @@
 <?php 
     require("../library/common.php"); 
+    include '../library/Form_Validator.php';
+    
 	if (!empty($_POST)) {
-		$order_id = $_POST['response_order_id'];
-		$reponse_code = ;
-		$date_stamp = ; // yyyy-mm-dd
-		$time_stamp = ; // ##:##:##
-		$bank_approval_code = ; #
-		$result = ; // 1=approved, 0=declined/incomplete
-		$trans_name = ; //purchase, preauth, cavv_purchase, cavv_preauth
-		$cardholder = ; //cardholdersname
-		$charge_total = ; // (40) with two decimals
-		$
+		//First test to see if post came from $0.00 transaction.
 		
+		//Otherwise, process Moneris transaction.
+		$fv = new Form_Validator();
+		$data = $fv->sanitizeTransactionDetails($_POST);
+		//Test respnse codes from data... may need to redirect early.		
 		$cart = new Cart($_SESSION['user']['user_id'], $db);
-		$cart->registerStudents($transactionId, $orderTime, $amt);
+		$content = cart->registerStudents($data);		
 	}
 	else {
 		header("Location: cart.php");
@@ -28,7 +25,8 @@
 	<?php include '../library/site_template/navbar.php' ?>   
     <div class="container">
       <div class="jumbotron">
-        <h3>Successful program registration information here.</h3>
+        <h3>Your registration was a success.</h3>
+        <?php echo $content?>
       </div>
     </div>
     <?php include '../library/site_template/body_end.php' ?>
