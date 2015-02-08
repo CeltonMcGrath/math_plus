@@ -57,33 +57,31 @@
     	}
     }
     
-    include '../library/site_template/head.php';
-    include '../library/site_template/header.php';
-?> 
-	<section class="content">
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <?php include '../library/site_template/head_private_area.php' ?>
+  <body>
+	<?php include '../library/site_template/navbar.php' ?>   
+	<div class='container'>
 		<h1>Edit Account</h1>
-		<span class="error"><?php echo $error?></span>
-		<span class="success"><?php echo $success?></span>		
-		<section id="accordion">
+		<div class="accordion" id="accordion">
 			<?php
-			//Link to guardians.php
-			echo $hg->accordionBox('guardians', 
-				'<a href="guardians.php">Manage parent/guardian contacts</a>', 
-				'');
-			//Link to students.php
-			echo $hg->accordionBox('students', 
-				'<a href="students.php">Manage student and programs</a>', '');
 			//Email updater
-			echo $hg->accordionBox('email', 'Update email address', 
+			echo $hg->bootstrapAccordion('email', 'Update email address', 
 				$fg->emailUpdateForm($_SESSION['user']['email']));
 			//Password updater
-			echo $hg->accordionBox('password', 'Update password', 
+			echo $hg->bootstrapAccordion('password', 'Update password', 
 				$fg->passwordUpdateForm());
 			//Listserv updater
-			echo $hg->accordionBox('listserv', 'Update mailing list settings', 
+			echo $hg->bootstrapAccordion('listserv', 'Update mailing list settings', 
 				$fg->listservUpdateForm($user->getListserv()));
 			?>
-		</section>
-	</section>
-    <?php include '../library/site_template/footer.php';?>
+		</div>
+	</div>
+  </body>
 </html>
+
+

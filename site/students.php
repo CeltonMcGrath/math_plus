@@ -2,10 +2,14 @@
     require("../library/common.php");     
     include '../library/config.php';
     include '../library/Form_Validator.php';
+    include '../library/forms/html_Generator.php';
     include '../library/Student.php';
    
     $error = '';
     $success = '';
+    
+    $fg = new Form_Generator();
+    $hg = new html_Generator();
     
     // Check if form has been submitted
     if(!empty($_POST)) {
@@ -30,18 +34,28 @@
     	}
     }
     
-    include '../library/site_template/head.php';
-    include '../library/site_template/header.php';
 ?>
-	<section class="content">
-		<span class="title"><h1>Students</h1></span>
-			<span class='error'><?php echo $error ?></span>
-			<span class='success'><?php echo $success ?></span>
-			<section id="accordion">
-				<?php Student::displayEmptyStudentForm
-					($db, $_SESSION['user']['user_id']);
-				
-				// Generate accordian-style contact list
+
+
+<!DOCTYPE html>
+<html lang="en">
+<?php include '../library/site_template/head_private_area.php' ?>
+	<body>
+		<?php include '../library/site_template/navbar.php' ?>   
+		<div class="container">
+			<h1>Students</h1>      
+			<div class="accordion" id="accordion">
+				<?php 
+				$guardian_group = Student::getUnCheckedGuardianGroup($db, 
+					$_SESSION['user']['user_id']);
+				$id = '0';
+				$label = 'Add new student';
+				$article = $fg->studentForm(0, $preferred_name='', $birthdate='', 
+					$gender='',  $grade ='', $allergies='', $medical='', 
+					$perm_leave='', $perm_photo='', $perm_lunch='',
+ 					$cellphone='', $guardian_group);
+ 	
+				echo $hg->bootstrapAccordion($id, $label, $article); 
 				
 				// Query the db for student contacts associated with current user
 				$query = "SELECT student_id FROM students 
@@ -62,9 +76,13 @@
 				
 				foreach ($rows as $row) :
 					$student = new Student ($row['student_id'], $db);
-					$student->displayStudentInfo();
+					$studentForm = $student->displayStudentInfo();
+					echo $hg->bootstrapAccordion($student->getId(), 
+							$student->getName(), $studentForm);
 				endforeach; ?>
-			</section>
-	</section>
-<?php include '../library/site_template/footer.php';?>
+			</div>	  		    
+		</div>    
+	</body>
 </html>
+
+

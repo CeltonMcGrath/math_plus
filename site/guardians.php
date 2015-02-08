@@ -52,8 +52,8 @@
   <body>
 	<?php include '../library/site_template/navbar.php' ?>   
     <div class="container">
-      <h3>Guardians</h3>      
-		<div class="accordion" id="accordion">
+      <h1>Guardians</h1>      
+	  <div class="accordion" id="accordion">
       <?php 
 			//Display accordion boorm
 			echo $hg->bootstrapAccordion(0, "Add new guardian contact", 
@@ -85,7 +85,6 @@
 			    endforeach; ?>	
 		</div>	  		    
     </div>    
-    <?php include '../library/site_template/body_end.php' ?>
   </body>
 </html>
 

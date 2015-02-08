@@ -276,14 +276,15 @@ class Form_Generator {
 							placeholder='Re-enter email address' 
 							data-equalto='#email' />
 				</div>
+			</div>
+			<div class='control-group'>
 				<div class='controls'>
 					<input class='form-control' type='password' 
 							name='password' id='password'
 							data-type='password' 
 							data-required='true' 
 							data-trigger='change' 
-							placeholder='Password'
-							pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' />
+							placeholder='Password' />
 				</div>
 				<div class='controls'>
 					<input class='form-control' type='password' 
@@ -296,8 +297,8 @@ class Form_Generator {
 				</div>
 				<div class='controls'>
 					<input type='checkbox' name='listserv' id='listserv' />
-					Would you like receive email notifications about upcoming
-		   				programs?
+					I would like to receive email notifications about upcoming
+		   				programs.
 				</div>
 			</div>
 			<br />
@@ -308,10 +309,6 @@ class Form_Generator {
 		</form>";		
 	}
 	
-	/* Returns html login form for login.php*/
-	public function loginForm() {
-	
-	}
 	
 	/* Returns html email update form for edit_account.php */
 	public function emailUpdateForm($currentEmail) {

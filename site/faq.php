@@ -23,20 +23,15 @@
   <?php include '../library/site_template/head_private_area.php' ?>
   <body>
 	<?php include '../library/site_template/navbar.php' ?>   
-    <div class="container">
-      <div class="jumbotron">
-        <h3>Frequently asked questions</h3>
-        	<div class="accordion" id="accordion">
+	<div class="container">
+		<h1>Frequently asked questions</h1>
+		<div class="accordion" id="accordion">
 			<?php 
 			foreach($rows as $row):
 				echo $hg->bootstrapAccordion($row['id'], $row['question'], $row['answer']);	
 			endforeach;
 			?>	
-			</div>
-      </div>
-    </div>
-    
-    <?php include '../library/site_template/body_end.php' ?>
+	</div>
   </body>
 </html>
 

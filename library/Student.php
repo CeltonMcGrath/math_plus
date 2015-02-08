@@ -2,7 +2,6 @@
 include 'Program.php';
 include 'Guardian.php';
 include 'forms/Form_Generator.php';
-include 'forms/html_Generator.php';
 
 class Student {
 
@@ -132,32 +131,24 @@ class Student {
 	public function displayStudentInfo() {
 		$fg = new Form_Generator();
 		
-		echo "
-	    	<div class='contact'>
-		   		<input class='accordion' type='checkbox'
-		   			id=".$this->student_id." />
-		   		<label for=".$this->student_id.">
-		   			".$this->last_name.", ".$this->first_name."
-		   		</label>
-		   		<article>";
-					echo $fg->studentForm($this->student_id, 
+		$form = $fg->studentForm($this->student_id, 
 						$this->preferred_name, $this->birthdate, $this->gender, 
 						$this->grade, $this->allergies, $this->medical, 
 						$this->perm_leave, $this->perm_lunch,
 						$this->perm_photo, $this->cellphone,
 						$this->getGuardianGroup());
-					echo "<br />";
-		   			$this->displayFutureProgramList();
-		   			echo "<br />";
-		   			$this->displayPastProgramList();
-		   			echo "
-		   			<form action='programs.php' method='post'>
+		$form .= "<br />";
+		$form .= $this->displayFutureProgramList();
+		$form .= "<br />";
+		$form .= $this->displayPastProgramList();
+		$form .= "<form action='programs.php' method='post'>
  						<input type='hidden' name='student_id' 
  							value=".$this->student_id."/>
  						<input type='submit' value='Add or view programs'/>
- 					</form>
- 				</article>
-	   		</div>";
+ 					</form>";
+ 		return $form;
+
+		
   	 }	
    
    	/* Returns array of guardian student relationship (all associated with
@@ -200,26 +191,9 @@ class Student {
  		return $guardian_group;
  	}
 	  
- 	/* Displays empty student form. */
- 	public static function displayEmptyStudentForm($db, $user_id) {
- 		$guardian_group = self::getUnCheckedGuardianGroup($db, $user_id);
-
- 		$fg = new Form_Generator();
-		$hg = new html_Generator();
-		
-		$id = '0';
-		$label = 'Add new student';
-		$article = $fg->studentForm(0, $preferred_name='', $birthdate='', 
-				$gender='',  $grade ='', $allergies='', $medical='', 
-				$perm_leave='', $perm_photo='', $perm_lunch='',
- 				$cellphone='', $guardian_group);
- 	
-		echo $hg->accordionBox($id, $label, $article); 
- 	}
- 	
  	/* Retrieves guardians associated with this user.
  	 * Returns an array who's values are guadian ids.*/
- 	 private static function getUnCheckedGuardianGroup($db, $user_id) {
+ 	 public static function getUnCheckedGuardianGroup($db, $user_id) {
  	 	// Get all guardians associated with user
  	 	$query = "SELECT guardian_id FROM guardians
 	    		WHERE user_id = :user_id";
@@ -248,7 +222,7 @@ class Student {
    /* Print a html list of programs this student is enrolled in that
     * end in the future.*/
     private function displayFutureProgramList() {	
- 		echo "Upcoming programs: <ul>";
+ 		$form = "Upcoming programs: <ul>";
  		
  		$query = 'SELECT 
  					programs.program_name, programs.start_date, 
@@ -272,19 +246,20 @@ class Student {
  			error_log($ex->getMessage());
  		}
  		$rows = $stmt->fetchAll();
- 			
+ 		 		
  		foreach($rows as $row):
- 			echo "<li>".$row['program_name']." 
+ 			$form .= "<li>".$row['program_name']." 
  				(".$row['start_date']."-".$row['end_date'].")
  				(<i>Registered</i>)</li>";
  		endforeach;
- 		echo "</ul>";
+ 		$form .= "</ul>";
+ 		return $form;
  	}  
  	
  	/* Print a html list of programs this student is enrolled in that
  	 * ended in the past. */
  	public function displayPastProgramList() {
- 		echo "Past programs: <ul>";
+ 		$form = "Past programs: <ul>";
  		
  		$query = "SELECT 
  					programs.program_name, programs.start_date, 
@@ -310,11 +285,12 @@ class Student {
  		$rows = $stmt->fetchAll();
  			
  		foreach($rows as $row):
- 			echo "<li>".$row['program_name']." 
+ 			$form .= "<li>".$row['program_name']." 
  				(".$row['start_date']."-".$row['end_date'].")
  				</li>";
  		endforeach;
- 		echo "</ul>";
+ 		$form = "</ul>";
+ 		return $form;	
  	}
  	
  	/*---------------------------------------------------------------

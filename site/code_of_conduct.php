@@ -12,6 +12,5 @@
         <?php include '../resources/student_code_of_conduct.php'; ?>
       </div>
     </div>
-    <?php include '../library/site_template/body_end.php' ?>
   </body>
 </html>
