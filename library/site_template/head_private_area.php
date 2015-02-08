@@ -8,46 +8,21 @@
     <title>Math+ | Enrichment program management</title>
 	
 	<!-- jQuery -->
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
-        
-    <!-- Bootstrap core CSS -->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+     
+    <!-- Parsley -->
+    <script type="text/javascript" src="../public_html/parsley.js"></script>
+    <link href="../public_html/parsley.css" rel="stylesheet">
+           
+    <!-- Bootstrap -->
+	<script type="text/javascript" src="../public_html/js/bootstrap.min.js"></script>
     <link href="../public_html/bootstrap-3.3.2-dist/css/bootstrap.min.css" 
     		rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="../public_html/navbar-fixed-top.css" rel="stylesheet">
+    <!-- Accordion -->
+    <link href="../public_html/accordion.css" rel="stylesheet">
     
-    <style>
-	    .accordion {
-		  margin-bottom: 20px;
-		}
-		
-		.accordion-group {
-		  margin-bottom: 2px;
-		  border: 1px solid #e5e5e5;
-		  -webkit-border-radius: 4px;
-		     -moz-border-radius: 4px;
-		          border-radius: 4px;
-		}
-		
-		.accordion-heading {
-		  border-bottom: 0;
-		  background: #ffffff;
-		}
-		
-		.accordion-heading .accordion-toggle {
-		  display: block;
-		  padding: 8px 15px;
-		}
-		
-		.accordion-toggle {
-		  cursor: pointer;
-		}
-		
-		.accordion-inner {
-		  padding: 9px 15px; 
-		  border-top: 1px solid #e5e5e5;
-		}		
-	</style>
+    <!-- Navbar -->
+    <link href="../public_html/navbar-fixed-top.css" rel="stylesheet">   
 	
   </head>

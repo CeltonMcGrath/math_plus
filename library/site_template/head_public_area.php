@@ -8,16 +8,18 @@
     <title>Math+ | Enrichment program management</title>
 
 	<!-- jQuery -->
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
         
-		<!-- Parsley -->
-        <script type="text/javascript" src="../public_html/parsley.js"></script>
-		<link rel="icon" href="../public_html/favicon.ico" type="image/x-icon">
+	<!-- Parsley -->
+    <script type="text/javascript" src="../public_html/parsley.js"></script>
+    <link href="../public_html/parsley.css" rel="stylesheet">
 		
-	    <!-- Bootstrap core CSS -->
-    	<link href="../public_html/bootstrap-3.3.2-dist/css/bootstrap.min.css" 
+	<!-- Bootstrap -->
+	<script type="text/javascript" src="../public_html/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+   	<link href="../public_html/bootstrap-3.3.2-dist/css/bootstrap.min.css" 
     		rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <!-- Public area styling -->
     <link href="../public_html/public_area.css" rel="stylesheet">
+    
 </head>

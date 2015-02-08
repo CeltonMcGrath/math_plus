@@ -255,58 +255,57 @@ class Form_Generator {
 	
 	/* Returns html registration form for register.php */
 	public function registrationForm($error, $success) {
-		return "
-			<form class='form-signin' action='register.php' method='post' 
-				id='registration_form' data-validate='parsley' >
-		    <h2 class='form-signin-heading'>Create an account</h2>
-		    <h5 class='form-signin-heading'>
-		    	
-		    </h5>		
-			<h5 class='form-signin-heading'>*Required fields</h5>
-			<br />	
-		   	<label for='email' class='sr-only'>*Email address</label>
-		    <input type='email' id='email' class='form-control' 
-		        	placeholder='Email address' name='email'
-		        	data-parsley-trigger='change'
-		        	required autofocus />		    	
-		    <br />
-		    <label for='email' class='sr-only'>*Re-enter your email</label>
-		    <input type='email' id='email2' class='form-control' 
-		        	placeholder='Email address' name='email2'
-		        	data-parsley-trigger='change' required   
-		    		data-parsley-equalto='#email' autofocus />
-		    <br />
-		    <label for='password' class='sr-only'>*Password</label>
-		    <input type='password' id='password' class='form-control' 
-		        name='password' autofocus required 
-		    		pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
-		    		data-parsley-error-message='Invalid password.'/>		
-		    <p>Password must contain at 
-				least one number, one lowercase and one 
-				uppercase letter and be at least
-				at least six characters.
-		    </p>	
-		    <br /> 
-		    <label for='password2' class='sr-only'>*Re-enter password</label>
-		    <input type='password' name='password2' class='form-control'
-		    	data-parsley-trigger='change' required   
-		    	data-parsley-equalto='#password' /> 
-		    <br /><br />
-		    Would you like receive email notifications about upcoming
-		    programs?
-		    <br />
-		    <div class='checkbox'>
-				<input type='checkbox' class='regular' name='listserv' checked>
-		    </div>
-		    <br />
-		    <button class='btn btn-lg btn-primary btn-block' 
+		return "<form action='register.php' method='post' class='form-signin' 
+				data-validate='parsley'>
+			<h2 class='form-signin-heading'>Create an account</h2>
+			<div class='control-group'>
+				<div class='controls'>
+					<input class='form-control' type='email' 
+							name='email' id='email'
+							data-type='email'
+							data-required='true' 
+							data-trigger='change' 
+							placeholder='Email address' />
+				</div>
+				<div class='controls'>
+					<input class='form-control' type='email' 
+							name='email2'
+							data-type='email'
+							data-required='true' 
+							data-trigger='change' 
+							placeholder='Re-enter email address' 
+							data-equalto='#email' />
+				</div>
+				<div class='controls'>
+					<input class='form-control' type='password' 
+							name='password' id='password'
+							data-type='password' 
+							data-required='true' 
+							data-trigger='change' 
+							placeholder='Password'
+							pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' />
+				</div>
+				<div class='controls'>
+					<input class='form-control' type='password' 
+							name='password2' 
+							data-type='password' 
+							data-required='true' 
+							data-trigger='change' 
+							placeholder='Re-enter password'
+							data-equalto='#password' />
+				</div>
+				<div class='controls'>
+					<input type='checkbox' name='listserv' id='listserv' />
+					Would you like receive email notifications about upcoming
+		   				programs?
+				</div>
+			</div>
+			<br />
+			<button class='btn btn-lg btn-primary btn-block' 
 		        	type='submit'>Continue</button>
-		    <br />
-		    <a href='login.php'>Return to login</a>
-		</form>
-		<script type='text/javascript'>
-  			$('#registration_form').parsley();
-		</script>";
+			<br />
+			<a href='login.php'>Return to login</a>
+		</form>";		
 	}
 	
 	/* Returns html login form for login.php*/
