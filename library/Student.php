@@ -146,9 +146,7 @@ class Student {
  							value=".$this->student_id."/>
  						<input type='submit' value='Add or view programs'/>
  					</form>";
- 		return $form;
-
-		
+ 		return $form;		
   	 }	
    
    	/* Returns array of guardian student relationship (all associated with
@@ -298,49 +296,8 @@ class Student {
  	 *  (Individualized display for each student.)
  	 * ---------------------------------------------------------------*/
  	
- 	/* Display accordion-style list of programs for programs.php */
- 	public function displayAllPrograms() {		
- 		//Select all upcoming programs
- 		$query = 'SELECT *
-	   			FROM
- 					programs
-	   			WHERE
- 					NOW() < programs.registration_deadline';
- 		try {
- 			$stmt = $this->database->prepare($query);
- 			$result = $stmt->execute();
- 		} catch(PDOException $ex) {
- 			error_log($ex->getMessage());
- 		}	
- 		$programRows = $stmt->fetchAll();
-		
- 		if (count($programRows)==0) {
-			echo "No upcoming programs. Check back again!";
-			return true;
-		}
-
-		foreach($programRows as $programRow):
- 			$program = new Program($programRow['program_id'], $this->database);
- 			echo "<div class='contact'>
- 					<input class='accordion' type='checkbox' 
- 					id='".$program->program_id."'/>";
- 			// Label
- 			if ($this->inProgram($program->program_id)) {
- 				$program->displayLabelForSelectionTwo();
- 			}
- 			elseif ($program->remainingSpots() == 0) {
- 				$program->displayLabelForSelectionThree();
- 			}
- 			else {
- 				$program->displayLabelForSelectionOne();
- 			}
- 			// Article
- 			$program->displayArticle();
- 		endforeach;
- 	}
- 	
  	// Returns true iff student is registered in program.
- 	private function inProgram($program_id) {
+ 	public function inProgram($program_id) {
  		$query = 'SELECT *
 	   			FROM
  					students_programs

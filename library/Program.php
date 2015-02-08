@@ -75,46 +75,34 @@ class Program {
 	
  	/* Displays program article for programs.php */
  	public function displayArticle() {
- 		echo "<article>
-		 			<ul>
-			 			<li>Start date: ".$this->start_date."</li>
-			 			<li>End date: ".$this->end_date."</li>
-			 			<li>Registration deadline:
-			 			".$this->registration_deadline."
-			 			</li>
-			 			<li>Grade levels: ".$this->grades."</li>
-			 			<li>Description: ".$this->description."</li>
-		 			</ul>
- 				</article>
- 			</div>";
+ 		return "<ul>
+	 			<li>Start date: ".$this->start_date."</li>
+	 			<li>End date: ".$this->end_date."</li>
+	 			<li>Registration deadline:
+	 			".$this->registration_deadline."
+	 			</li>
+	 			<li>Grade levels: ".$this->grades."</li>
+	 			<li>Description: ".$this->description."</li>
+ 			</ul>";
  	}
  	
 	/* Display program label for programs.php if student is not
 	 * registered in program. */
 	public function displayLabelForSelectionOne() {
-		echo "
-			<label for='".$this->program_id."'>
- 				<input class='regular' name='program_group[]'
- 					value='".$this->program_id."' type='checkbox'/>
- 				".$this->program_name.", (".$this->remainingSpots()."
-		 		spots remaining) Fee: ".$this->cost."
-		 	</label>";
+		return $this->program_name.", (".$this->remainingSpots()."
+		 		spots remaining) Fee: ".$this->cost;
 	}
 	
 	/* Display program label for programs.php if student is
 	 * registered in program. */
 	public function displayLabelForSelectionTwo() {
-		echo "<label for='".$this->program_id."'>
-				".$this->program_name." (<i>Registered</i>)
-			</label>";		 
+		return $this->program_name." (<i>Registered</i>)";	 
 	}
 	
 	/* Displays program label for programs.php is program has full capacity.*/
 	public function displayLabelForSelectionThree() {
-		echo "<label for='".$this->program_id."'>
-				".$this->program_name." (Sorry - full capacity)
-			</label>";
+		return $this->program_name." (Full capacity)";
 	}
-	
- 
-}
+	 
+} 
+?>
