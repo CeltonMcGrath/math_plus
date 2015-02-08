@@ -44,18 +44,20 @@
     	}    	
     }
     
-    include '../library/site_template/head.php';
-    include '../library/site_template/header.php';
 ?> 
-	<section class="content">
-		<h1>Guardians</h1>
-			<span class='error'><?php echo $error ?></span>
-			<span class='success'><?php echo $success ?></span>
-			<section id="accordion">	
-			<?php 
+
+<!DOCTYPE html>
+<html lang="en">
+  <?php include '../library/site_template/head_private_area.php' ?>
+  <body>
+	<?php include '../library/site_template/navbar.php' ?>   
+    <div class="container">
+      <h3>Guardians</h3>      
+		<div class="accordion" id="accordion">
+      <?php 
 			//Display accordion boorm
-				echo $hg->accordionBox(0, "Add new guardian contact", 
-					$fg->guardianForm(0, '', '', '', '', ''));
+			echo $hg->bootstrapAccordion(0, "Add new guardian contact", 
+				$fg->guardianForm(0, '', '', '', '', ''));
 			//Display accordion box for each registered guardian
 				$query = "SELECT guardian_id FROM guardians 
     				WHERE user_id = :user_id"; 
@@ -79,10 +81,11 @@
 						$guardian->getFirstName(), $guardian->getLastName(), 
 						$guardian->getPrimaryPhone(), $guardian->getSecondPhone(), 
 						$guardian->getEmail());
-					echo $hg->accordionBox($guardian->getId(), $label, $article);
-			    endforeach; ?>
-			</section>
-	</section>
-	<?php include '../library/site_template/footer.php';?>
+					echo $hg->bootsrapAccordion($guardian->getId(), $label, $article);
+			    endforeach; ?>	
+		</div>	  		    
+    </div>    
+    <?php include '../library/site_template/body_end.php' ?>
+  </body>
 </html>
 
