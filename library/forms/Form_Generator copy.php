@@ -210,78 +210,53 @@ class Form_Generator {
 		// Display settings for already registered guardian form
 		if ($guardian_id) {
 			$new = '';
-			$delete =  "<button type='submit' id='$guardian_id-submit' name='submit' class='btn btn-danger' value='Delete'>Delete</button>";
+			$delete = "<input type='checkbox' class='regular' name='delete'
+					/> Delete";
 			$submit_value = "Update contact";
 		}
 		// Display settings for new guardian form
 		else {
 			$new = "
-				<div class='form-group'>
-  					<label class='col-md-4 control-label' 
-						for='$guardian_id-first_name'>First name</label>  
- 					 <div class='col-md-4'>
-  					<input id='$guardian_id-first_name' name='first_name' 
-						type='text' class='form-control 
-						input-md' required>
- 					 </div>
-				</div>
-				<div class='form-group'>
-  					<label class='col-md-4 control-label' 
-						for='$guardian_id-last_name'>Last name</label>  
-  					<div class='col-md-4'>
-  					<input id='$guardian_id-last_name' name='last_name' type='text' 
-						class='form-control input-md' required>   
-  				</div>
-			</div>";
+	   	    	First name:
+	   			<input type='text' name='first_name' 
+					data-parsley-trigger='change' required/>
+	   			Last name:
+				<input type='text' name='last_name' 
+					data-parsley-trigger='change' required/>";
 			$delete = '';
-			$submit_value = 'Add new contact';
+			$submit_value = 'Submit';
 		}
 		// Return form	
 		$form = "<form action='guardians.php' method='post'
-				id='$guardian_id' class='form-horizontal' />
-				<fieldset>
+				id='$guardian_id' data-validate='parsley' />
 				<input type='hidden' name='guardian_id'
 					value='$guardian_id'/>
-				<!-- Name -->
 				$new
-				<!-- Primary phone-->
-				<div class='form-group'>
-  					<label class='col-md-4 control-label' for='$guardian_id-phone_1'>Primary phone</label>  
- 					 <div class='col-md-4'>
-  					<input id='$guardian_id-phone_1' name='phone_1' type='tel' value='$phone_1' class='form-control input-md' required=''>    
- 					 </div>
-				</div>
-				<!-- Secondary phone-->
-				<div class='form-group'>
-  					<label class='col-md-4 control-label' for='$guardian_id-phone_2'>Secondary phone</label>  
-  					<div class='col-md-4'>
-  					<input id='$guardian_id-phone_2' name='phone_2' type='tel' value='$phone_2' class='form-control input-md'>   
-  					</div>
-				</div>
-				<!-- Email -->
-				<div class='form-group'>
-				  <label class='col-md-4 control-label' for='$guardian_id-email'>Email</label>  
-				  <div class='col-md-4'>
-				  <input id='$guardian_id-email' name='email' type='email' value='$email' class='form-control input-md' required=''>				    
-				  </div>
-				</div>
-				<!-- Button -->
-				<div class='form-group'>
-				  <label class='col-md-4 control-label' for='submit'></label>
-				  <div class='col-md-8'>
-				    <button type='submit' id='$guardian_id-submit' name='update' class='btn btn-success' value='$submit_value'>$submit_value</button>
-				    $delete 
-				  </div>
-				</div>
-				</fieldset>
-			</form>";
+				Primary phone: <input type='tel' name='phone_1' 
+					value='$phone_1'
+					data-parsley-trigger='change' required />
+				<br />
+				Secondary phone: <input type='tel' name='phone_2'
+				value='$phone_2'/>
+				<br />
+				Email: <input type='email' name='email' value='$email'
+					data-parsley-trigger='change' required />
+				<br />
+				$delete
+				<br />
+				<input type='submit' value='$submit_value' name='update' />
+			</form>
+			<script type='text/javascript'>
+  				$('#";
+		$form .= $guardian_id;
+		$form .= "' ).parsley(); </script>";
 		return $form;
 	}
 	
 	/* Returns html registration form for register.php */
 	public function registrationForm($error, $success) {
 		return "<form action='register.php' method='post' class='form-signin' 
-				parsley-validate>
+				data-validate='parsley'>
 			<h2 class='form-signin-heading'>Create an account</h2>
 			<div class='control-group'>
 				<div class='controls'>
@@ -305,14 +280,16 @@ class Form_Generator {
 			<div class='control-group'>
 				<div class='controls'>
 					<input class='form-control' type='password' 
-							name='password' id='password' 
+							name='password' id='password'
+							data-type='password' 
 							data-trigger='change' 
 							pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}'
 							placeholder='Password' />
 				</div>
 				<div class='controls'>
 					<input class='form-control' type='password' 
-							name='password2'
+							name='password2' 
+							data-type='password' 
 							data-trigger='change' 
 							placeholder='Re-enter password'
 							data-equalto='#password' />
