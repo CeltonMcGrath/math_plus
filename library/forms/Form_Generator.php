@@ -14,14 +14,16 @@ class Form_Generator {
 			<div class='form-group'>
 				<label class='col-md-4 control-label' for='first_name'>First name</label>
 				<div class='col-md-4'>
-					<input id='first_name' name='first_name' type='text' class='form-control input-md' required >
+					<input id='first_name' name='first_name' type='text' class='form-control input-md' required 
+						data-parsley-trigger='change'>
 				</div>
 			</div>
 			<!-- Last name -->
 			<div class='form-group'>
 			<label class='col-md-4 control-label' for='last_name'>Last name</label>
 				<div class='col-md-4'>
-					<input id='last_name' name='last_name' type='text' class='form-control input-md' required >
+					<input id='last_name' name='last_name' type='text' class='form-control input-md' required 
+						data-parsley-trigger='change'>
 				</div>
 			</div>";
 			// No gender specified
@@ -92,7 +94,7 @@ class Form_Generator {
 		$text_field = $GLOBALS['text_field'];
 		
 		return "<form class='form-horizontal' action='students.php' method='post'
-				id='$student_id'>
+				id='form-$student_id'>
 		<input type='hidden' name='student_id' value='$student_id'/>
 		<fieldset>		
 		$new
@@ -107,7 +109,8 @@ class Form_Generator {
 		<div class='form-group'>
 			<label class='col-md-4 control-label' for='$student_id-birth_\date'>Birthdate</label>
 			<div class='col-md-4'>
-				<input id='$student_id-birthdate' name='birthdate' type='text' placeholder='' class='form-control input-md' required value='$birthdate' >
+				<input id='$student_id-birthdate' name='birthdate' type='text' placeholder='' class='form-control input-md' required value='$birthdate' 
+					data-parsley-trigger='change' pattern='^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$' >
 				<span class='help-block'>yyyy-mm-dd</span>
 			</div>
 		</div>				
@@ -133,7 +136,8 @@ class Form_Generator {
 		<div class='form-group'>
 			<label class='col-md-4 control-label' for='$student_id-grade'>Grade</label>
 			<div class='col-md-4'>
-				<input id='$student_id-grade' name='grade' type='text' class='form-control input-md' required value='$grade' >	
+				<input id='$student_id-grade' name='grade' type='text' class='form-control input-md' required 
+					data-parsley-trigger='change' value='$grade' >	
 			</div>
 		</div>
 		<!-- Cellphone -->
@@ -162,7 +166,7 @@ class Form_Generator {
 		</div>				
 		<!-- Leave permission -->
 		<div class='form-group'>
-			<label class='col-md-4 control-label' for='$student_id-perm_leave'>".$text_field['perm_leave']."</label>
+			<label class='col-md-8 control-label' for='$student_id-perm_leave'>".$text_field['perm_leave']."</label>
 			<div class='col-md-4'>
 				<div class='radio'>
 					<label for='$student_id-perm_leave-0'>
@@ -180,7 +184,7 @@ class Form_Generator {
 		</div>		
 		<!-- Lunch leave permission -->
 		<div class='form-group'>
-			<label class='col-md-4 control-label' for='$student_id-perm_lunch'>".$text_field['perm_lunch']."</label>
+			<label class='col-md-8 control-label' for='$student_id-perm_lunch'>".$text_field['perm_lunch']."</label>
 			<div class='col-md-4'>
 				<div class='radio'>
 					<label for='$student_id-perm_lunch-0'>
@@ -204,7 +208,7 @@ class Form_Generator {
 		</div>
 		<!-- Photo permission -->
 		<div class='form-group'>
-			<label class='col-md-4 control-label' for='$student_id-perm_photo'>".$text_field['perm_photo']."</label>
+			<label class='col-md-8 control-label' for='$student_id-perm_photo'>".$text_field['perm_photo']."</label>
 			<div class='col-md-4'>
 				<div class='radio'>
 					<label for='$student_id-perm_photo-0'>
@@ -238,12 +242,17 @@ class Form_Generator {
 					</label>
 				</div>
 			</div>
-			<div class='col-md-4'>
-		    	<button type='submit' id='$student_id-submit' name='update' class='btn btn-success' value='Submit'>Submit</button>
-		  	</div>
+		</div>
+		<div class='col-md-4'>
+		</div>	
+		<div class='col-md-4'>
+		    <button type='submit' id='$student_id-submit' name='update' class='btn btn-lg btn-primary btn-block'' value='Submit'>Submit</button>
 		</div>		
 		</fieldset>
-		</form>";			
+		</form>
+			<script type='text/javascript'>
+	  			$('#form-".$student_id."').parsley();
+			</script>";				
 	}
 	
 	/* Returns html guardian selection form for students.php
@@ -314,8 +323,8 @@ class Form_Generator {
 			$submit_value = 'Add new contact';
 		}
 		// Return form	
-		$form = "<form action='guardians.php' method='post'
-				id='$guardian_id' class='form-horizontal' />
+		$form = "<form id='form-$guardian_id' action='guardians.php' method='post'
+					class='form-horizontal' />
 				<fieldset>
 				<input type='hidden' name='guardian_id'
 					value='$guardian_id'/>
@@ -325,7 +334,8 @@ class Form_Generator {
 				<div class='form-group'>
   					<label class='col-md-4 control-label' for='$guardian_id-phone_1'>Primary phone</label>  
  					 <div class='col-md-4'>
-  					<input id='$guardian_id-phone_1' name='phone_1' type='tel' value='$phone_1' class='form-control input-md' required=''>    
+  					<input id='$guardian_id-phone_1' name='phone_1' type='tel' value='$phone_1' class='form-control input-md' required
+  							data-parsley-trigger='change'>    
  					 </div>
 				</div>
 				<!-- Secondary phone-->
@@ -339,7 +349,8 @@ class Form_Generator {
 				<div class='form-group'>
 				  <label class='col-md-4 control-label' for='$guardian_id-email'>Email</label>  
 				  <div class='col-md-4'>
-				  <input id='$guardian_id-email' name='email' type='email' value='$email' class='form-control input-md' required=''>				    
+				  <input id='$guardian_id-email' name='email' type='email' value='$email' class='form-control input-md' required
+							data-parsley-trigger='change'>				    
 				  </div>
 				</div>
 				<!-- Button -->
@@ -351,30 +362,31 @@ class Form_Generator {
 				  </div>
 				</div>
 				</fieldset>
-			</form>";
+			</form>
+			<script type='text/javascript'>
+	  			$('#form-".$guardian_id."').parsley();
+			</script>";	
 		return $form;
 	}
 	
 	/* Returns html registration form for register.php */
 	public function registrationForm($error, $success) {
 		return "<form action='register.php' method='post' class='form-signin' 
-				parsley-validate>
+				id='register-form'>
 			<h2 class='form-signin-heading'>Create an account</h2>
 			<div class='control-group'>
 				<div class='controls'>
 					<input class='form-control' type='email' 
 							name='email' id='email'
-							data-type='email'
-							data-required='true' 
-							data-trigger='change' 
+							required 
+							data-parsley-trigger='change' 
 							placeholder='Email address' />
 				</div>
 				<div class='controls'>
 					<input class='form-control' type='email' 
 							name='email2'
-							data-type='email'
-							data-required='true' 
-							data-trigger='change' 
+							required
+							data-parsley-trigger='change' 
 							placeholder='Re-enter email address' 
 							data-equalto='#email' />
 				</div>
@@ -383,14 +395,22 @@ class Form_Generator {
 				<div class='controls'>
 					<input class='form-control' type='password' 
 							name='password' id='password' 
-							data-trigger='change' 
+							required
+							data-parsley-trigger='change'  
 							pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}'
 							placeholder='Password' />
 				</div>
 				<div class='controls'>
+					<p>Password must contain at 
+					least one number, one lowercase and one 
+					uppercase letter and be at least
+					at least six characters.</p>
+				</div>
+				<div class='controls'>
 					<input class='form-control' type='password' 
 							name='password2'
-							data-trigger='change' 
+							required
+							data-parsley-trigger='change' 
 							placeholder='Re-enter password'
 							data-equalto='#password' />
 				</div>
@@ -405,63 +425,95 @@ class Form_Generator {
 		        	type='submit'>Continue</button>
 			<br />
 			<a href='login.php'>Return to login</a>
-		</form>";		
+		</form>
+		<script type='text/javascript'>
+  			$('#register-form').parsley();
+		</script>";		
 	}
 	
 	
 	/* Returns html email update form for edit_account.php */
 	public function emailUpdateForm($currentEmail) {
-		return "<form action='edit_account.php' method='post'
-				id='email_update_form' data-validate='parsley'>
-				<input type='hidden' name='update' value='email' />
-			    Current email: '$currentEmail'
-			    <br />
-			    New email: 
-			    <input type='email' name='email' id='email' 
-			    data-parsley-trigger='change' required />
-			    <br />
-			    Re-enter new email:<br /> 
-			    <input type='email' name='email2' 
-			    data-parsley-trigger='change' required 
-			    data-parsley-equalto='#email' />
-			    <br />
-			    <input type='submit' value='Update email' /> 
-			</form>
-			<script type='text/javascript'>
-  				$('#email_update_form').parsley();
-			</script>";
+		return "<form id='email_update_form' action='edit_account.php' method='post'
+				 class='form-horizontal' />
+				<fieldset>
+				<input type='hidden' name='update' value='email' />	
+				<!-- Old email -->
+				<div class='form-group'>
+  					<label class='col-md-4 control-label' for='email'>Current email</label>  
+ 					 <div class='col-md-4'>
+  						<input class='form-control input-md' disabled value='$currentEmail'>    
+ 					 </div>
+				</div>			
+				<!-- Enter email -->
+				<div class='form-group'>
+  					<label class='col-md-4 control-label' for='email'>New email</label>  
+ 					 <div class='col-md-4'>
+  					<input id='email' name='email' type='email' class='form-control input-md' required
+  							data-parsley-trigger='change'>    
+ 					 </div>
+				</div>
+				<!-- Enter email again -->
+				<div class='form-group'>
+  					<label class='col-md-4 control-label' for='email'>Enter new email again</label>  
+ 					 <div class='col-md-4'>
+  					<input id='email2' name='email2' type='email' class='form-control input-md' required
+  							data-parsley-trigger='change' data-equalto='#email' >    
+ 					 </div>
+				</div>
+				<div class='col-md-2'>
+				    <button type='submit' id='submit' name='update' class='btn btn-primary' value='Submit'>Submit</button>
+				</div>		
+				</fieldset>
+				</form>
+				<script type='text/javascript'>
+	  				$('#email_update_form').parsley();
+				</script>";
 	}
 	
 	/* Returns html password update form for edit_account.php */
-	public function passwordUpdateForm() {
-		return "<form action='edit_account.php' method='post'
-				id='pw_update_form' data-validate='parsley'>
-				<input type='hidden' name='update' value='password' />
-			    Current password:<br /> 
-			    <input type='password' name='oldPassword' value='' 
-				data-parsley-trigger='change' required />
-			    <br /> 
-			    New password:
-		    	<input type='password' name='newPassword' id='password'
-		    	pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' 
-		    	required 
-		    	data-parsley-error-message='Invalid password.' /> 
-				<p>Password must contain at 
-				least one number, one lowercase and one 
-				uppercase letter and be at least
-				at least six characters.</p>
-		   	 	<br />
-		    	Re-enter new password:
-		    	<input type='password' name='newPassword2' 
-		    	data-parsley-trigger='change' required   
-		    	data-parsley-equalto='#password' /> 
-		    	<br />
-			    <br /> 
-			    <input type='submit' value='Update password' /> 
-			</form>
-			<script type='text/javascript'>
-  				$('#pw_update_form').parsley();
-			</script>";
+	public function passwordUpdateForm() { 
+		return "<form id='pw_update_form' action='edit_account.php' method='post'
+				 class='form-horizontal' />
+				<fieldset>
+				<input type='hidden' name='update' value='password' />	
+				<!-- Current password -->
+				<div class='form-group'>
+  					<label class='col-md-4 control-label' for='oldPassword'>Current password</label>  
+ 					 <div class='col-md-4'>
+  						<input id='oldPassword' name='oldPassword' class='form-control input-md' type='password' data-parsley-trigger='change' required />    
+ 					 </div>
+				</div>			
+				<!-- Enter new password -->
+				<div class='form-group'>
+  					<label class='col-md-4 control-label' for='newPassword'>New password</label>  
+ 					 <div class='col-md-4'>
+  						<input id='newPassword' name='newPassword' type='password' class='form-control input-md' required
+  							data-parsley-trigger='change' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}' >    
+ 					 </div>
+					<div class='col-md-4'>
+						<p>Password must contain at 
+							least one number, one lowercase and one 
+							uppercase letter and be at least
+							at least six characters.</p>
+					</div>
+				</div>
+				<!-- Enter new password -->
+				<div class='form-group'>
+  					<label class='col-md-4 control-label' for='newPassword2'>New password again</label>  
+ 					 <div class='col-md-4'>
+  						<input id='newPassword2' name='newPassword2' type='password' class='form-control input-md' required
+  							data-parsley-trigger='change' data-equalto='#newPassword' >    
+ 					 </div>
+				</div>
+				<div class='col-md-2'>
+				    <button type='submit' id='submit' name='update' class='btn btn-primary' value='Submit'>Submit</button>
+				</div>		
+				</fieldset>
+				</form>
+				<script type='text/javascript'>
+	  				$('#pw_update_form').parsley();
+				</script>";
 	}
 	
 	/* Returns html listserv update form for edit_account.php */
@@ -470,15 +522,25 @@ class Form_Generator {
 		if ($currentSettings) {
 			$checked = 'checked';
 		}
-		return "<form action='edit_account.php' method='post'> 
-				<input type='hidden' name='update' value='listserv' />
-				<input type='checkbox' class='regular' 
-		    		name='listserv' $checked /> 
-		    	I would like receive email notifications about 
-				upcoming programs.
-		    	<br />
-			    <input type='submit' value='Update mailing list settings' /> 
-			</form>";
+		return "<form action='edit_account.php' method='post'
+				 class='form-horizontal' />
+				<fieldset>
+				<input type='hidden' name='update' value='listserv' />	
+				<div class='form-group'>
+					<div class='col-md-8'>
+						<div class='checkbox'>
+							<label for='listserv'>
+								<input type='checkbox' name='listserv' id='listserv' value='1' $checked >
+								I would like to receive email notifications about upcoming programs.
+							</label>
+						</div>
+					</div>
+				</div>							
+				<div class='col-md-2'>
+				    <button type='submit' id='submit' name='update' class='btn btn-primary' value='Submit'>Submit</button>
+				</div>		
+				</fieldset>
+				</form>";
 	}
 
 }
