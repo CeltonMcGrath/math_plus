@@ -89,8 +89,13 @@ class Program {
 	/* Display program label for programs.php if student is not
 	 * registered in program. */
 	public function displayLabelForSelectionOne() {
-		return $this->program_name.", (".$this->remainingSpots()."
+		$script = "<script type='text/javascript'>
+				$('#".$this->program_id."-cb').live('click',function(event){ $('#".$this->program_id."-cb').attr('checked',false); });
+						</script>";
+		$checkbox = "<input type='checkbox' id='$this->program_id-cb' name='program_group[]' value='$this->program_id' checked >   ";
+		$program_label = $this->program_name.", (".$this->remainingSpots()."
 		 		spots remaining) Fee: ".$this->cost;
+		return $script.$checkbox.$program_label;
 	}
 	
 	/* Display program label for programs.php if student is

@@ -49,22 +49,29 @@
 		<?php 
 		if(!$cart->isEmpty()) {
 			echo "
-			<h1>Program shopping cart:</h1>
 			<h3>".$success.$error."</h3>
-    		<form method='post' action='cart.php'><ul>";
+    		<form method='post' action='cart.php'>
+    		<div class='panel panel-default'>
+			  <div class='panel-heading'>
+			    <h3 class='panel-title'>Panel title</h3>
+			  </div>";
         	$total = $cart->displayCart();
-			echo "</ul>
-        	<input type='submit' name='delete' 
+			echo "
+    		<div class='panel-body'>
+    			<input type='submit' name='delete' 
         		value='Delete selected programs'/>
-        	<br />
-        	Enter bursary code:<input type='text' name='bursary_id'/>
-			<input type='submit' name='bursary'
-				value='Apply bursary to selected program'/>
-			<article> Total: ".number_format($total, 2)."</article>
-       		</form>
-			<br />";
+ 			</div>
+    		<div class='panel-body'>
+	        	Enter bursary code:<input type='text' name='bursary_id'/>
+				<input type='submit' name='bursary'
+					value='Apply bursary to selected program'/>
+				<article> Total: ".number_format($total, 2)."</article>
+	       		</form>
+    		</div>";
 			if ($total > 0) {
-				echo "<FORM METHOD='POST' 
+				echo "
+    			<div class='panel-body'>
+    				<FORM METHOD='POST' 
 						ACTION='https://esqa.moneris.com/HPPDP/index.php'> 
 					<INPUT TYPE='HIDDEN' NAME='ps_store_id' VALUE='XU4D4tore1'> 
 					<INPUT TYPE='HIDDEN' NAME='hpp_key' VALUE='hpHQNQ99HJ28'>
@@ -72,15 +79,16 @@
 					<!--MORE OPTIONAL VARIABLES CAN BE DEFINED HERE -->
 					<INPUT TYPE='SUBMIT' NAME='SUBMIT' 
 						VALUE='Click to proceed to Secure Page'>
-				</FORM>";
+				</FORM>
+    			</div>";
 			}
 			else {
 				// Go to confirm
 			}					
     	}  
     	else {
-			echo '<h1>Your cart is empty. Add programs under student 
-    				management panel.</h1>';
+			echo '<h3>Your cart is empty. Add programs under student 
+    				management panel.</h3>';
     	} 
     	?>	
 	</div>

@@ -107,18 +107,11 @@ class Cart {
 			}
 			
 			echo "
-			<li>
-				<section id='accordion'>
-					<div class='contact'>
-	   					<label>
-	   						<input class='regular' name='selected_programs[]'
-								value='".$index."' type='checkbox'/>
-							".$student_name." - ".$program_name."
-	   						- ".$cost."
-	   					</label>
-					</div>
-				</section>
-			</li>
+			<div class='panel-body'>
+    			<input class='regular' name='selected_programs[]'
+					value='".$index."' type='checkbox'/>
+					".$student_name." - ".$program_name." - ".$cost."
+  			</div>
 			";
 			$cart_total += $cost;
 		}
