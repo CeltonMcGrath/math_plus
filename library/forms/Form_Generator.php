@@ -10,12 +10,20 @@ class Form_Generator {
 		//Display settings for new contact form
 		if ($student_id == 0) {
 			$new = "
-	   	    	*First name:
-	   			<input type='text' name='first_name' 
-					data-parsley-trigger='change' required/>
-	   			*Last name:
-				<input type='text' name='last_name' 
-					data-parsley-trigger='change' required/>";
+			<!-- First name -->
+			<div class='form-group'>
+				<label class='col-md-4 control-label' for='first_name'>First name</label>
+				<div class='col-md-4'>
+					<input id='first_name' name='first_name' type='text' class='form-control input-md' required >
+				</div>
+			</div>
+			<!-- Last name -->
+			<div class='form-group'>
+			<label class='col-md-4 control-label' for='last_name'>Last name</label>
+				<div class='col-md-4'>
+					<input id='last_name' name='last_name' type='text' class='form-control input-md' required >
+				</div>
+			</div>";
 			// No gender specified
 			$boy_check = '';
 			$girl_check = '';
@@ -83,90 +91,159 @@ class Form_Generator {
 		//Display settings for both contact types
 		$text_field = $GLOBALS['text_field'];
 		
-		$form = "<form action='students.php' method='post'
-				id='$student_id' data-validate='parsley' />
-			<input type='hidden' name='student_id' value='$student_id'/>
-			".$new."
-			Preferred name:
-			<input type='text' name='preferred_name' value='$preferred_name'/>
-			*Birthdate (yyyy-mm-dd):
-			<input type='text' name='birthdate'  value='$birthdate' 
-		    	pattern='^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$' 
-		    	required />
-			Gender:
-			<input type='checkbox' name='gender' value='boy' $boy_check /> Boy
-			<input type='checkbox' name='gender' value='girl' $girl_check /> Girl
-			<br />
-			*Grade:
-			<input type='text' name='grade' value='$grade'
-				data-parsley-trigger='change' required />
-			Cellphone:
-			<input type='text' name='cellphone' value='$cellphone'/>
-			<br />
-			".$text_field['allergy_label']."
-			<textarea name='allergies'>$allergies</textarea>
-			".$text_field['medical_label']."
-			<textarea name='medical'>$medical</textarea>
-			<br />
-			<hr>	
-			<br />
-			".$text_field['perm_leave']." (*)
-			<br />
-			<input type='radio' name='perm_leave' value='0' $leave_no_check />
-			No<br />
-			<input type='radio' name='perm_leave' value='1' $leave_yes_check />	
-			Yes
-			<br />
-			<hr>	
-			<br />
-   			".$text_field['perm_lunch']." (*)
-			<input type='radio' name='perm_lunch' 
-	   				value='0' $lunch_stay_check />No
-			<br />
-			<input type='radio' name='perm_lunch' 
-	   				value='1' $lunch_leave_check />Yes
-			<br />	
-	   		<input type='radio' name='perm_lunch' 
-	   				value='2' $lunch_pickup_check />
-				Someone may pickup
-   			<br />
-			<hr>	
-			<br />
-			".$text_field['perm_photo']." (*)
-			<br />
-			<input type='radio' name='perm_photo' 
-	   				value='1' 
-	   				$photo_18_check />
-	   		This student is eighteen years of age or over and consents
-			<br />
-			<input type='radio' name='perm_photo' 
-	   				value='2' 
-	   				$photo_guardian_check />	
-	   		I am the parent/guardian of the participant and I consent
-			<br />
-	   		<input type='radio' name='perm_photo' 
-	   				value='0' 
-	   				$photo_no_check />
-	   		I do not consent
-   			<br />
-			<hr>	
-			<br />
-   			".$this->guardianSelectionForm($guardian_group)."
-   			<br />
-			<hr>	
-			<br />
-	 		<input type='checkbox' class='regular' name='consent' 
-   					".$consent_check." 
-   					data-parsley-trigger='change' required/> 
-   			".$text_field['student_consent']."
-	 		<br />
-	   		<input type='submit' value='Submit Changes' />
-		</form>
-		<script type='text/javascript'>
-  				$('#";
-		$form .= $student_id;
-		$form .= "' ).parsley(); </script>";
-		return $form;
+		return "<form class='form-horizontal' action='students.php' method='post'
+				id='$student_id'>
+		<input type='hidden' name='student_id' value='$student_id'/>
+		<fieldset>		
+		$new
+		<!-- Preferred name -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-preferred_name'>Preferred name</label>
+			<div class='col-md-4'>
+				<input id='$student_id-preferred_name' name='preferred_name' type='text' class='form-control input-md' value='$preferred_name' >		
+			</div>
+		</div>		
+		<!-- Birthday -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-birth_\date'>Birthdate</label>
+			<div class='col-md-4'>
+				<input id='$student_id-birthdate' name='birthdate' type='text' placeholder='' class='form-control input-md' required value='$birthdate' >
+				<span class='help-block'>yyyy-mm-dd</span>
+			</div>
+		</div>				
+		<!-- Gender -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='gender'>Gender</label>
+			<div class='col-md-4'>
+				<div class='radio'>
+					<label for='gender-0'>
+						<input type='radio' name='gender' id='$student_id-gender-0' value='boy' $boy_check >
+						Male
+					</label>
+				</div>
+				<div class='radio'>
+					<label for='gender-1'>
+						<input type='radio' name='gender' id='$student_id-gender-1' value='girl' $girl_check >
+						Female
+					</label>
+				</div>
+			</div>
+		</div>		
+		<!-- Grade -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-grade'>Grade</label>
+			<div class='col-md-4'>
+				<input id='$student_id-grade' name='grade' type='text' class='form-control input-md' required value='$grade' >	
+			</div>
+		</div>
+		<!-- Cellphone -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-cellphone'>Cellphone</label>
+			<div class='col-md-4'>
+				<input id='$student_id-cellphone' name='cellphone' type='text' class='form-control input-md' value='$cellphone' >				
+			</div>
+		</div>		
+		<!-- Allergies -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-allergies'>
+				Please let us know of any allergies this student may have. 
+				If the student carries an epipen, please say so.
+			</label>
+			<div class='col-md-4'>
+				<textarea class='form-control' id='$student_id-allergies' name='allergies'>$allergies</textarea>
+			</div>
+		</div>		
+		<!-- Medical -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-medical'>Medical information</label>
+			<div class='col-md-4'>
+				<textarea class='form-control' id='$student_id-medical' name='medical'>$medical</textarea>
+			</div>
+		</div>				
+		<!-- Leave permission -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-perm_leave'>".$text_field['perm_leave']."</label>
+			<div class='col-md-4'>
+				<div class='radio'>
+					<label for='$student_id-perm_leave-0'>
+						<input type='radio' name='perm_leave' id='$student_id-perm_leave-0' value='0' $leave_no_check >
+						No
+					</label>
+				</div>
+				<div class='radio'>
+					<label for='$student_id-perm_leave-1'>
+						<input type='radio' name='perm_leave' id='$student_id-perm_leave-1' value='1' $leave_yes_check >
+						Yes
+					</label>
+				</div>
+			</div>
+		</div>		
+		<!-- Lunch leave permission -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-perm_lunch'>".$text_field['perm_lunch']."</label>
+			<div class='col-md-4'>
+				<div class='radio'>
+					<label for='$student_id-perm_lunch-0'>
+						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-0' value='0' $lunch_stay_check >
+						No
+					</label>
+				</div>
+				<div class='radio'>
+					<label for='$student_id-perm_lunch-1'>
+						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-1' value='1' $lunch_leave_check >
+						Yes
+					</label>
+				</div>
+				<div class='radio'>
+					<label for='$student_id-perm_lunch-2'>
+						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-2' value='2' $lunch_pickup_check >
+						Someone may pick up
+					</label>
+				</div>
+			</div>
+		</div>
+		<!-- Photo permission -->
+		<div class='form-group'>
+			<label class='col-md-4 control-label' for='$student_id-perm_photo'>".$text_field['perm_photo']."</label>
+			<div class='col-md-4'>
+				<div class='radio'>
+					<label for='$student_id-perm_photo-0'>
+						<input type='radio' name='perm_photo' id='$student_id-perm_photo-0' value='1' $photo_18_check >
+						This student is eighteen years of age or over and consents
+					</label>
+				</div>
+				<div class='radio'>
+					<label for='$student_id-perm_photo-1'>
+						<input type='radio' name='perm_photo' id='$student_id-perm_photo-1' value='2' $photo_guardian_check >
+						I am the parent/guardian of the participant and I consent
+					</label>
+				</div>
+				<div class='radio'>
+					<label for='$student_id-perm_photo-2'>
+						<input type='radio' name='perm_photo' id='$student_id-perm_photo-2' value='0' $photo_no_check>
+						I do not consent
+					</label>
+				</div>
+			</div>
+		</div>
+		<!-- Guardian selection form -->
+		".$this->guardianSelectionForm($guardian_group)."
+		<!-- Consent check & Button -->
+		<div class='form-group'>
+			<div class='col-md-8'>
+				<div class='checkbox'>
+					<label for='$student_id-consent-0'>
+						<input type='checkbox' name='consent' id='$student_id-consent-0' value='1' checked >
+						".$text_field['student_consent']."
+					</label>
+				</div>
+			</div>
+			<div class='col-md-4'>
+		    	<button type='submit' id='$student_id-submit' name='update' class='btn btn-success' value='Submit'>Submit</button>
+		  	</div>
+		</div>		
+		</fieldset>
+		</form>";			
 	}
 	
 	/* Returns html guardian selection form for students.php
