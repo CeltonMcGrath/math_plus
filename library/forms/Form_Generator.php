@@ -246,7 +246,7 @@ class Form_Generator {
 		<div class='col-md-4'>
 		</div>	
 		<div class='col-md-4'>
-		    <button type='submit' id='$student_id-submit' name='update' class='btn btn-lg btn-primary btn-block'' value='Submit'>Submit</button>
+		    <button type='submit' id='$student_id-submit' name='update' class='btn btn-lg btn-primary btn-block' value='Submit'>Submit</button>
 		</div>		
 		</fieldset>
 		</form>

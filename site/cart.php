@@ -50,31 +50,46 @@
 			echo "
 			<h3>".$success.$error."</h3>
     		<form class='form-horizontal' method='post' action='cart.php'>
-    		<div class='panel panel-default'>
-			  <div class='panel-heading'>
-			    <h2 class='panel-title'>Shopping cart</h2>
-			  </div><div class='panel-body'><ul class='list-group'>";
+    		<fieldset>
+    		<ul class='list-group'>
+    		<h3 class='list-group-item'>
+  					Shopping cart
+			</h3>";
         	$total = $cart->displayCart();
 			echo "    		
     		<li class='list-group-item'>
     			<div class='form-group'>
 					<label class='col-md-4 control-label' for='bursary_code'>Enter bursary code</label>
 					<div class='col-md-4'>
-						<input id='bursary_code' name='bursary_id' type='text' class='form-control input-md' />		
+						<input id='bursary_code' name='bursary_id' 
+    					type='text' class='form-control input-md' />		
+					</div>
+    				<div class='col-md-4'>
+    					<button type='submit' id='bursary' 
+    						name='bursary' 
+    						class='btn btn-md btn-primary btn-block'
+    						value='0'>
+    							Apply bursary to selected program
+    					</button>	
 					</div>
 				</div>
     		</li>
     		<li class='list-group-item'>
-    			<input type='submit' name='bursary'
-					value='Apply bursary to selected program'/>
+    			<div class='form-group'>
+    				<div class='col-md-4'>
+    					<button type='submit' id='delete' 
+    						name='delete' 
+    						class='btn btn-md btn-primary btn-block'
+    						value='0'>
+    							Delete selected programs
+    					</button>	
+					</div>
+				</div>
     		</li>
-    		<li class='list-group-item'>
-    			<input type='submit' name='delete' 
-        		value='Delete selected programs'/>
- 			</li>
     		<li class='list-group-item'>
 				<article> Total: ".number_format($total, 2)."</article>
     		</li>
+			</fieldset>
     		</form>";
 			if ($total > 0) {
 				echo "
@@ -88,7 +103,7 @@
 					<INPUT TYPE='SUBMIT' NAME='SUBMIT' 
 						VALUE='Click to proceed to Secure Page'>
 				</FORM>
-    			</li></ul></div>";
+    			</li></ul>";
 			}
 			else {
 				// Go to confirm

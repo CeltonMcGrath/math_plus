@@ -19,8 +19,7 @@
   <?php include '../library/site_template/head_private_area.php' ?>
   <body>
 	<?php include '../library/site_template/navbar.php' ?>   
-	<div class="container">
-	<h1>Select programs for <?php echo $student->getName() ?></h1>
+	<div class="container">	
 		<form action='cart.php' method='post'>
 		<input type='hidden' name='operation'
 					value='update_student' />
@@ -45,7 +44,10 @@
 				echo "<h3>No upcoming programs. Check back again!</h3>";
 			}
 			else {
-				echo "<ul class='list-group'>";
+				echo "<ul class='list-group'>
+    			<h3 class='list-group-item'>
+  					Select programs for ".$student->getName()."
+				</h3>";
 				foreach($programRows as $programRow):
 					$program = new Program($programRow['program_id'], $db);
 					//ID
@@ -71,19 +73,16 @@
 						</div>
 					</div></li>";
 				endforeach;
-				echo "</ul>";
 			}
  		?>
-		    	<div class='col-md-4'>
-				</div>	
-				<div class='col-md-4'>
-				</div>
-				<div class='col-md-4'>
-				    <button type='submit' id='$student_id-submit' name='update' 
+ 			<li class='list-group-item'>
+		    	<button type='submit' id='$student_id-submit' name='update' 
 				    		class='btn btn-md btn-primary btn-block'' 
 				    		value='submit'>Add programs to cart</button>
-				</div>
-    		</form>	
+				
+			</li>
+    		</form>
+    		</ul>	
   </body>
 </html>
 
