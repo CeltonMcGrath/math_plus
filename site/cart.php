@@ -1,10 +1,13 @@
 <?php 
     require("../library/common.php"); 
     include '../library/Cart.php';
+    include '../library/forms/html_Generator.php';
+    
+    $hg = new html_Generator();
  
     /*Load previous cart contents*/
     $cart = new Cart($_SESSION['user']['user_id'], $db);
-
+    
     $success = "";
     $error = "";
 
@@ -13,12 +16,12 @@
     	if (isset($_POST['delete'])) {
     		$cart->deletePrograms($_POST['selected_programs']);	
     	}
-    	// Apply bursary codes
+    	// Apply bursary code
     	elseif (isset($_POST['bursary'])) {
     		if (!isset($_POST['selected_programs'])) {
-			$error = 'Please select a program.';
-		}
-		elseif (count($_POST['selected_programs'])>1) {
+				$error = 'Please select a program.';
+			}
+			elseif (count($_POST['selected_programs'])>1) {
     			$error = 'You may only apply code to one program.';
     		}
     		elseif (!$cart->validBursary($_POST['bursary_id'], 
@@ -47,9 +50,8 @@
 	<div class="container">		
 		<?php 
 		if(!$cart->isEmpty()) {
-			echo "
-			<h3>".$success.$error."</h3>
-    		<form class='form-horizontal' method='post' action='cart.php'>
+			echo $hg->errorMessage($error).$hg->successMessage($success)."	
+			<form class='form-horizontal' method='post' action='cart.php'>
     		<fieldset>
     		<ul class='list-group'>
     		<h3 class='list-group-item'>
@@ -101,12 +103,18 @@
 					<INPUT TYPE='HIDDEN' NAME='charge_total' VALUE=".$total.">
 					<!--MORE OPTIONAL VARIABLES CAN BE DEFINED HERE -->
 					<INPUT TYPE='SUBMIT' NAME='SUBMIT' 
-						VALUE='Click to proceed to Secure Page'>
+						VALUE='Click to checkout'>
 				</FORM>
     			</li></ul>";
 			}
 			else {
-				// Go to confirm
+				echo "<li class='list-group-item'>
+    				<FORM METHOD='POST' 
+						ACTION='confirm.php'> 
+					<INPUT TYPE='SUBMIT' NAME='SUBMIT' 
+						VALUE='Click to checkout'>
+				</FORM>
+    			</li></ul>";
 			}					
     	}  
     	else {

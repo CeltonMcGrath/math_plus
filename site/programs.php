@@ -1,9 +1,6 @@
 <?php  
     require("../library/common.php");     
     include '../library/Student.php';
-    include '../library/forms/html_Generator.php';
-
-    $hg = new html_Generator();
     
     if (empty($_POST)) { 
     	//Redirect to students.php
@@ -44,14 +41,12 @@
 			else {
 				echo "
   				<form action='cart.php' method='post'>
-					<input type='hidden' name='operation'
-					value='update_student' />
-				<input type='hidden' name='student_id' 
- 					value= '".$student->getId()."' />	
- 				<ul class='list-group'>
-    			<h3 class='list-group-item'>
-  					Select programs for ".$student->getName()."
-				</h3>";
+					<input type='hidden' name='student_id' 
+	 					value= '".$student->getId()."' />	
+	 				<ul class='list-group'>
+		    			<h3 class='list-group-item'>
+		  					Select programs for ".$student->getName()."
+						</h3>";
 				foreach($programRows as $programRow):
 					$program = new Program($programRow['program_id'], $db);
 					//ID
@@ -70,22 +65,24 @@
 					$article = $program->displayArticle();
 						
 					echo
-					"<li class='list-group-item'><div class='panel panel-default'>
-						<div class='panel-heading'>$label</div>
-						<div class='panel-body'>
-							$article
-						</div>
-					</div></li>";
+						"<li class='list-group-item'>
+							<div class='panel panel-default'>
+								<div class='panel-heading'>$label</div>
+								<div class='panel-body'>
+									$article
+								</div>
+							</div>
+						</li>";
 				endforeach;
 				echo "
-					<li class='list-group-item'>
-		    			<button type='submit' id='submit' 
-		    				name='update' 
-				    		class='btn btn-md btn-primary btn-block'' 
-				    		value='submit'>Add programs to cart
-				    	</button>
-					</li>
-				</ul>
+						<li class='list-group-item'>
+			    			<button type='submit' id='submit' 
+			    				name='update' 
+					    		class='btn btn-md btn-primary btn-block'' 
+					    		value='submit'>Add programs to cart
+					    	</button>
+						</li>
+					</ul>
 		    	</form>";
 			}
  		?>

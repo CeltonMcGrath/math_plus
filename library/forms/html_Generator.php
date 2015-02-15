@@ -19,5 +19,28 @@ class html_Generator {
 				";
 	}
 	
+	public function errorMessage($message) {
+		if ($message=="") {
+			return "";
+		}
+		else {
+			return "
+				<div class='alert alert-danger' role='alert'>
+					$message
+				</div>";
+		}	
+	}
+
+	public function successMessage($message) {
+		if ($message=="") {
+			return "";
+		}
+		else {
+			return "
+			<div class='alert alert-success' role='alert'>
+				$message
+			</div>";
+		}
+	}
+	
 }
-   

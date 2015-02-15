@@ -50,10 +50,10 @@ class Form_Generator {
 			// Load gender checkboxes
 			$boy_check = '';
 			$girl_check = '';
-			if ($gender=='boy') {
+			if ($gender== 'boy') {
 				$boy_check = 'checked';
 			}
-			elseif ($gender =='girl') {
+			elseif ($gender == 'girl') {
 				$girl_check = 'checked';
 			}
 			// Load leave permission radio buttons
@@ -437,33 +437,33 @@ class Form_Generator {
 		return "<form id='email_update_form' action='edit_account.php' method='post'
 				 class='form-horizontal' />
 				<fieldset>
-				<input type='hidden' name='update' value='email' />	
-				<!-- Old email -->
-				<div class='form-group'>
-  					<label class='col-md-4 control-label' for='email'>Current email</label>  
- 					 <div class='col-md-4'>
-  						<input class='form-control input-md' disabled value='$currentEmail'>    
- 					 </div>
-				</div>			
-				<!-- Enter email -->
-				<div class='form-group'>
-  					<label class='col-md-4 control-label' for='email'>New email</label>  
- 					 <div class='col-md-4'>
-  					<input id='email' name='email' type='email' class='form-control input-md' required
-  							data-parsley-trigger='change'>    
- 					 </div>
-				</div>
-				<!-- Enter email again -->
-				<div class='form-group'>
-  					<label class='col-md-4 control-label' for='email'>Enter new email again</label>  
- 					 <div class='col-md-4'>
-  					<input id='email2' name='email2' type='email' class='form-control input-md' required
-  							data-parsley-trigger='change' data-equalto='#email' >    
- 					 </div>
-				</div>
-				<div class='col-md-2'>
-				    <button type='submit' id='submit' name='update' class='btn btn-primary' value='Submit'>Submit</button>
-				</div>		
+					<input type='hidden' name='update' value='email' />	
+					<!-- Old email -->
+					<div class='form-group'>
+	  					<label class='col-md-4 control-label' for='email'>Current email</label>  
+	 					 <div class='col-md-4'>
+	  						<input class='form-control input-md' disabled value='$currentEmail'>    
+	 					 </div>
+					</div>			
+					<!-- Enter email -->
+					<div class='form-group'>
+	  					<label class='col-md-4 control-label' for='email'>New email</label>  
+	 					 <div class='col-md-4'>
+	  					<input id='email' name='email' type='email' class='form-control input-md' required
+	  							data-parsley-trigger='change'>    
+	 					 </div>
+					</div>
+					<!-- Enter email again -->
+					<div class='form-group'>
+	  					<label class='col-md-4 control-label' for='email'>Enter new email again</label>  
+	 					 <div class='col-md-4'>
+	  					<input id='email2' name='email2' type='email' class='form-control input-md' required
+	  							data-parsley-trigger='change' data-equalto='#email' >    
+	 					 </div>
+					</div>
+					<div class='col-md-2'>
+					    <button type='submit' class='btn btn-primary'>Submit</button>
+					</div>		
 				</fieldset>
 				</form>
 				<script type='text/javascript'>
@@ -498,7 +498,7 @@ class Form_Generator {
 							at least six characters.</p>
 					</div>
 				</div>
-				<!-- Enter new password -->
+				<!-- Enter new password again -->
 				<div class='form-group'>
   					<label class='col-md-4 control-label' for='newPassword2'>New password again</label>  
  					 <div class='col-md-4'>
@@ -507,7 +507,7 @@ class Form_Generator {
  					 </div>
 				</div>
 				<div class='col-md-2'>
-				    <button type='submit' id='submit' name='update' class='btn btn-primary' value='Submit'>Submit</button>
+				    <button type='submit' class='btn btn-primary'>Submit</button>
 				</div>		
 				</fieldset>
 				</form>
@@ -524,8 +524,8 @@ class Form_Generator {
 		}
 		return "<form action='edit_account.php' method='post'
 				 class='form-horizontal' />
-				<fieldset>
-				<input type='hidden' name='update' value='listserv' />	
+				<fieldset>	
+				<input type='hidden' name='update' value='listserv' />
 				<div class='form-group'>
 					<div class='col-md-8'>
 						<div class='checkbox'>
@@ -537,7 +537,7 @@ class Form_Generator {
 					</div>
 				</div>							
 				<div class='col-md-2'>
-				    <button type='submit' id='submit' name='update' class='btn btn-primary' value='Submit'>Submit</button>
+				    <button type='submit' class='btn btn-primary' >Submit</button>
 				</div>		
 				</fieldset>
 				</form>";

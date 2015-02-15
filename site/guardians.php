@@ -1,6 +1,5 @@
 <?php 
     require("../library/common.php"); 
-    include '../library/config.php';
     include '../library/Form_Validator.php';
     include '../library/forms/html_Generator.php';
     include '../library/forms/Form_Generator.php';

@@ -18,8 +18,8 @@
     		$user = new User($email, $db);
     		$user->resetPassword();
     		$success = "An email has been sent to your email address 
-    					with a temporarypassword. Please login with your 
-    					temporary password and change it.
+    					with a temporary password. Please login with your 
+    					new password. You can change it once you login.
     					(Check your junk/ spam folders.)";
     	}
     }

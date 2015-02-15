@@ -1,6 +1,5 @@
 <?php
-	/*Code from http://www.9lessons.info/2013/11/php-email-verification-script.html 11/26/14*/	
-	
+
 	function sendActivationEmail($email, $activation, $reason) {
 		/* Returns true iff activation email successfully sent.*/
 		include 'config.php';
@@ -24,7 +23,7 @@
 		/* Returns true iff temporary password email successfully sent.*/
 		$subject = "Math+ registration - temporary password";
 		$body = "Your password for the Math+ registration site has been 
-				reset to".$password." Please login with this password and 
+				reset to $password. Please login with this password and 
 				change your password on the account management panel.";
 		return sendMail($email, $subject, $body);
 	}

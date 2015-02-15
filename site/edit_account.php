@@ -40,10 +40,10 @@
     		elseif ($data['update']=='password') {
     			//Check old password
     			if (!$user->correctPassword($data['oldPassword'])) {
-    				$error = "Incorrect credentials.";
+    				$error = "Incorrect password.";
     			}
     			else {
-    				//Update passworld
+    				//Update password
     				$user->updatePassword($data['newPassword']);
     				$success = "Password successfully updated.
     						Use your new password for your next login.";
@@ -67,6 +67,10 @@
 	<?php include '../library/site_template/navbar.php' ?>   
 	<div class='container'>
 		<h1>Edit Account</h1>
+		<?php 
+			echo $hg->errorMessage($error);
+			echo $hg->successMessage($success);		
+		?>
 		<div class="accordion" id="accordion">
 			<?php
 			//Email updater

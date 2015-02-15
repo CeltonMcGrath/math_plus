@@ -1,6 +1,9 @@
 <?php 
     require("../library/common.php");
-    include '../library/User.php'; 
+    include '../library/User.php';
+    include '../library/forms/html_Generator.php';
+    
+    $hg = new html_Generator();
     
     // Redisplay user email if they have a login email.
     $submitted_email = '';
@@ -57,9 +60,10 @@
 		      <form class="form-signin" action="login.php" method="post" >
 		        <h2 class="form-signin-heading">Please sign in</h2>
 		        <input type=hidden name='operation' value='login' />
-		        <h5 class="form-signin-heading">
-		        	<?php echo $error; echo $success ?>
-		        </h5>
+				<?php 
+					echo $hg->errorMessage($error);
+					echo $hg->successMessage($success);		
+				?>
 		        <label for="inputEmail" class="sr-only">Email address</label>
 		        <input type="email" id="inputEmail" class="form-control" 
 		        	placeholder="Email address" name='email'
