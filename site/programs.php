@@ -19,12 +19,7 @@
   <?php include '../library/site_template/head_private_area.php' ?>
   <body>
 	<?php include '../library/site_template/navbar.php' ?>   
-	<div class="container">	
-		<form action='cart.php' method='post'>
-		<input type='hidden' name='operation'
-					value='update_student' />
-				<input type='hidden' name='student_id' 
- 					value= '<?php echo $student->getId()?>' />		
+	<div class="container">				
  		<?php 	
 	 		//Select all upcoming programs
 	 		$query = 'SELECT *
@@ -41,10 +36,19 @@
 	 		$programRows = $stmt->fetchAll();
 	
 	 		if (count($programRows)==0) {
-				echo "<h3>No upcoming programs. Check back again!</h3>";
+				echo "
+				<div class='jumbotron'>
+					<h3>No upcoming programs. Check back again!</h3>
+				</div>";
 			}
 			else {
-				echo "<ul class='list-group'>
+				echo "
+  				<form action='cart.php' method='post'>
+					<input type='hidden' name='operation'
+					value='update_student' />
+				<input type='hidden' name='student_id' 
+ 					value= '".$student->getId()."' />	
+ 				<ul class='list-group'>
     			<h3 class='list-group-item'>
   					Select programs for ".$student->getName()."
 				</h3>";
@@ -73,16 +77,19 @@
 						</div>
 					</div></li>";
 				endforeach;
+				echo "
+					<li class='list-group-item'>
+		    			<button type='submit' id='submit' 
+		    				name='update' 
+				    		class='btn btn-md btn-primary btn-block'' 
+				    		value='submit'>Add programs to cart
+				    	</button>
+					</li>
+				</ul>
+		    	</form>";
 			}
  		?>
- 			<li class='list-group-item'>
-		    	<button type='submit' id='$student_id-submit' name='update' 
-				    		class='btn btn-md btn-primary btn-block'' 
-				    		value='submit'>Add programs to cart</button>
-				
-			</li>
-    		</form>
-    		</ul>	
+ 	</div>		
   </body>
 </html>
 
