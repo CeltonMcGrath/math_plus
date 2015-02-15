@@ -13,7 +13,9 @@
 		elseif ($reason == "update") {
 			$subject = "Math+ updated email";
 			$body = "You've successfully updated your email for your Math+ account.
-					Please click <a href=".$link.">here</a> to activate your new email.";
+					Please click <a href='$link' >here</a> to activate your new email.
+					
+					$link";
 		}
 		
 		return sendMail($email, $subject, $body);
