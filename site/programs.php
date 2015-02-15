@@ -20,13 +20,12 @@
   <body>
 	<?php include '../library/site_template/navbar.php' ?>   
 	<div class="container">
-		<h1>Select programs for <?php echo $student->getName() ?></h1>
+	<h1>Select programs for <?php echo $student->getName() ?></h1>
 		<form action='cart.php' method='post'>
 		<input type='hidden' name='operation'
 					value='update_student' />
 				<input type='hidden' name='student_id' 
- 					value= '<?php echo $student->getId()?>' />
-		<div class="accordion" id="accordion">			
+ 					value= '<?php echo $student->getId()?>' />		
  		<?php 	
 	 		//Select all upcoming programs
 	 		$query = 'SELECT *
@@ -46,6 +45,7 @@
 				echo "<h3>No upcoming programs. Check back again!</h3>";
 			}
 			else {
+				echo "<ul class='list-group'>";
 				foreach($programRows as $programRow):
 					$program = new Program($programRow['program_id'], $db);
 					//ID
@@ -63,8 +63,15 @@
 					// Article
 					$article = $program->displayArticle();
 						
-					echo $hg->bootstrapAccordion($id, $label, $article);
+					echo
+					"<li class='list-group-item'><div class='panel panel-default'>
+						<div class='panel-heading'>$label</div>
+						<div class='panel-body'>
+							$article
+						</div>
+					</div></li>";
 				endforeach;
+				echo "</ul>";
 			}
  		?>
 		    	<div class='col-md-4'>
@@ -77,7 +84,6 @@
 				    		value='submit'>Add programs to cart</button>
 				</div>
     		</form>	
-	</div>
   </body>
 </html>
 

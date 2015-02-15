@@ -44,33 +44,41 @@
   <?php include '../library/site_template/head_private_area.php' ?>
   <body>
 	<?php include '../library/site_template/navbar.php' ?>   
-	<div class="container">
-		<h1>Shopping cart</h1>
+	<div class="container">		
 		<?php 
 		if(!$cart->isEmpty()) {
 			echo "
 			<h3>".$success.$error."</h3>
-    		<form method='post' action='cart.php'>
+    		<form class='form-horizontal' method='post' action='cart.php'>
     		<div class='panel panel-default'>
 			  <div class='panel-heading'>
-			    <h3 class='panel-title'>Panel title</h3>
-			  </div>";
+			    <h2 class='panel-title'>Shopping cart</h2>
+			  </div><div class='panel-body'><ul class='list-group'>";
         	$total = $cart->displayCart();
-			echo "
-    		<div class='panel-body'>
+			echo "    		
+    		<li class='list-group-item'>
+    			<div class='form-group'>
+					<label class='col-md-4 control-label' for='bursary_code'>Enter bursary code</label>
+					<div class='col-md-4'>
+						<input id='bursary_code' name='bursary_id' type='text' class='form-control input-md' />		
+					</div>
+				</div>
+    		</li>
+    		<li class='list-group-item'>
+    			<input type='submit' name='bursary'
+					value='Apply bursary to selected program'/>
+    		</li>
+    		<li class='list-group-item'>
     			<input type='submit' name='delete' 
         		value='Delete selected programs'/>
- 			</div>
-    		<div class='panel-body'>
-	        	Enter bursary code:<input type='text' name='bursary_id'/>
-				<input type='submit' name='bursary'
-					value='Apply bursary to selected program'/>
+ 			</li>
+    		<li class='list-group-item'>
 				<article> Total: ".number_format($total, 2)."</article>
-	       		</form>
-    		</div>";
+    		</li>
+    		</form>";
 			if ($total > 0) {
 				echo "
-    			<div class='panel-body'>
+    			<li class='list-group-item'>
     				<FORM METHOD='POST' 
 						ACTION='https://esqa.moneris.com/HPPDP/index.php'> 
 					<INPUT TYPE='HIDDEN' NAME='ps_store_id' VALUE='XU4D4tore1'> 
@@ -80,7 +88,7 @@
 					<INPUT TYPE='SUBMIT' NAME='SUBMIT' 
 						VALUE='Click to proceed to Secure Page'>
 				</FORM>
-    			</div>";
+    			</li></ul></div>";
 			}
 			else {
 				// Go to confirm

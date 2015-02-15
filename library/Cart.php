@@ -107,11 +107,20 @@ class Cart {
 			}
 			
 			echo "
-			<div class='panel-body'>
-    			<input class='regular' name='selected_programs[]'
-					value='".$index."' type='checkbox'/>
-					".$student_name." - ".$program_name." - ".$cost."
-  			</div>
+			<li class='list-group-item'>
+				<div class='form-group'>
+					<div class='col-md-4'>
+						<div class='checkbox'>
+							<label for='$index'>
+								<input 
+									id='$index' name='selected_programs[]'
+									value='".$index."' type='checkbox'/>
+								".$student_name." - ".$program_name." - ".$cost."
+							</label>
+						</div>
+					</div>
+				</div>		
+  			</li>
 			";
 			$cart_total += $cost;
 		}
