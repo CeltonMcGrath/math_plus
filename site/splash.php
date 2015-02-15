@@ -9,7 +9,7 @@
 	<?php include '../library/site_template/navbar.php' ?>   
     <div class="container">
       <div class="jumbotron">
-        <?php include '../resources/splash_content.php'; ?>
+        <?php include '../resources/splash_content.html'; ?>
       </div>
     </div>
   </body>

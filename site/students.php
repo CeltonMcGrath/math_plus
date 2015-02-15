@@ -43,7 +43,11 @@
 	<body>
 		<?php include '../library/site_template/navbar.php' ?>   
 		<div class="container">
-			<h1>Students</h1>      
+			<h3>Students</h3>   
+			<?php 
+				echo $hg->errorMessage($error);
+				echo $hg->successMessage($success);		
+			?>   
 			<div class="accordion" id="accordion">
 				<?php 
 				$guardian_group = Student::getUnCheckedGuardianGroup($db, 

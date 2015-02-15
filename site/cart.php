@@ -79,6 +79,10 @@
     		<li class='list-group-item'>
     			<div class='form-group'>
     				<div class='col-md-4'>
+    				</div>
+    				<div class='col-md-4'>
+    				</div>
+    				<div class='col-md-4'>
     					<button type='submit' id='delete' 
     						name='delete' 
     						class='btn btn-md btn-primary btn-block'
@@ -88,33 +92,38 @@
 					</div>
 				</div>
     		</li>
-    		<li class='list-group-item'>
-				<article> Total: ".number_format($total, 2)."</article>
+    		<li class='list-group-item pull-right'>
+				Total: ".number_format($total, 2)."
     		</li>
 			</fieldset>
-    		</form>";
+    		</form>
+			</ul>";
 			if ($total > 0) {
 				echo "
-    			<li class='list-group-item'>
+    			<div class='pull-right'>
     				<FORM METHOD='POST' 
 						ACTION='https://esqa.moneris.com/HPPDP/index.php'> 
 					<INPUT TYPE='HIDDEN' NAME='ps_store_id' VALUE='XU4D4tore1'> 
 					<INPUT TYPE='HIDDEN' NAME='hpp_key' VALUE='hpHQNQ99HJ28'>
 					<INPUT TYPE='HIDDEN' NAME='charge_total' VALUE=".$total.">
 					<!--MORE OPTIONAL VARIABLES CAN BE DEFINED HERE -->
-					<INPUT TYPE='SUBMIT' NAME='SUBMIT' 
-						VALUE='Click to checkout'>
-				</FORM>
-    			</li></ul>";
+					<button type='submit' class='btn btn-primary'>
+  						Proceed to payment
+  					</button>
+					</FORM>
+				</div>";
 			}
 			else {
-				echo "<li class='list-group-item'>
+				echo "
+    			<div class='pull-right'>
     				<FORM METHOD='POST' 
 						ACTION='confirm.php'> 
-					<INPUT TYPE='SUBMIT' NAME='SUBMIT' 
-						VALUE='Click to checkout'>
-				</FORM>
-    			</li></ul>";
+					<INPUT TYPE='HIDDEN' NAME='code' VALUE='000'> 
+					<button type='submit' class='btn btn-primary'>
+  						Complete registration
+  					</button>
+					</FORM>
+				</div>";
 			}					
     	}  
     	else {

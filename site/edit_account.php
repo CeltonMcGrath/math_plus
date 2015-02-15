@@ -11,6 +11,7 @@
     
     $error = '';
     $success = '';
+    
     // Check if form has been submitted
     if(!empty($_POST)) {
     	$form_validator = new Form_Validator();
@@ -66,7 +67,7 @@
   <body>
 	<?php include '../library/site_template/navbar.php' ?>   
 	<div class='container'>
-		<h1>Edit Account</h1>
+		<h3>Edit Account</h3>
 		<?php 
 			echo $hg->errorMessage($error);
 			echo $hg->successMessage($success);		

@@ -9,7 +9,7 @@
 	<?php include '../library/site_template/navbar.php' ?>   
     <div class="container">
       <div class="jumbotron">
-        <?php include '../resources/student_code_of_conduct.php'; ?>
+        <?php include '../resources/student_code_of_conduct.html'; ?>
       </div>
     </div>
   </body>

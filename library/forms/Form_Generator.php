@@ -296,7 +296,10 @@ class Form_Generator {
 		// Display settings for already registered guardian form
 		if ($guardian_id) {
 			$new = '';
-			$delete =  "<button type='submit' id='$guardian_id-submit' name='submit' class='btn btn-danger' value='Delete'>Delete</button>";
+			$delete =  "
+				<button type='submit' id='$guardian_id-submit' name='delete' 
+					class='btn btn-danger'>Delete
+				</button>";
 			$submit_value = "Update contact";
 		}
 		// Display settings for new guardian form
