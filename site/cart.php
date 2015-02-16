@@ -125,7 +125,7 @@
 						action='https://esqa.moneris.com/HPPDP/index.php'>
 					<input TYPE='HIDDEN' NAME='ps_store_id' VALUE='XU4D4tore1'> 
 					<input TYPE='HIDDEN' NAME='hpp_key' VALUE='hpHQNQ99HJ28'>
-					<input TYPE='HIDDEN' NAME='charge_total' VALUE=".$total.">";
+					<input TYPE='HIDDEN' NAME='charge_total' VALUE='$total'>";
 					$n = 1;
 					foreach ($contents as $index=>$item) {
 						echo "
