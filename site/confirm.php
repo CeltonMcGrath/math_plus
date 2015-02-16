@@ -1,7 +1,7 @@
 <?php 
     require("../library/common.php"); 
     include '../library/Form_Validator.php';
-    
+        echo print_r($_POST);
 	if (!empty($_POST)) {
 		//First test to see if post came from $0.00 transaction.
 		
@@ -10,7 +10,7 @@
 		$data = $fv->sanitizeTransactionDetails($_POST);
 		//Test respnse codes from data... may need to redirect early.		
 		$cart = new Cart($_SESSION['user']['user_id'], $db);
-		$content = cart->registerStudents($data);		
+		$content = $cart->registerStudents($data);		
 	}
 	else {
 		header("Location: cart.php");
