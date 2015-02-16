@@ -42,7 +42,7 @@
     }
 
     $contents = $cart->getFormattedContents();
-    $total = Cart::getTotal($contents);
+    $total = number_format(Cart::getTotal($contents), 2);
 ?>
 
 <!DOCTYPE html>
@@ -113,7 +113,7 @@
 					</div>
 	    		</li>
 	    		<li class='list-group-item pull-right'>
-					Total: ".number_format($total, 2)."
+					Total: $total
 	    		</li>
 			</fieldset>
     		</form>
