@@ -10,7 +10,7 @@
     
     $success = "";
     $error = "";
-
+	error_log(print_r($_POST));
     if (!empty($_POST)) {
     	// Delete cart items
     	if (isset($_POST['delete'])) {
