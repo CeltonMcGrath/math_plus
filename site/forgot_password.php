@@ -2,6 +2,9 @@
     // First we execute our common code to connection to the database and start the session 
     require("../library/common.php");   
     include '../library/User.php';
+    include '../library/forms/html_Generator.php';
+    
+    $hg = new html_Generator();
     
     $success = "";
     $error = "";
@@ -32,9 +35,10 @@
 			<form class="form-signin" action="forgot_password.php" 
 				method="post" >
 			    <h2 class="form-signin-heading">Please enter your email</h2>
-			    <h5 class="form-signin-heading">
-		        	<?php echo $error; echo $success ?>
-		        </h5>
+			    <?php 
+					echo $hg->errorMessage($error);
+					echo $hg->successMessage($success);		
+				?>
 			    <label for="inputEmail" class="sr-only">Email address</label>
 			        <input type="email" id="inputEmail" class="form-control" 
 			        	placeholder="Email address" name='email'

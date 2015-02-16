@@ -9,13 +9,12 @@
 			$subject = "Math+ registration activation";
 			$body = "Thanks for registering with Math+. 
 					Please click <a href='$link'>here</a> to activate your account.
-					
-					$link";
+					($link)";
 		}
 		elseif ($reason == "update") {
 			$subject = "Math+ updated email";
 			$body = "You've successfully updated your email for your Math+ account.
-					Please click <a href='$link' >here</a> to activate your new email.
+					Please click <a href='$link'>here</a> to activate your new email.
 					
 					$link";
 		}

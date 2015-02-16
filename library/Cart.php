@@ -3,7 +3,7 @@ include 'Student.php';
 
 class Cart {
 	
-	// User who cart belongs too
+	//User whom this cart belongs too
 	private $user_id;
 	
 	/* $contents - array of 3-tuples:
@@ -11,8 +11,7 @@ class Cart {
 	 * Each 3 tuple represent one shopping cart item.
 	 * $bursary_id is default false if no bursary applied
 	 */ 
-	private $contents;
-	
+	private $contents;	
 	private $database;
  
 	public function __construct($u_id, $db) {
@@ -87,44 +86,49 @@ class Cart {
 		}
 		return $string;
 	}
+
+	public function getContents() {
+		return $this->contents;
+	}
 	
-	/* Displays cart for site/cart.php and returns the cost of this program
-	 * with bursaries tooken into account.*/
-	public function displayCart() {
-		$cart_total = 0;
+	
+	/* Returns an array of cart items, each a tuple 
+	 * index => (student name,  program name, cost) */
+	public function getFormattedContents() {
+		$formatted_contents = array();
 		foreach ($this->contents as $index=>$cart_item) {
+			
 			//Get student name
 			$student = new Student($cart_item['student_id'], $this->database);
 			$student_name = $student->getName();
-			//Get program name and cost
+			//Get program
 			$program = new Program($cart_item['program_id'], $this->database);
 			$program_name = $program->getName();
+			//Get cost
 			if ($cart_item['bursary_id']!=-1) {
-				$cost = $this->getBursaryCost($cart_item['bursary_id'])." (Bursary applied.)";
+				$cost = $this->getBursaryCost($cart_item['bursary_id']);
 			}
 			else {
 				$cost = $program->getCost();
 			}
-			
-			echo "
-			<li class='list-group-item'>
-				<div class='form-group'>
-					<div class='col-md-4'>
-						<div class='checkbox'>
-							<label for='$index'>
-								<input 
-									id='$index' name='selected_programs[]'
-									value='".$index."' type='checkbox'/>
-								".$student_name." - ".$program_name." - ".$cost."
-							</label>
-						</div>
-					</div>
-				</div>		
-  			</li>
-			";
-			$cart_total += $cost;
+			//Bundle data
+			$formatted_contents[$index] = array(
+					'student_id' => $cart_item['student_id'],
+					'student_name' => $student_name, 
+					'program_id' => $cart_item['program_id'],
+					'program_name' => $program_name,  
+					'cost' => $cost
+			);
 		}
-		return $cart_total;
+		return $formatted_contents;
+	}
+
+	public static function  getTotal($formattedContents) {
+		$total = 0;
+		foreach ($formattedContents as $item) {
+			$total += $item['cost'];
+		}
+		return $total;
 	}
 	
 	/* Retrieves bursary cost from database. */

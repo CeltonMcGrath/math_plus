@@ -1,6 +1,9 @@
 <?php 
     require("../library/common.php");
+    include '../library/forms/html_Generator.php';
 
+    $hg = new html_Generator();
+    
 	$error = "";
 	$terms='';
     if(!empty($_POST)) {
@@ -17,7 +20,8 @@
     $terms = file_get_contents("../resources/user_terms_and_conditions.txt"); 
 ?> 
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<?php include '../library/site_template/head_public_area.php' ?>
 	<body>
 		<div class="container" >
@@ -28,9 +32,9 @@
 					<?php echo $terms ?>			
 				</div>
 		        <input type="hidden" name='operation' value='register'/>
-		        <h5 class="form-signin-heading">
-		        	<?php echo $error?>
-		        </h5>
+		        <?php 
+					echo $hg->errorMessage($error);		
+				?>
 		        <label for="inputEmail" class="sr-only">Email address</label>
 		        <input type='checkbox' name='terms'/>
 				I agree to the terms and conditions stated above.

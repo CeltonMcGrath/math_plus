@@ -90,7 +90,7 @@ class Form_Generator {
 			// Use must agree to use consent
 			$consent_check = 'checked';
 		}
-		//Display settings for both contact types
+
 		$text_field = $GLOBALS['text_field'];
 		
 		return "<form class='form-horizontal' action='students.php' method='post'
@@ -246,13 +246,16 @@ class Form_Generator {
 		<div class='col-md-4'>
 		</div>	
 		<div class='col-md-4'>
-		    <button type='submit' id='$student_id-submit' name='update' class='btn btn-lg btn-primary btn-block' value='Submit'>Submit</button>
+		    <button type='submit' id='$student_id-submit' name='update' 
+		    	class='btn btn-lg btn-primary btn-block' value='Submit'>
+		    	Submit
+		    </button>
 		</div>		
 		</fieldset>
 		</form>
-			<script type='text/javascript'>
-	  			$('#form-".$student_id."').parsley();
-			</script>";				
+		<script type='text/javascript'>
+  			$('#form-".$student_id."').parsley();
+		</script>";				
 	}
 	
 	/* Returns html guardian selection form for students.php

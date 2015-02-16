@@ -39,7 +39,10 @@
     	else {
     		$cart->addPrograms($_POST['student_id'], $_POST['program_group']);
     	}  	
-    }    
+    }
+
+    $contents = $cart->getFormattedContents();
+    $total = Cart::getTotal($contents);
 ?>
 
 <!DOCTYPE html>
@@ -54,60 +57,91 @@
 			<form class='form-horizontal' method='post' action='cart.php'>
     		<fieldset>
     		<ul class='list-group'>
-    		<h3 class='list-group-item'>
-  					Shopping cart
-			</h3>";
-        	$total = $cart->displayCart();
-			echo "    		
-    		<li class='list-group-item'>
-    			<div class='form-group'>
-					<label class='col-md-4 control-label' for='bursary_code'>Enter bursary code</label>
-					<div class='col-md-4'>
-						<input id='bursary_code' name='bursary_id' 
-    					type='text' class='form-control input-md' />		
+	    		<h3 class='list-group-item'>
+	  					Shopping cart
+				</h3>
+			<li class='list-group-item'>
+			<div class='form-group'>
+    		<div class='col-md-4'>";
+			foreach ($contents as $index=>$cart_item) {
+				$student_name = $cart_item['student_name'];
+				$program_name = $cart_item['program_name'];
+				$cost = $cart_item['cost'];
+				echo "
+					<div class='checkbox'>
+						<label for='$index'>
+							<input 
+								id='$index' name='selected_programs[]'
+								value='".$index."' type='checkbox'
+								 />
+							".$student_name." - ".$program_name." - ".$cost."
+						</label>
+					</div>";
+			}
+			echo "</div></li>  		
+	    		<li class='list-group-item'>
+	    			<div class='form-group'>
+						<label class='col-md-4 control-label' for='bursary_code'>Enter bursary code</label>
+						<div class='col-md-4'>
+							<input id='bursary_code' name='bursary_id' 
+	    					type='text' class='form-control input-md' />		
+						</div>
+	    				<div class='col-md-4'>
+	    					<button type='submit' id='bursary' 
+	    						name='bursary' 
+	    						class='btn btn-md btn-primary btn-block'
+	    						value='0'>
+	    							Apply bursary to selected program
+	    					</button>	
+						</div>
 					</div>
-    				<div class='col-md-4'>
-    					<button type='submit' id='bursary' 
-    						name='bursary' 
-    						class='btn btn-md btn-primary btn-block'
-    						value='0'>
-    							Apply bursary to selected program
-    					</button>	
+	    		</li>
+	    		<li class='list-group-item'>
+	    			<div class='form-group'>
+	    				<div class='col-md-4'>
+	    				</div>
+	    				<div class='col-md-4'>
+	    				</div>
+	    				<div class='col-md-4'>
+	    					<button type='submit' id='delete' 
+	    						name='delete' 
+	    						class='btn btn-md btn-primary btn-block'
+	    						value='0'>
+	    							Delete selected programs
+	    					</button>	
+						</div>
 					</div>
-				</div>
-    		</li>
-    		<li class='list-group-item'>
-    			<div class='form-group'>
-    				<div class='col-md-4'>
-    				</div>
-    				<div class='col-md-4'>
-    				</div>
-    				<div class='col-md-4'>
-    					<button type='submit' id='delete' 
-    						name='delete' 
-    						class='btn btn-md btn-primary btn-block'
-    						value='0'>
-    							Delete selected programs
-    					</button>	
-					</div>
-				</div>
-    		</li>
-    		<li class='list-group-item pull-right'>
-				Total: ".number_format($total, 2)."
-    		</li>
+	    		</li>
+	    		<li class='list-group-item pull-right'>
+					Total: ".number_format($total, 2)."
+	    		</li>
 			</fieldset>
     		</form>
 			</ul>";
 			if ($total > 0) {
 				echo "
     			<div class='pull-right'>
-    				<FORM METHOD='POST' 
-						ACTION='https://esqa.moneris.com/HPPDP/index.php'> 
-					<INPUT TYPE='HIDDEN' NAME='ps_store_id' VALUE='XU4D4tore1'> 
-					<INPUT TYPE='HIDDEN' NAME='hpp_key' VALUE='hpHQNQ99HJ28'>
-					<INPUT TYPE='HIDDEN' NAME='charge_total' VALUE=".$total.">
-					<!--MORE OPTIONAL VARIABLES CAN BE DEFINED HERE -->
-					<button type='submit' class='btn btn-primary'>
+    				<form method='post' 
+						action='https://esqa.moneris.com/HPPDP/index.php'>
+					<input TYPE='HIDDEN' NAME='ps_store_id' VALUE='XU4D4tore1'> 
+					<input TYPE='HIDDEN' NAME='hpp_key' VALUE='hpHQNQ99HJ28'>
+					<input TYPE='HIDDEN' NAME='charge_total' VALUE=".$total.">";
+					$n = 1;
+					foreach ($contents as $index=>$item) {
+						echo "
+						<input type='hidden' name='id$n'
+							value='".$item['student_id']." - ".$item['program_id']."'>
+						<input type='hidden' name='description$n' 
+							value='".$item['program_name']." - ".$item['student_name']."'> 
+						<input type='hidden' name='quantity$n' 
+							value='1'>
+						<input type='hidden' name='price$n' 
+	    					value='".$item['cost']."'>
+						<input type='hidden' name='subtotal$n' 
+	    					value='".$item['cost']."'>";
+	    				$n++;
+					}
+					echo "<button type='submit' class='btn btn-primary'>
   						Proceed to payment
   					</button>
 					</FORM>

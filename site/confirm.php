@@ -16,6 +16,7 @@
 		header("Location: cart.php");
 		die("Redirecting to shopping cart.");
 	}   
+	
 ?>
 
 <!DOCTYPE html>
@@ -25,8 +26,11 @@
 	<?php include '../library/site_template/navbar.php' ?>   
     <div class="container">
       <div class="jumbotron">
-        <h3>Your registration was a success.</h3>
-        <?php echo $content?>
+        <h3>Your registration was a success.</h3>       
+        <?php 
+        $text_field = $GLOBALS['text_field']; 
+        echo print_r($_POST);
+        ?>
       </div>
     </div>
     <?php include '../library/site_template/body_end.php' ?>

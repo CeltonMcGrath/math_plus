@@ -19,10 +19,6 @@
                 <li><a href="edit_account.php">Edit account settings</a></li>
                 <li><a href="students.php">Manage student contacts</a></li>
                 <li><a href="guardians.php">Manage guardian contacts</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link example</a></li>
-                <li><a href="#">One more separated link example</a></li>
               </ul>
             </li>
             <li><a href="cart.php">Cart</a></li>

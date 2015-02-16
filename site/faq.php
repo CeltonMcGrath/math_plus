@@ -24,7 +24,7 @@
   <body>
 	<?php include '../library/site_template/navbar.php' ?>   
 	<div class="container">
-		<h1>Frequently asked questions</h1>
+		<h3>Frequently asked questions</h3>
 		<div class="accordion" id="accordion">
 			<?php 
 			foreach($rows as $row):

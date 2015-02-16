@@ -4,8 +4,10 @@
     include '../library/User.php';
     include '../library/Form_Validator.php';
     include '../library/forms/Form_Generator.php';
+    include '../library/forms/html_Generator.php';
 	
     $fg = new Form_Generator();
+    $hg = new html_Generator();
 	
     $error = '';
     $success = '';
@@ -39,7 +41,10 @@
     <?php include '../library/site_template/head_public_area.php'; ?>
     <body>
     	<div class="container">
-        	<?php echo $fg->registrationForm($error, $success) ?>
+    		<?php 
+			echo $hg->errorMessage($error);	
+		    echo $fg->registrationForm($error, $success);
+		    ?>
         </div>
     </body>
 </html>
