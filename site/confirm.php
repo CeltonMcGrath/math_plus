@@ -18,7 +18,7 @@
 		$cart = new Cart($_SESSION['user']['user_id'], $db);
 		$transaction_id = $cart->saveTransaction($data);
 		// Check if transaction successful		
-		if ($result!= -1) {
+		if ($result != -1) {
 			$error = $result;
 		}
 		else {
@@ -42,7 +42,7 @@
       	<?php 
 			echo $hg->errorMessage($error);
 			echo $hg->successMessage($success);		
-			echo content; 
+			echo $content; 
 		?>
       </div>
     </div>
