@@ -297,7 +297,7 @@ class Cart {
 		$value_array_string = "";
 		$key_array_string = "";		
 		$query_params = array();
-		
+	        $data['user_id'] = $this->user_id;	
 		foreach ($data as $index=>$value) {
 			$query_params[":".$index] = $value;
 			if ($value_array_string != "") {
@@ -320,7 +320,7 @@ class Cart {
 			error_log($ex->getMessage());
 		}
 			
-		$transaction_id = $db->lastInsertId();
+		$transaction_id = $this->database->lastInsertId();
 		return $transaction_id;
 	}
 	
