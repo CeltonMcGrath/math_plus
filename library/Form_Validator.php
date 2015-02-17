@@ -183,7 +183,7 @@ class Form_Validator {
 
 	/* Checks the post array  */
 	public function validateTransactionPost($post) {
-		if ($post['reponse_code'] > 50) {
+		if ($post['response_order_id'] > 50) {
 			return "The transaction was declined. 
 					If you are unsure why this happened, please 
 					contact outreach@math.utoronto.edu";
@@ -193,11 +193,11 @@ class Form_Validator {
 					If you are unsure why this happened, please 
 					contact outreach@math.utoronto.edu";
 		}
-		else if ($post['purchase'])!='purchase' {
+		else if ($post['purchase']!='purchase') {
 			return "Something went wrong with the transaction.
 					Please contact outreach@math.utoronto.edu";
 		}
-		else if ($post['result'])!='1' {
+		else if ($post['result']!='1') {
 			return "The transaction was declined. 
 					If you are unsure why this happened, please 
 					contact outreach@math.utoronto.ca";
@@ -209,7 +209,7 @@ class Form_Validator {
 		
 	public function sanitizeTransactionDetails($post) {
 		$data = $this->sanitize($this->transaction_whitelist, $post);
-		$data['timestamp'] = $data['date']." ".$data['time'];
+		$data['timestamp'] = $data['date_stamp']." ".$data['time_stamp'];
 		unset($data['date_stamp']);
 		unset($data['time_stamp']);
 		return $data;

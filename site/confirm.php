@@ -2,6 +2,8 @@
     require("../library/common.php"); 
     include '../library/Form_Validator.php';
     include '../library/forms/html_Generator.php';
+    include '../library/Cart.php';
+    
     
     $error = '';
     $success = '';
@@ -9,12 +11,12 @@
 
 	if (!empty($_POST)) {				
 		// Prepare transaction data
-		$form_validator = new Form_Validator();
-		$result = $form_validator->validateTransactionPost($_POST);
+		$fv = new Form_Validator();
+		$result = $fv->validateTransactionPost($_POST);
 		$data = $fv->sanitizeTransactionDetails($_POST);		
 		// Save transaction information
 		$cart = new Cart($_SESSION['user']['user_id'], $db);
-		$transaction_id = cart->saveTransaction($data);
+		$transaction_id = Cart::saveTransaction($data);
 		// Check if transaction successful		
 		if ($result!= -1) {
 			$error = $result;

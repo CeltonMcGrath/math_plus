@@ -294,19 +294,19 @@ class Cart {
 	
 	/* Stores transaction details. */
 	public static function saveTransaction($data) {		
-		$value_array_string;
-		$key_array_string;		
+		$value_array_string = "";
+		$key_array_string = "";		
 		$query_params = array();
 		
 		foreach ($data as $index=>$value) {
 			$query_params[":".$index] = $value;
 			if ($value_array_string != "") {
 				$value_array_string .= ", ".$index;
-				$key_array_string; .= ", :".$index;
+				$key_array_string .= ", :".$index;
 			}
 			else {
 				$value_array_string .= $index;
-				$key_array_string; .= ":".$index;
+				$key_array_string .= ":".$index;
 			}			
 		}
 		
