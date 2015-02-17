@@ -4,7 +4,7 @@
     include '../library/forms/html_Generator.php';
     include '../library/Cart.php';
     
-    
+    $hg = new html_Generator();   
     $error = '';
     $success = '';
     $content = '';
