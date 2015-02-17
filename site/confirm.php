@@ -22,7 +22,7 @@
 			$error = $result;
 		}
 		else {
-			//$content = $cart->registerStudents($transaction_id);
+			$content = $cart->closeTransaction($transaction_id);
 		}				
 	}
 	else {

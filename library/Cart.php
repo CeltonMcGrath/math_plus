@@ -183,51 +183,58 @@ class Cart {
 	
 	/* Registers students in programs and empties cart.
 	 * Called upon successful payment. */
-	public function registerStudents($transaction_id) {
-		
+	public function closeTransaction($transaction_id) {		
 		foreach ($this->contents as $cart_item) {
-			// Add student-program entry
-			$query = "INSERT INTO students_programs 
+			$this->registerStudent($transaction_id, $cart_item);
+		}
+		$this->contents = array();
+		$this->syncDatabase();
+		return "Transaction successful.";
+	}
+	
+	/* Register student and record bursary usage for program and 
+	 * bursary info in cart_item. */
+	private function registerStudent($transaction_id, $cart_item) {
+		// Add student-program entry
+		$query = "INSERT INTO students_programs
 					(transaction_id, program_id, student_id)
 	   			VALUES
 					(:transaction_id, :program_id, :student_id)";
 			
-			$query_params = array(
-					':transaction_id' => $transactionId, 
-					':program_id' => $cart_item['program_id'], 
-					':student_id' => $cart_item['student_id']
+		$query_params = array(
+				':transaction_id' => $transaction_id,
+				':program_id' => $cart_item['program_id'],
+				':student_id' => $cart_item['student_id']
+		);
+		
+		try {
+			$stmt = $this->database->prepare($query);
+			$result = $stmt->execute($query_params);
+		}
+		catch(PDOException $ex) {
+			error_log($ex->getMessage());
+		}
+		
+		// Record usage of bursary
+		if ($cart_item['bursary_id']!=-1) {
+			$query = "UPDATE bursaries
+	    		SET student_id = :student_id, transaction_id = :transaction_id
+	    		WHERE bursary_id = :bursary_id";
+		
+			$query_params = array (
+					':student_id' => $cart['student_id'],
+					':transaction_id' => $transaction_id,
+					':bursary_id' => $cart['bursary_id']
 			);
-				
+			
 			try {
 				$stmt = $this->database->prepare($query);
 				$result = $stmt->execute($query_params);
-			}
-			catch(PDOException $ex) {
+			} catch ( PDOException $ex ) {
 				error_log($ex->getMessage());
 			}
-			
-			// Record usage of bursary
-			if ($cart_item['bursary_id']!=-1) {
-				$query = "UPDATE bursaries
-	    		SET student_id = :student_id, transaction_id = :transaction_id
-	    		WHERE bursary_id = :bursary_id";
-				
-				$query_params = array (
-						':student_id' => $cart['student_id'],
-						':transaction_id' => $transactionId
-				);
-				try {
-					$stmt = $this->database->prepare ( $query );
-					$result = $stmt->execute ( $query_params );
-				} catch ( PDOException $ex ) {
-					error_log($ex->getMessage());
-				}
-			}
 		}
-		$this->contents = array();
-		$this->syncDatabase();
-		return true;
-	}
+	} 
 	
 	/* Returns True iff this cart is empty.*/
 	public function isEmpty() {
@@ -249,7 +256,9 @@ class Cart {
 		
 		$query = "SELECT *
 	    		FROM bursaries
-	    		WHERE bursary_id = :bursary_id AND program_id = :program_id AND student_id = 0";
+	    		WHERE bursary_id = :bursary_id 
+					AND program_id = :program_id 
+					AND student_id = 0";
 		 
 		$query_params = array(
 				':bursary_id' => $bursary_id, 
@@ -264,7 +273,7 @@ class Cart {
 		}
 		$row = $stmt->fetch();
 		if (empty($row)) {
-			//Valid bursary with bursary does not exist.
+			//Valid bursary with bursary id does not exist.
 			return false;
 		}
 		else {
