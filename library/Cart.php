@@ -183,37 +183,7 @@ class Cart {
 	
 	/* Registers students in programs and empties cart.
 	 * Called upon successful payment. */
-	public function registerStudents($data) {
-		/*$order_id = $_POST['response_order_id'];
-		$reponse_code = ;
-		$date_stamp = ; // yyyy-mm-dd
-		$time_stamp = ; // ##:##:##
-		$bank_approval_code = ; #
-		$result = ; // 1=approved, 0=declined/incomplete
-		$trans_name = ; //purchase, preauth, cavv_purchase, cavv_preauth
-		$cardholder = ; //cardholdersname
-		$charge_total = ; // (40) with two decimals
-		$*/
-		
-		// Create transaction
-		$query = "INSERT INTO transactions (transaction_id, user_id, date, amount)
-	   			VALUES
-				(:transaction_id, :user_id, :date, :amount)";
-			
-		$query_params = array(
-				':transaction_id' => $transactionId, 
-				':user_id' => $this->user_id,
-				':date' => $orderTime,
-				':amount' => $amt
-		);
-		
-		try {
-			$stmt = $this->database->prepare($query);
-			$result = $stmt->execute($query_params);
-		}
-		catch(PDOException $ex) {
-			error_log($ex->getMessage());
-		}
+	public function registerStudents($transaction_id) {
 		
 		foreach ($this->contents as $cart_item) {
 			// Add student-program entry
@@ -269,6 +239,7 @@ class Cart {
 		$this->contents[$selected_programs[0]]['bursary_id'] = $bursary_id;
 		$this->syncDatabase();
 	}
+	
 
 	/* Checks whether bursary can be applied to program at $index. 
 	 * Bursary may be already used or not exist, or may not be applicable
@@ -320,6 +291,39 @@ class Cart {
 			error_log($ex->getMessage());
 		}
 	}
+	
+	/* Stores transaction details. */
+	public static function saveTransaction($data) {		
+		$value_array_string;
+		$key_array_string;		
+		$query_params = array();
+		
+		foreach ($data as $index=>$value) {
+			$query_params[":".$index] = $value;
+			if ($value_array_string != "") {
+				$value_array_string .= ", ".$index;
+				$key_array_string; .= ", :".$index;
+			}
+			else {
+				$value_array_string .= $index;
+				$key_array_string; .= ":".$index;
+			}			
+		}
+		
+		$query = "INSERT into transactions (".$value_array_string.")
+				Values (".$key_array_string.")";
+		try {
+			$stmt = $this->database->prepare($query);
+			$result = $stmt->execute($query_params);
+		}		
+		catch(PDOException $ex) {
+			error_log($ex->getMessage());
+		}
+			
+		$transaction_id = $db->lastInsertId();
+		return $transaction_id;
+	}
+	
 	
  }
 

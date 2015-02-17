@@ -18,7 +18,11 @@ class Form_Validator {
 	private $account_update_whitelist = array('email', 'email2', 'oldPassword',
 			 'newPassword', 'newPassword2', 'update');
 	
-	private $transaction_whitelist = array();
+	private $transaction_whitelist = array('response_order_id', 
+			'date_stamp', 'time_stamp', 'bank_transaction_id', 'charge_total', 
+			'bank_approval_code', 'response_code', 'iso_code', 'message', 
+			'trans_name', 'cardholder', 'f4l4', 'card', 'expiry_date', 
+			'result');
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
@@ -37,7 +41,7 @@ class Form_Validator {
 		return $data;
 	}
 	
-	/* Returns 0 if each  value in POST array is valid, error code
+	/* Returns -1 if each  value in POST array is valid, error code
 	 * if not.*/
 	public function validateStudentPost($post) {
 		// Check for non-empty values:
@@ -70,7 +74,7 @@ class Form_Validator {
 		return $data;
 	}
 	
-	/* Returns 0 if each  value in POST array is valid, error code
+	/* Returns -1 if each  value in POST array is valid, error code
 	 * if not.*/
 	public function validateGuardianPost($post) {
 		// Check first name
@@ -166,7 +170,6 @@ class Form_Validator {
 		return -1;
 	}
 	
-	/* Sanitizes post array */
 	public function sanitizeAccountUpdatePost($post) {
 		$data = $this->sanitize($this->account_update_whitelist, $post);
 		$data['listserv'] = isset($post['listserv']);
@@ -176,9 +179,39 @@ class Form_Validator {
 
 	/* -----------------------------------------------------
 	 * Form validation for confirm.php
-	 * -----------------------------------------------------*/	
+	 * -----------------------------------------------------*/
+
+	/* Checks the post array  */
+	public function validateTransactionPost($post) {
+		if ($post['reponse_code'] > 50) {
+			return "The transaction was declined. 
+					If you are unsure why this happened, please 
+					contact outreach@math.utoronto.edu";
+		}
+		else if ($post['message']!='APPROVED') {
+			return "The transaction was not approved.
+					If you are unsure why this happened, please 
+					contact outreach@math.utoronto.edu";
+		}
+		else if ($post['purchase'])!='purchase' {
+			return "Something went wrong with the transaction.
+					Please contact outreach@math.utoronto.edu";
+		}
+		else if ($post['result'])!='1' {
+			return "The transaction was declined. 
+					If you are unsure why this happened, please 
+					contact outreach@math.utoronto.ca";
+		}
+		else {
+			return -1;
+		}
+	}
+		
 	public function sanitizeTransactionDetails($post) {
 		$data = $this->sanitize($this->transaction_whitelist, $post);
+		$data['timestamp'] = $data['date']." ".$data['time'];
+		unset($data['date_stamp']);
+		unset($data['time_stamp']);
 		return $data;
 	}
 	

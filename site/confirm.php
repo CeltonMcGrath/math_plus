@@ -1,21 +1,32 @@
 <?php 
     require("../library/common.php"); 
     include '../library/Form_Validator.php';
-        echo print_r($_POST);
-	if (!empty($_POST)) {
-		//First test to see if post came from $0.00 transaction.
-		
-		//Otherwise, process Moneris transaction.
-		$fv = new Form_Validator();
-		$data = $fv->sanitizeTransactionDetails($_POST);
-		//Test respnse codes from data... may need to redirect early.		
+    include '../library/forms/html_Generator.php';
+    
+    $error = '';
+    $success = '';
+    $content = '';
+
+	if (!empty($_POST)) {				
+		// Prepare transaction data
+		$form_validator = new Form_Validator();
+		$result = $form_validator->validateTransactionPost($_POST);
+		$data = $fv->sanitizeTransactionDetails($_POST);		
+		// Save transaction information
 		$cart = new Cart($_SESSION['user']['user_id'], $db);
-		$content = $cart->registerStudents($data);		
+		$transaction_id = cart->saveTransaction($data);
+		// Check if transaction successful		
+		if ($result!= -1) {
+			$error = $result;
+		}
+		else {
+			//$content = $cart->registerStudents($transaction_id);
+		}				
 	}
 	else {
 		header("Location: cart.php");
 		die("Redirecting to shopping cart.");
-	}   
+	}
 	
 ?>
 
@@ -26,11 +37,11 @@
 	<?php include '../library/site_template/navbar.php' ?>   
     <div class="container">
       <div class="jumbotron">
-        <h3>Your registration was a success.</h3>       
-        <?php 
-        $text_field = $GLOBALS['text_field']; 
-        echo print_r($_POST);
-        ?>
+      	<?php 
+			echo $hg->errorMessage($error);
+			echo $hg->successMessage($success);		
+			echo content; 
+		?>
       </div>
     </div>
     <?php include '../library/site_template/body_end.php' ?>
