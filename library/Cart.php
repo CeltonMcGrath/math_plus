@@ -293,7 +293,7 @@ class Cart {
 	}
 	
 	/* Stores transaction details. */
-	public static function saveTransaction($data) {		
+	public function saveTransaction($data) {		
 		$value_array_string = "";
 		$key_array_string = "";		
 		$query_params = array();

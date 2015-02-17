@@ -16,7 +16,7 @@
 		$data = $fv->sanitizeTransactionDetails($_POST);		
 		// Save transaction information
 		$cart = new Cart($_SESSION['user']['user_id'], $db);
-		$transaction_id = Cart::saveTransaction($data);
+		$transaction_id = $cart->saveTransaction($data);
 		// Check if transaction successful		
 		if ($result!= -1) {
 			$error = $result;
