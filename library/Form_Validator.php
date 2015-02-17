@@ -183,17 +183,17 @@ class Form_Validator {
 
 	/* Checks the post array  */
 	public function validateTransactionPost($post) {
+		error_log($post['message']);
 		if ($post['response_order_id'] > 50) {
 			return "The transaction was declined. 
 					If you are unsure why this happened, please 
 					contact outreach@math.utoronto.edu";
-		}
-		else if ($post['message'] != 'APPROVED') {
-			error_log($post['message']);
+		}		
+		/*else if ($post['message'] != 'APPROVED') {			
 			return "The transaction was not approved.
 					If you are unsure why this happened, please 
 					contact outreach@math.utoronto.edu";
-		}
+		}*/
 		else if ($post['purchase'] != 'purchase') {
 			return "Something went wrong with the transaction.
 					Please contact outreach@math.utoronto.edu";

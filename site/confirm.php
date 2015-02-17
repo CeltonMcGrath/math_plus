@@ -46,7 +46,6 @@
 		?>
       </div>
     </div>
-    <?php include '../library/site_template/body_end.php' ?>
   </body>
 </html>
 
