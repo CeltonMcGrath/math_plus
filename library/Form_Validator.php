@@ -193,11 +193,11 @@ class Form_Validator {
 			return "The transaction was not approved.
 					If you are unsure why this happened, please 
 					contact outreach@math.utoronto.edu";
-		}*/
+		}
 		else if ($post['purchase'] != 'purchase') {
 			return "Something went wrong with the transaction.
 					Please contact outreach@math.utoronto.edu";
-		}
+		}*/
 		else if ($post['result']!='1') {
 			return "The transaction was declined. 
 					If you are unsure why this happened, please 

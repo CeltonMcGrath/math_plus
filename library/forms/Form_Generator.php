@@ -31,15 +31,15 @@ class Form_Generator {
 			$girl_check = '';
 			// Default leave setting
 			$leave_yes_check = '';
-			$leave_no_check = 'checked';
+			$leave_no_check = '';
 			// Default lunch setting
 			$lunch_leave_check ='';
-			$lunch_stay_check = 'checked';
+			$lunch_stay_check = '';
 			$lunch_pickup_check = '';
 			// Default photo permiss
 			$photo_18_check = '';
 			$photo_guardian_check = '';
-			$photo_no_check = 'checked';
+			$photo_no_check = '';
 			// Consent check
 			$consent_check = '';
 		}
@@ -82,7 +82,7 @@ class Form_Generator {
 			$photo_no_check = '';
 			if ($perm_photo==0) {
 				$photo_no_check = 'checked';
-			} elseif($perm_lunch==1){
+			} elseif($perm_photo==1){
 				$photo_18_check ='checked';
 			} else {
 				$photo_guardian_check = 'checked';
@@ -136,8 +136,10 @@ class Form_Generator {
 		<div class='form-group'>
 			<label class='col-md-4 control-label' for='$student_id-grade'>Grade</label>
 			<div class='col-md-4'>
-				<input id='$student_id-grade' name='grade' type='text' class='form-control input-md' required 
-					data-parsley-trigger='change' value='$grade' >	
+				<input id='$student_id-grade' name='grade' type='text' 
+					class='form-control input-md' 
+					required data-parsley-trigger='change' 
+					value='$grade' >	
 			</div>
 		</div>
 		<!-- Cellphone -->
@@ -150,18 +152,21 @@ class Form_Generator {
 		<!-- Allergies -->
 		<div class='form-group'>
 			<label class='col-md-4 control-label' for='$student_id-allergies'>
-				Please let us know of any allergies this student may have. 
-				If the student carries an epipen, please say so.
+				".$text_field['allergy_label']."
 			</label>
 			<div class='col-md-4'>
-				<textarea class='form-control' id='$student_id-allergies' name='allergies'>$allergies</textarea>
+				<textarea class='form-control input-md' id='$student_id-allergies' 
+				name='allergies'
+				required data-parsley-trigger='change'>$allergies</textarea>
 			</div>
 		</div>		
 		<!-- Medical -->
 		<div class='form-group'>
-			<label class='col-md-4 control-label' for='$student_id-medical'>Medical information</label>
+			<label class='col-md-4 control-label' for='$student_id-medical'>".$text_field['medical_label']."</label>
 			<div class='col-md-4'>
-				<textarea class='form-control' id='$student_id-medical' name='medical'>$medical</textarea>
+				<textarea class='form-control input-md' id='$student_id-medical' 
+				name='medical'
+				required data-parsley-trigger='change'>$medical</textarea>
 			</div>
 		</div>				
 		<!-- Leave permission -->
@@ -170,13 +175,20 @@ class Form_Generator {
 			<div class='col-md-4'>
 				<div class='radio'>
 					<label for='$student_id-perm_leave-0'>
-						<input type='radio' name='perm_leave' id='$student_id-perm_leave-0' value='0' $leave_no_check >
+						<input type='radio' name='perm_leave' 
+							id='$student_id-perm_leave-0' value='0' 
+							$leave_no_check 
+							data-group='$student_id-leave' >
 						No
 					</label>
 				</div>
 				<div class='radio'>
 					<label for='$student_id-perm_leave-1'>
-						<input type='radio' name='perm_leave' id='$student_id-perm_leave-1' value='1' $leave_yes_check >
+						<input type='radio' name='perm_leave' 
+							id='$student_id-perm_leave-1' value='1' 
+							$leave_yes_check 
+							data-group='$student_id-leave' 
+							data-parsley-trigger='change' required >
 						Yes
 					</label>
 				</div>
@@ -188,19 +200,25 @@ class Form_Generator {
 			<div class='col-md-4'>
 				<div class='radio'>
 					<label for='$student_id-perm_lunch-0'>
-						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-0' value='0' $lunch_stay_check >
+						<input type='radio' name='perm_lunch' 
+						id='$student_id-perm_lunch-0' 
+						value='0' $lunch_stay_check 
+						data-group='$student_id-lunch' >
 						No
 					</label>
 				</div>
 				<div class='radio'>
 					<label for='$student_id-perm_lunch-1'>
-						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-1' value='1' $lunch_leave_check >
+						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-1' value='1' $lunch_leave_check 
+						data-group='$student_id-lunch' >
 						Yes
 					</label>
 				</div>
 				<div class='radio'>
 					<label for='$student_id-perm_lunch-2'>
-						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-2' value='2' $lunch_pickup_check >
+						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-2' value='2' $lunch_pickup_check 
+						data-group='$student_id-lunch' 
+						data-parsley-trigger='change' required >
 						Someone may pick up
 					</label>
 				</div>
@@ -211,20 +229,30 @@ class Form_Generator {
 			<label class='col-md-8 control-label' for='$student_id-perm_photo'>".$text_field['perm_photo']."</label>
 			<div class='col-md-4'>
 				<div class='radio'>
-					<label for='$student_id-perm_photo-0'>
-						<input type='radio' name='perm_photo' id='$student_id-perm_photo-0' value='1' $photo_18_check >
+					<label for='$student_id-perm_photo-1'>
+						<input type='radio' name='perm_photo' 
+						id='$student_id-perm_photo-1' 
+						value='1' $photo_18_check
+						data-group='$student_id-photo' >
 						This student is eighteen years of age or over and consents
 					</label>
 				</div>
 				<div class='radio'>
-					<label for='$student_id-perm_photo-1'>
-						<input type='radio' name='perm_photo' id='$student_id-perm_photo-1' value='2' $photo_guardian_check >
+					<label for='$student_id-perm_photo-2'>
+						<input type='radio' name='perm_photo' 
+						id='$student_id-perm_photo-2' 
+						value='2' $photo_guardian_check 
+						data-group='$student_id-photo' >
 						I am the parent/guardian of the participant and I consent
 					</label>
 				</div>
 				<div class='radio'>
-					<label for='$student_id-perm_photo-2'>
-						<input type='radio' name='perm_photo' id='$student_id-perm_photo-2' value='0' $photo_no_check>
+					<label for='$student_id-perm_photo-0'>
+						<input type='radio' name='perm_photo' 
+						id='$student_id-perm_photo-0' 
+						value='0' $photo_no_check 
+						data-group='$student_id-photo' 
+						data-parsley-trigger='change' required >
 						I do not consent
 					</label>
 				</div>
@@ -236,9 +264,12 @@ class Form_Generator {
 		<div class='form-group'>
 			<div class='col-md-8'>
 				<div class='checkbox'>
-					<label for='$student_id-consent-0'>
-						<input type='checkbox' name='consent' id='$student_id-consent-0' value='1' checked >
-						".$text_field['student_consent']."
+					<label for='$student_id-consent'>
+						<input type='checkbox' name='consent' 
+							id='$student_id-consent' $consent_check
+							data-group='$student_id-consent' 
+							data-parsley-trigger='change' required > 
+							".$text_field['student_consent']."
 					</label>
 				</div>
 			</div>
@@ -283,7 +314,7 @@ class Form_Generator {
 					$checked = "checked";
 				}
 				$form .= "<li>
-						<input class='regular' name='guardian_group[]'
+						<input name='guardian_group[]'
 							value='".$guardian_id."' type='checkbox'
 							".$checked." />".$tuple[0]."
 					</li>";

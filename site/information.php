@@ -1,5 +1,12 @@
 <?php 
     require("../library/common.php");    
+    
+    if (empty($_GET)) {
+    	$content = "user_guide.html";
+    }
+    else {
+    	$content = $_GET['view'].".html";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +16,7 @@
 	<?php include '../library/site_template/navbar.php' ?>   
     <div class="container">
       <div class="jumbotron">
-        <?php include '../resources/student_code_of_conduct.html'; ?>
+        <?php include "../resources/".$content; ?>
       </div>
     </div>
   </body>

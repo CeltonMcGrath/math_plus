@@ -17,7 +17,7 @@
     	}
     }
     
-    $terms = file_get_contents("../resources/user_terms_and_conditions.txt"); 
+    $terms = file_get_contents("../resources/user_terms_and_conditions.html"); 
 ?> 
 
 <!DOCTYPE html>

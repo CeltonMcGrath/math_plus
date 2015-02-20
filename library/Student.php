@@ -141,10 +141,20 @@ class Student {
 		$form .= $this->displayFutureProgramList();
 		$form .= "<br />";
 		$form .= $this->displayPastProgramList();
-		$form .= "<form action='programs.php' method='post'>
+		$form .= "<form class='form-horizontal' action='programs.php' 
+						method='post'>
+					<fieldset>
  						<input type='hidden' name='student_id' 
  							value=".$this->student_id."/>
- 						<input type='submit' value='Add or view programs'/>
+ 						<div class='col-md-4'>
+						</div>	
+						<div class='col-md-4'>
+	 						<button type='submit' 
+	 							class='btn btn-lg btn-primary btn-block' >
+			    				Add or view programs
+			    			</button>
+	 					</div>
+	 					</fieldset>
  					</form>";
  		return $form;		
   	 }	
@@ -173,7 +183,6 @@ class Student {
  			error_log($ex->getMessage());
  		} 			
  		$rows = $stmt->fetchAll();
- 	
  			// Create array of guardian_id's
  			$certain_guardians = array();
  			foreach ($rows as $row) {
@@ -386,7 +395,7 @@ class Student {
 		catch(PDOException $ex)	{
 			error_log($ex->getMessage());
 		}
-		echo("<script>console.log('PHP: DELETE')</script>");;
+
 		// Add new student guardian permissions for each guardian
 		foreach ($selected_guardians as $guardian_id) {	
 			$query = "INSERT INTO students_guardians (student_id, guardian_id)
