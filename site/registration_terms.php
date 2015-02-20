@@ -29,7 +29,7 @@
 		      		method='post' >
 		        <h2 class="form-signin-heading">Terms & Conditions</h2>
 		        <div class="scroll" style="background: white; max-height: 70%; overflow: scroll;">	
-					<?php echo $terms ?>			
+					<?php include '../resources/user_terms_and_conditions.html' ?>			
 				</div>
 		        <input type="hidden" name='operation' value='register'/>
 		        <?php 

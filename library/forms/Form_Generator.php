@@ -151,7 +151,7 @@ class Form_Generator {
 		</div>		
 		<!-- Allergies -->
 		<div class='form-group'>
-			<label class='col-md-4 control-label' for='$student_id-allergies'>
+			<label class='col-md-8 control-label' for='$student_id-allergies'>
 				".$text_field['allergy_label']."
 			</label>
 			<div class='col-md-4'>
@@ -162,7 +162,7 @@ class Form_Generator {
 		</div>		
 		<!-- Medical -->
 		<div class='form-group'>
-			<label class='col-md-4 control-label' for='$student_id-medical'>".$text_field['medical_label']."</label>
+			<label class='col-md-8 control-label' for='$student_id-medical'>".$text_field['medical_label']."</label>
 			<div class='col-md-4'>
 				<textarea class='form-control input-md' id='$student_id-medical' 
 				name='medical'
@@ -219,7 +219,7 @@ class Form_Generator {
 						<input type='radio' name='perm_lunch' id='$student_id-perm_lunch-2' value='2' $lunch_pickup_check 
 						data-group='$student_id-lunch' 
 						data-parsley-trigger='change' required >
-						Someone may pick up
+						Someone will pick up
 					</label>
 				</div>
 			</div>
@@ -234,7 +234,7 @@ class Form_Generator {
 						id='$student_id-perm_photo-1' 
 						value='1' $photo_18_check
 						data-group='$student_id-photo' >
-						This student is eighteen years of age or over and consents
+						I am eighteen years or older and I consent
 					</label>
 				</div>
 				<div class='radio'>
@@ -243,7 +243,7 @@ class Form_Generator {
 						id='$student_id-perm_photo-2' 
 						value='2' $photo_guardian_check 
 						data-group='$student_id-photo' >
-						I am the parent/guardian of the participant and I consent
+						I am the parent/guardian and I consent
 					</label>
 				</div>
 				<div class='radio'>
@@ -253,16 +253,16 @@ class Form_Generator {
 						value='0' $photo_no_check 
 						data-group='$student_id-photo' 
 						data-parsley-trigger='change' required >
-						I do not consent
+						I am the parent/guardian and I do not consent
 					</label>
 				</div>
 			</div>
 		</div>
 		<!-- Guardian selection form -->
-		".$this->guardianSelectionForm($guardian_group)."
+		".$this->guardianSelectionForm($guardian_group, $student_id)."
 		<!-- Consent check & Button -->
 		<div class='form-group'>
-			<div class='col-md-8'>
+			<div class='col-md-12'>
 				<div class='checkbox'>
 					<label for='$student_id-consent'>
 						<input type='checkbox' name='consent' 
@@ -295,32 +295,41 @@ class Form_Generator {
 	 * $checked is a boolean indicating whether or not to check the checkbox.
 	 * (ie. Used to show that guardian can pick up student.)
 	 */
-	private function guardianSelectionForm($guardian_group) {
-		$form = "Which guardian/parent contacts are allowed to pick this
-				student up for lunch or at the end of daily programs?";
-		
+	private function guardianSelectionForm($guardian_group, $student_id) {
+		$text_field = $GLOBALS['text_field'];
+		$form = "
+		<div class='form-group'>
+			<label class='col-md-8 control-label' for='checkboxes'>
+				".$text_field['guardian_pick_up']."
+			</label>
+			<div class='col-md-4'>";
+
 		if (empty($guardian_group)) {
-			$form .= "<br /><span class='error'>
- 						No guardian/parent contacts registered. Please fill
+			$form .= "No guardian/parent contacts registered. Please fill
  						out the guardian and parent contact form whether or
- 						not student may leave on their own.
- 					</span>";
+ 						not student may leave on their own.";
 		}
 		else {
-			$form .= "<ul>";
 			foreach ($guardian_group as $guardian_id=>$tuple) {
 				$checked = '';
 				if ($tuple[1]) {
 					$checked = "checked";
 				}
-				$form .= "<li>
-						<input name='guardian_group[]'
-							value='".$guardian_id."' type='checkbox'
-							".$checked." />".$tuple[0]."
-					</li>";
+				$form .= "
+					<div class='checkbox'>
+						<label for='checkboxes-".$student_id."-".$guardian_id."'>
+				    		<input type='checkbox' 
+								name='guardian_group[]' 
+								id='checkboxes-".$student_id."-".$guardian_id."' 
+								value='".$guardian_id."' ".$checked." >
+				      		".$tuple[0]." 
+				    	</label>
+					</div>";
 			}
-			$form .= "</ul>";
 		}
+
+		$form .= "</div></div>";
+
 		return $form;
 	}
 	
