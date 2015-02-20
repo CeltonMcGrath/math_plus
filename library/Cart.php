@@ -189,7 +189,6 @@ class Cart {
 		}
 		$this->contents = array();
 		$this->syncDatabase();
-		return "Transaction successful.";
 	}
 	
 	/* Register student and record bursary usage for program and 
@@ -214,7 +213,7 @@ class Cart {
 		catch(PDOException $ex) {
 			error_log($ex->getMessage());
 		}
-		
+
 		// Record usage of bursary
 		if ($cart_item['bursary_id']!=-1) {
 			$query = "UPDATE bursaries

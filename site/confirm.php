@@ -7,8 +7,9 @@
     $hg = new html_Generator();   
     $error = '';
     $success = '';
-    $content = '';
-
+	
+    $text_field = $GLOBALS['text_field'];
+    
 	if (!empty($_POST)) {				
 		// Prepare transaction data
 		$fv = new Form_Validator();
@@ -22,7 +23,8 @@
 			$error = $result;
 		}
 		else {
-			$content = $cart->closeTransaction($transaction_id);
+			$cart->closeTransaction($transaction_id);
+			$success = $text_field['registration_success'];
 		}				
 	}
 	else {
@@ -41,8 +43,7 @@
       <div class="jumbotron">
       	<?php 
 			echo $hg->errorMessage($error);
-			echo $hg->successMessage($success);		
-			echo $content; 
+			echo $hg->successMessage($success);	
 		?>
       </div>
     </div>
