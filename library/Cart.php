@@ -221,9 +221,9 @@ class Cart {
 	    		WHERE bursary_id = :bursary_id";
 		
 			$query_params = array (
-					':student_id' => $cart['student_id'],
+					':student_id' => $cart_item['student_id'],
 					':transaction_id' => $transaction_id,
-					':bursary_id' => $cart['bursary_id']
+					':bursary_id' => $cart_item['bursary_id']
 			);
 			
 			try {
@@ -324,6 +324,24 @@ class Cart {
 			$stmt = $this->database->prepare($query);
 			$result = $stmt->execute($query_params);
 		}		
+		catch(PDOException $ex) {
+			error_log($ex->getMessage());
+		}
+			
+		$transaction_id = $this->database->lastInsertId();
+		return $transaction_id;
+	}
+	
+	public function saveEmptyTransaction() {
+		$query = "INSERT into transactions (user_id)
+				Values (:user_id)";
+		
+		$query_params = array(":user_id" => $this->user_id);
+		
+		try {
+			$stmt = $this->database->prepare($query);
+			$result = $stmt->execute($query_params);
+		}
 		catch(PDOException $ex) {
 			error_log($ex->getMessage());
 		}

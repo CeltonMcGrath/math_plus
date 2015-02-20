@@ -151,7 +151,7 @@
     			<div class='pull-right'>
     				<FORM METHOD='POST' 
 						ACTION='confirm.php'> 
-					<INPUT TYPE='HIDDEN' NAME='code' VALUE='000'> 
+					<INPUT TYPE='HIDDEN' NAME='no_cost' VALUE='true'> 
 					<button type='submit' class='btn btn-primary'>
   						Complete registration
   					</button>

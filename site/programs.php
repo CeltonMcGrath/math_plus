@@ -2,6 +2,8 @@
     require("../library/common.php");     
     include '../library/Student.php';
     
+    $text_field = $GLOBALS['text_field'];
+    
     if (empty($_POST)) { 
     	//Redirect to students.php
     	header("Location: students.php");
@@ -35,7 +37,7 @@
 	 		if (count($programRows)==0) {
 				echo "
 				<div class='jumbotron'>
-					<h3>No upcoming programs. Check back again!</h3>
+					<h3>No upcoming programs. Check back again soon!</h3>
 				</div>";
 			}
 			else {
@@ -46,7 +48,11 @@
 	 				<ul class='list-group'>
 		    			<h3 class='list-group-item'>
 		  					Select programs for ".$student->getName()."
-						</h3>";
+						</h3>
+	 					<li class='list-group-item'> 
+	 						".$text_field['program_warning']."
+	 					</li>
+	 					<li class='list-group-item'>";
 				foreach($programRows as $programRow):
 					$program = new Program($programRow['program_id'], $db);
 					//ID
@@ -64,17 +70,14 @@
 					// Article
 					$article = $program->displayArticle();
 						
-					echo
-						"<li class='list-group-item'>
-							<div class='panel panel-default'>
+						echo "<div class='panel panel-default'>
 								<div class='panel-heading'>$label</div>
 								<div class='panel-body'>
 									$article
 								</div>
-							</div>
-						</li>";
+							</div>";
 				endforeach;
-				echo "
+				echo "</li>
 						<li class='list-group-item'>
 			    			<button type='submit' id='submit' 
 			    				name='update' 

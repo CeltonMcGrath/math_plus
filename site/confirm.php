@@ -10,21 +10,31 @@
 	
     $text_field = $GLOBALS['text_field'];
     
-	if (!empty($_POST)) {				
-		// Prepare transaction data
-		$fv = new Form_Validator();
-		$result = $fv->validateTransactionPost($_POST);
-		$data = $fv->sanitizeTransactionDetails($_POST);		
-		// Save transaction information
+	if (!empty($_POST)) {
 		$cart = new Cart($_SESSION['user']['user_id'], $db);
-		$transaction_id = $cart->saveTransaction($data);
-		// Check if transaction successful		
-		if ($result != -1) {
-			$error = $result;
-		}
-		else {
+		$contents = $cart->getFormattedContents();
+		$cost = Cart::getTotal($contents);
+		if ($cost == 0) {
+			$transaction_id = $cart->saveEmptyTransaction();
 			$cart->closeTransaction($transaction_id);
 			$success = $text_field['registration_success'];
+		}
+		else {
+			// Prepare transaction data
+			$fv = new Form_Validator();
+			$result = $fv->validateTransactionPost($_POST);
+			$data = $fv->sanitizeTransactionDetails($_POST);
+			// Save transaction information
+			
+			$transaction_id = $cart->saveTransaction($data);
+			// Check if transaction successful
+			if ($result != -1) {
+				$error = $result;
+			}
+			else {
+				$cart->closeTransaction($transaction_id);
+				$success = $text_field['registration_success'];
+			}
 		}				
 	}
 	else {

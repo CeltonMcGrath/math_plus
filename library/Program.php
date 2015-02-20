@@ -92,14 +92,12 @@ class Program {
 		$checkbox = "<input type='checkbox' 
 					id='".$this->program_id."-cb' 
 					name='program_group[]' 
-					value='$this->program_id' />";
-		$program_label = $this->program_name."
-				<button class='btn btn-primary' type='button'>
+					value='$this->program_id' />  ";
+		$program_label = $this->program_name.", 
 					<span class='badge'>
 						".$this->remainingSpots()."
-					</span> spots remaining
-				</button>
-				Fee: ".$this->cost;
+					</span> spots remaining, 
+				Fee: $".$this->cost;
 		return $checkbox.$program_label;
 	}
 	

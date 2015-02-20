@@ -21,8 +21,7 @@ class Form_Validator {
 	private $transaction_whitelist = array('response_order_id', 
 			'date_stamp', 'time_stamp', 'bank_transaction_id', 'charge_total', 
 			'bank_approval_code', 'response_code', 'iso_code', 'message', 
-			'trans_name', 'cardholder', 'f4l4', 'card', 'expiry_date', 
-			'result');
+			'trans_name', 'cardholder', 'result');
 		
 	/* -----------------------------------------------------
 	 * Form validation for students.php
@@ -38,6 +37,15 @@ class Form_Validator {
 		else {
 			$data['guardian_group'] = $post['guardian_group'];
 		}
+		
+		if (!isset($post['gender'])) {
+			$data['gender'] = 'NULL';
+		}
+		
+		if(!isset($post['preferred_name'])) {
+			$data['preferred_name'] = 'NULL';
+		}
+		
 		return $data;
 	}
 	
