@@ -1,334 +1,240 @@
-"Febrero 26, 2015",,,
+"“March 2, 2015”",,,
 ,,,
 ,Client,Product/Service,Qty
 0.50,,,
-,The Healthy Butcher Eglington,Butcher's Espresso,-1.00
-,The Healthy Butcher Eglington,Butcher's Medium Blend,-0.50
-,The Healthy Butcher Eglington,,
-,The Healthy Butcher Eglington,Butcher's Decaf,0.50
-,The Healthy Butcher Eglington,Butcher's Espresso,-1.00
-,The Healthy Butcher Eglington,Butcher's Decaf,-0.50
-,The Healthy Butcher Eglington,Butcher's Medium Blend,-0.50
-,The Healthy Butcher Eglington,Butcher's Decaf,0.50
-,The Healthy Butcher Eglington,Butcher's Medium Blend,1.00
-,The Healthy Butcher Eglington,Butcher's Espresso,1.50
-,The Healthy Butcher Eglington,Butcher's Decaf,-0.50
-,The Healthy Butcher Eglington,Butcher's Bold Blend,-3.50
-,The Healthy Butcher Eglington,Butcher's Medium Blend,-1.00
-,The Healthy Butcher Eglington,Butcher's Espresso,-1.50
-,The Healthy Butcher Eglington,Butcher's Bold Blend,3.50
-,The Healthy Butcher Eglington,Butcher's Medium Blend,0.50
-,The Healthy Butcher Eglington,Butcher's Espresso,1.00
-,The Healthy Butcher Eglington,Butcher's Decaf,-0.50
-,The Healthy Butcher Eglington,Butcher's Decaf,0.50
-,The Healthy Butcher Eglington,Butcher's Bold Blend,3.50
-,The Healthy Butcher Eglington,Butcher's Medium Blend,1.00
-,The Healthy Butcher Eglington,Butcher's Espresso,1.50
-,The Healthy Butcher Eglington,,
+,Andrea DeShield,Cafe Solar medium,-0.50
+,Andrea DeShield,Cafe Solar medium,0.50
+,Andrea DeShield,Cafe Solar medium,0.50
 1,,,
-,Vitarock,Cafe Solar Dark,5.00
-,Vitarock,Cafe Solar medium,3.00
-,Vitarock,Cafe Solar medium,3.00
-,Bernie Breen Management,Blend X,2.00
-,Kevin Hedley,Cafe Solar medium,2.00
-,Vitarock,Cafe Solar Dark,5.00
-,Vitarock,Cafe Solar Dark,5.00
-,Vitarock,Cafe Solar medium,3.00
-,Vitarock,Cafe Solar medium,3.00
-,Bernie Breen Management,Blend X,2.00
-,Kevin Hedley,Cafe Solar medium,2.00
-,Vitarock,,
-,Vitarock,,
-,Vitarock,,
-,Vitarock,Cafe Solar Dark,5.00
-,Vitarock,EQP - MGC Coffee Spring,2.00
-,Vitarock,EQP - Chemex Classic 10 cup,1.00
-,Vitarock,EQP - Cotton Sock Single,2.00
-,Vitarock,EQP - 1 L Carafe,2.00
-,Vitarock,EQP - 64 oz Pitcher,2.00
-,Vitarock,Cafe Solar Dark,-5.00
-,Vitarock,Cafe Solar Dark,-5.00
-,Vitarock,Cafe Solar medium,-3.00
-,Vitarock,Cafe Solar medium,-3.00
-,Kevin Hedley,Cafe Solar medium,-2.00
-,Bernie Breen Management,Blend X,-2.00
-,Vitarock,EQP - MGC Coffee Spring,-2.00
-,Vitarock,EQP - Chemex Classic 10 cup,-1.00
-,Vitarock,EQP - Cotton Sock Single,-2.00
-,Vitarock,EQP - 1 L Carafe,-2.00
-,Vitarock,EQP - 64 oz Pitcher,-2.00
-,Vitarock,EQP - Cotton Sock Single,2.00
-,Vitarock,EQP - MGC Coffee Spring,2.00
-,Vitarock,EQP - 1 L Carafe,2.00
-,Vitarock,EQP - Chemex Classic 10 cup,1.00
-,Vitarock,EQP - 64 oz Pitcher,2.00
-,Bernie Breen Management,Miscellaneous,-1.00
-,Kevin Hedley,,-28.00
+,Shim-Sutcliffe Architects Inc.,Choice Origin,1.00
+,Grenville Corp.,Choice Origin,1.50
+,Inspirit Foundation,Choice Origin,2.00
+,Key Gordon Communications,Choice Origin,2.00
+,LGA Architectural Partners,Choice Origin,3.00
+,YTZ Management,Espresso Supremo,1.00
+,Timbercreek Asset Managment,Espresso Supremo,1.00
+,Mott Macdonald Canada Ltd.,Blend X,4.00
+,Ivey Foundation,Joe Bold,2.00
+,Jessica Chow,Average Joe,2.00
+,Toronto Hydro (9th floor),Average Joe,2.00
+,Toronto City Hall,Average Joe,2.00
+,Investeco,Decaf Nation,1.00
+,Bryan Purcell,Average Joe,1.00
+,Linda Weichel,Africa Arabia,1.00
+,Tangerine,Africa Arabia,1.00
+,Investeco,Bolivia,1.00
+,Urban Stategies Inc.,Cafe Solar medium,1.00
+,Urban Stategies Inc.,Joe Bold,1.00
+,Urban Stategies Inc.,Average Joe,1.00
+,YTZ Management,Cafe Solar medium,1.00
+,Timbercreek Asset Managment,Bolivia,1.00
+,Tangerine,Asia-Pacifics,1.00
+,Investeco,Asia-Pacifics,1.00
+,Mott Macdonald Canada Ltd.,Blend X,4.00
+,Ivey Foundation,Joe Bold,2.00
+,Jessica Chow,Average Joe,2.00
+,Toronto City Hall,Average Joe,2.00
+,Toronto Hydro (9th floor),Average Joe,2.00
+,Linda Weichel,Africa Arabia,1.00
+,Bryan Purcell,Average Joe,1.00
+,Investeco,Decaf Nation,1.00
+,Timbercreek Asset Managment,Bolivia,1.00
+,Investeco,Bolivia,1.00
+,Investeco,Asia-Pacifics,1.00
+,Urban Stategies Inc.,Average Joe,1.00
+,Urban Stategies Inc.,Joe Bold,1.00
+,Urban Stategies Inc.,Cafe Solar medium,1.00
+,YTZ Management,Cafe Solar medium,1.00
+,Tangerine,Africa Arabia,1.00
+,Tangerine,Asia-Pacifics,1.00
+,LGA Architectural Partners,Choice Origin,3.00
+,Envision Sales Inc.,Choice Origin,2.00
+,ERA Architects Inc.,Choice Origin,2.00
+,Inspirit Foundation,Choice Origin,2.00
+,Key Gordon Communications,Choice Origin,2.00
+,Grenville Corp.,Choice Origin,1.50
+,Engineers Without Borders,Choice Origin,1.50
+,Compass 360,Choice Origin,1.00
+,Shim-Sutcliffe Architects Inc.,Choice Origin,1.00
+,Timbercreek Asset Managment,Espresso Supremo,1.00
+,LGA Architectural Partners,Choice Origin,1.00
+,YTZ Management,Espresso Supremo,1.00
+,Compass 360,Choice Origin,-1.00
+,Engineers Without Borders,Choice Origin,-1.50
+,Envision Sales Inc.,Choice Origin,-2.00
+,ERA Architects Inc.,Choice Origin,-2.00
+,LGA Architectural Partners,Choice Origin,-1.00
+,Shim-Sutcliffe Architects Inc.,Choice Origin,-1.00
+,Tangerine,Asia-Pacifics,-1.00
+,Grenville Corp.,Choice Origin,-1.50
+,Inspirit Foundation,Choice Origin,-2.00
+,Investeco,Asia-Pacifics,-1.00
+,Key Gordon Communications,Choice Origin,-2.00
+,LGA Architectural Partners,Choice Origin,-3.00
+,YTZ Management,Espresso Supremo,-1.00
+,Timbercreek Asset Managment,Espresso Supremo,-1.00
+,Bryan Purcell,Average Joe,-1.00
+,Linda Weichel,Africa Arabia,-1.00
+,Tangerine,Africa Arabia,-1.00
+,Investeco,Bolivia,-1.00
+,Urban Stategies Inc.,Cafe Solar medium,-1.00
+,Urban Stategies Inc.,Joe Bold,-1.00
+,Urban Stategies Inc.,Average Joe,-1.00
+,YTZ Management,Cafe Solar medium,-1.00
+,Timbercreek Asset Managment,Bolivia,-1.00
+,Investeco,Decaf Nation,-1.00
+,Ivey Foundation,Joe Bold,-2.00
+,Jessica Chow,Average Joe,-2.00
+,Toronto Hydro (9th floor),Average Joe,-2.00
+,Toronto City Hall,Average Joe,-2.00
+,Mott Macdonald Canada Ltd.,Blend X,-4.00
+,Compass 360,Choice Origin,1.00
+,Engineers Without Borders,Choice Origin,1.50
+,Envision Sales Inc.,Choice Origin,2.00
+,ERA Architects Inc.,Choice Origin,2.00
+,LGA Architectural Partners,Choice Origin,1.00
 5,,,
-,The Big Carrot,Delivery Charge,1.00
-,The Beet,Delivery Charge,1.00
-,Karelia Kitchen,Delivery Charge,1.00
-,Mountain Equipment Co-op,Delivery Charge,1.00
-,Merchants of Green Coffee:Cafe Thursday Order,Ethiopia,5.00
-,Karelia Kitchen,Blend L,-3.00
-,The Big Carrot,Joe Mild,-3.00
-,Peapods to Chanterelles by The Passionate Chef,Custom Blend,-15.00
-,CSI Annex,CSI Medium Blend,-10.00
-,Mountain Equipment Co-op,Eco Coffee,-7.00
-,Dangerous Dan's Diner,Custom Blend,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Ethiopia,-5.00
-,Creme Fraiche,Sumatra,-1.00
-,Creme Fraiche,Decaf Nation,-1.00
-,Creme Fraiche,Decaf Nation,-1.00
-,CSI Coffee Pub,Decaf Nation,-1.00
-,Artists' Play Dance,Decaf Nation,-1.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Decaf Nation,-1.50
-,The Drake Hotel,Decaf Nation,-2.00
-,CSI Coffee Pub,Papua New Guinea,-3.00
-,The Big Carrot,Cafe Solar medium,-3.00
-,The Big Carrot,Decaf Nation,-3.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Blend X,-4.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar Dark,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar medium,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar medium,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Blend X,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Guatemala,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar Dark,-5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar medium,-5.00
-,Artists' Play Dance,Blend X,-5.00
-,The Big Carrot,Sumatra,-5.00
-,The Big Carrot,Guatemala,-5.00
-,The Big Carrot,Average Joe,-5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Papua New Guinea,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Sumatra,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Papua New Guinea,-5.00
-,Fisheye Corp.,Cafe Solar medium,-5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Decaf Nation,-5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar medium,-7.00
-,Circus Coffee House,Blend X,-8.00
-,The Beet,Joe Bold,-8.00
-,Creme Fraiche,Blend X,-10.00
-,Merchants of Green Coffee:Cafe Thursday Order,Blend X,-10.00
-,Merchants of Green Coffee:Cafe Thursday Order,Joe Bold,-10.00
-,The Big Carrot,Joe Bold,-10.00
-,Peapods to Chanterelles by The Passionate Chef,Joe Bold,-10.00
-,The Drake Hotel,Cafe Solar medium,-80.00
-,Merchants of Green Coffee:Cafe Thursday Order,Ethiopia,5.00
-,The Drake Hotel,Cafe Solar medium,80.00
-,Creme Fraiche,Blend X,10.00
-,Merchants of Green Coffee:Cafe Thursday Order,Blend X,10.00
-,Merchants of Green Coffee:Cafe Thursday Order,Joe Bold,10.00
-,The Big Carrot,Joe Bold,10.00
-,Peapods to Chanterelles by The Passionate Chef,Joe Bold,10.00
-,Circus Coffee House,Blend X,8.00
-,The Beet,Joe Bold,8.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar medium,7.00
-,Merchants of Green Coffee:Cafe Thursday Order,Decaf Nation,5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar Dark,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar medium,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar medium,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Blend X,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Guatemala,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar Dark,5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar medium,5.00
-,Artists' Play Dance,Blend X,5.00
-,The Big Carrot,Sumatra,5.00
-,The Big Carrot,Guatemala,5.00
-,The Big Carrot,Average Joe,5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Papua New Guinea,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Sumatra,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Papua New Guinea,5.00
-,Fisheye Corp.,Cafe Solar medium,5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Blend X,4.00
-,The Big Carrot,Decaf Nation,3.00
-,CSI Coffee Pub,Papua New Guinea,3.00
-,The Big Carrot,Cafe Solar medium,3.00
-,The Drake Hotel,Decaf Nation,2.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Decaf Nation,1.50
-,Creme Fraiche,Decaf Nation,1.00
-,Creme Fraiche,Decaf Nation,1.00
-,CSI Coffee Pub,Decaf Nation,1.00
-,Artists' Play Dance,Decaf Nation,1.00
-,Creme Fraiche,Sumatra,1.00
-,Karelia Kitchen,Blend L,3.00
-,The Big Carrot,Joe Mild,3.00
-,Peapods to Chanterelles by The Passionate Chef,Custom Blend,15.00
-,CSI Annex,CSI Medium Blend,10.00
-,Mountain Equipment Co-op,Eco Coffee,7.00
-,Dangerous Dan's Diner,Custom Blend,5.00
-,The Drake Hotel,Cafe Solar medium,80.00
-,Peapods to Chanterelles by The Passionate Chef,Custom Blend,15.00
-,Peapods to Chanterelles by The Passionate Chef,Joe Bold,10.00
-,Creme Fraiche,Blend X,10.00
-,The Big Carrot,Joe Bold,10.00
-,Merchants of Green Coffee:Cafe Thursday Order,Blend X,10.00
-,Merchants of Green Coffee:Cafe Thursday Order,Joe Bold,10.00
-,CSI Annex,CSI Medium Blend,10.00
-,The Beet,Joe Bold,8.00
-,Circus Coffee House,Blend X,8.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar medium,7.00
-,Mountain Equipment Co-op,Eco Coffee,7.00
-,Fisheye Corp.,Cafe Solar medium,5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar medium,5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Cafe Solar Dark,5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Papua New Guinea,5.00
-,Artists' Play Dance,Blend X,5.00
-,Dangerous Dan's Diner,Custom Blend,5.00
-,The Big Carrot,Sumatra,5.00
-,The Big Carrot,Guatemala,5.00
-,The Big Carrot,Average Joe,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Guatemala,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Sumatra,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Papua New Guinea,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Decaf Nation,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar medium,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Blend X,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar medium,5.00
-,Merchants of Green Coffee:Cafe Thursday Order,Cafe Solar Dark,5.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Blend X,4.00
-,Karelia Kitchen,Blend L,3.00
-,The Big Carrot,Joe Mild,3.00
-,The Big Carrot,Cafe Solar medium,3.00
-,The Big Carrot,Decaf Nation,3.00
-,CSI Coffee Pub,Papua New Guinea,3.00
-,The Drake Hotel,Decaf Nation,2.00
-,Merchants of Green Coffee:Brickworks Farmers Market,Decaf Nation,1.50
-,Creme Fraiche,Decaf Nation,1.00
-,Artists' Play Dance,Decaf Nation,1.00
-,Creme Fraiche,Decaf Nation,1.00
-,Creme Fraiche,Sumatra,1.00
-,CSI Coffee Pub,Decaf Nation,1.00
-,Creme Fraiche,,
-,Creme Fraiche,,
-,Creme Fraiche,,
-,Merchants of Green Coffee:Cafe Thursday Order,,
-,Merchants of Green Coffee:Cafe Thursday Order,,
-,Merchants of Green Coffee:Brickworks Farmers Market,,
-,Merchants of Green Coffee:Brickworks Farmers Market,,
-,Merchants of Green Coffee:Brickworks Farmers Market,,
-,Karelia Kitchen,,
-,Peapods to Chanterelles by The Passionate Chef,,
-,Fisheye Corp.,,
-Not Specified,,,
-,Fresh on Spadina,Decaf Nation,1.00
-,Youngplace Coffee Pub,Rwanda,1.00
-,Fresh on Bloor,Decaf Nation,0.50
-,Fiesta Farms,Stop Dark Blend,10.00
-,Fresh on Bloor,The Fresh Blend,10.00
-,Fresh on Eglinton,The Fresh Blend,10.00
-,Fresh on Spadina,The Fresh Blend,6.00
-,Good Shepherd Refuge,Eco Coffee,10.00
-,Youngplace Coffee Pub,CSI Espresso,10.00
-,Youngplace Coffee Pub,Brazil,1.00
-,Fiesta Farms,Stop Medium Blend,-7.00
-,Fiesta Farms,Stop Dark Blend,-1.00
-,Fiesta Farms,Stop Medium Blend,10.00
-,Cluny,Joe Bold,20.00
-,Cluny,Blend X,15.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Joe Bold,15.00
-,Fresh on Bloor,The Fresh Blend,10.00
-,Fresh on Eglinton,The Fresh Blend,10.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Cafe Solar Dark,10.00
-,Fiesta Farms,Stop Medium Blend,10.00
-,Fiesta Farms,Stop Dark Blend,10.00
-,Youngplace Coffee Pub,CSI Espresso,10.00
-,Academy of Lions Cafe,Blend X,9.00
-,Fresh on Spadina,The Fresh Blend,6.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Decaf Nation,5.00
-,Any Direct Flight,Blend X,5.00
-,Stack,Average Joe,5.00
-,Parsons Brinckerhoff Halsall Inc,El Salvador,5.00
-,Parsons Brinckerhoff Halsall Inc,Sumatra,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Blend X,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Cafe Solar medium,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Sumatra,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Rwanda,5.00
-,The Canonball,Africa Arabia,4.00
-,Greenpeace,Joe Bold,2.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Blend X,1.50
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,La Nina,1.50
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,El Nino,1.50
-,Stack,Decaf Nation,1.00
-,Fresh on Spadina,Decaf Nation,1.00
-,Youngplace Coffee Pub,Rwanda,1.00
-,Youngplace Coffee Pub,Brazil,1.00
-,Fresh on Bloor,Decaf Nation,0.50
-,Fresh on Crawford,The Fresh Blend,0.00
-,Fresh on Crawford,Decaf Nation,0.00
-,Good Shepherd Refuge,Eco Coffee,10.00
-,Fiesta Farms,Stop Dark Blend,-1.00
-,Fiesta Farms,Stop Medium Blend,-7.00
-,Fresh on Spadina,,
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,,
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,,
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,,
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,,
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,,
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,,
-,Greenpeace,,
-,Fiesta Farms,,
-,Parsons Brinckerhoff Halsall Inc,Delivery Charge,1.00
-,Academy of Lions Cafe,Delivery Charge,1.00
-,Cluny,Delivery Charge,1.00
-,Stack,Delivery Charge,1.00
-,Greenpeace,Delivery Charge,1.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Ethiopia,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Espresso Supremo,1.50
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Ethiopia,-5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Espresso Supremo,-1.50
-,Fiesta Farms,Stop Medium Blend,-10.00
-,Fiesta Farms,Stop Dark Blend,-10.00
-,Fresh on Bloor,The Fresh Blend,-10.00
-,Fresh on Eglinton,The Fresh Blend,-10.00
-,Fresh on Spadina,The Fresh Blend,-6.00
-,Good Shepherd Refuge,Eco Coffee,-10.00
-,Youngplace Coffee Pub,CSI Espresso,-10.00
+,Cafe Fiorentina,Espresso Supremo,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Ethiopia,5.00
+,Parsons Brinckerhoff Halsall Inc-Richmond Hill,Choice Origin,1.00
+,Youngplace Coffee Pub,CSI Espresso,-5.00
 ,Youngplace Coffee Pub,Brazil,-1.00
-,Fiesta Farms,Stop Medium Blend,7.00
-,Fiesta Farms,Stop Dark Blend,1.00
+,Cafe Fiorentina,Espresso Supremo,-5.00
+,CSI Annex,CSI Medium Blend,-30.00
+,CSI Regent Park,CSI Medium Blend,-5.00
+,CSI Spadina,CSI Medium Blend,-20.00
+,CSI Coffee Pub,CSI Espresso,-5.00
+,CSI Coffee Pub,Brazil,-2.00
+,"Raymond,  James",Espresso Y,-3.00
+,Merchants of Green Coffee:Cafe Monday Order,Ethiopia,-5.00
+,Merchants of Green Coffee:Cafe Monday Order,Mexico,-5.00
+,Parsons Brinckerhoff Halsall Inc-Richmond Hill,Choice Origin,-1.00
+,Parsons Brinckerhoff Halsall Inc-Richmond Hill,Joe Mild,-3.00
+,Fresh on Bloor,The Fresh Blend,-5.00
+,Fresh on Crawford,The Fresh Blend,-5.00
+,Fresh on Spadina,The Fresh Blend,-5.00
+,The Chefs' House,Chef's House Blend,-5.00
 ,Fresh on Bloor,Decaf Nation,-0.50
 ,Youngplace Coffee Pub,Rwanda,-1.00
-,Stack,Decaf Nation,-1.00
-,Fresh on Spadina,Decaf Nation,-1.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Blend X,-1.50
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,La Nina,-1.50
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,El Nino,-1.50
-,Greenpeace,Joe Bold,-2.00
-,The Canonball,Africa Arabia,-4.00
-,Any Direct Flight,Blend X,-5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Sumatra,-5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Rwanda,-5.00
+,Cafe Fiorentina,Average Joe,-1.00
+,Youngplace Coffee Pub,Decaf Nation,-1.00
+,CSI Coffee Pub,Decaf Nation,-1.00
+,The Chefs' House,Decaf Nation,-2.00
+,Entro Communications Inc.,La Nina,-3.00
+,Entro Communications Inc.,El Nino,-3.00
+,The Big Carrot,Cafe Solar medium,-3.00
+,The Big Carrot,Sumatra,-3.00
+,The Big Carrot,Xpresso Mild,-3.00
+,The Canonball,Africa Arabia,-3.00
+,Toronto Hydro (8th floor),Average Joe,-3.00
+,Merchants of Green Coffee:Cafe Monday Order,Decaf Nation,-3.00
+,Merchants of Green Coffee:Cafe Monday Order,Cafe Solar medium,-5.00
+,Merchants of Green Coffee:Cafe Monday Order,Blend X,-5.00
+,Merchants of Green Coffee:Cafe Monday Order,Blend X,-5.00
+,Merchants of Green Coffee:Cafe Monday Order,Joe Bold,-5.00
+,Merchants of Green Coffee:Cafe Monday Order,Sumatra,-5.00
+,Merchants of Green Coffee:Cafe Monday Order,Guatemala,-5.00
+,The Big Carrot,Joe Bold,-5.00
+,The Big Carrot,Guatemala,-5.00
+,The Big Carrot,Average Joe,-5.00
+,Real Food for Real Kids,Blend X,-5.00
+,Montgomery Sisam Architechs,Joe Bold,-5.00
 ,Parsons Brinckerhoff Halsall Inc,Sumatra,-5.00
-,Parsons Brinckerhoff Halsall Inc,El Salvador,-5.00
-,Stack,Average Joe,-5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Cafe Solar medium,-5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Blend X,-5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Decaf Nation,-5.00
-,Academy of Lions Cafe,Blend X,-9.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Cafe Solar Dark,-10.00
-,Cluny,Blend X,-15.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Joe Bold,-15.00
-,Cluny,Joe Bold,-20.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Ethiopia,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Espresso Supremo,1.50
-,Cluny,Joe Bold,20.00
-,Cluny,Blend X,15.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Joe Bold,15.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Cafe Solar Dark,10.00
-,Academy of Lions Cafe,Blend X,9.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Decaf Nation,5.00
-,Any Direct Flight,Blend X,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Sumatra,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Rwanda,5.00
+,The Big Carrot,Decaf Nation,-5.00
+,Real Food for Real Kids,Blend X,-6.00
+,Gilead Bistro,Average Joe,-10.00
+,Parsons Brinckerhoff Halsall Inc,El Salvador,-10.00
+,The Drake Devonshire Inn,La Nina,-30.00
+,Cafe Fiorentina,Espresso Supremo,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Ethiopia,5.00
+,Parsons Brinckerhoff Halsall Inc-Richmond Hill,Choice Origin,1.00
+,The Drake Devonshire Inn,La Nina,30.00
+,Gilead Bistro,Average Joe,10.00
+,Parsons Brinckerhoff Halsall Inc,El Salvador,10.00
+,Real Food for Real Kids,Blend X,6.00
+,The Big Carrot,Decaf Nation,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Cafe Solar medium,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Blend X,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Blend X,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Joe Bold,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Sumatra,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Guatemala,5.00
+,The Big Carrot,Joe Bold,5.00
+,The Big Carrot,Guatemala,5.00
+,The Big Carrot,Average Joe,5.00
+,Real Food for Real Kids,Blend X,5.00
+,Montgomery Sisam Architechs,Joe Bold,5.00
 ,Parsons Brinckerhoff Halsall Inc,Sumatra,5.00
-,Parsons Brinckerhoff Halsall Inc,El Salvador,5.00
-,Stack,Average Joe,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Cafe Solar medium,5.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Blend X,5.00
-,The Canonball,Africa Arabia,4.00
-,Greenpeace,Joe Bold,2.00
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,La Nina,1.50
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,El Nino,1.50
-,Merchants of Green Coffee:St. Lawrence Farmers' Market,Blend X,1.50
-,Stack,Decaf Nation,1.00
-TOTAL,,,
+,Merchants of Green Coffee:Cafe Monday Order,Decaf Nation,3.00
+,Entro Communications Inc.,La Nina,3.00
+,Entro Communications Inc.,El Nino,3.00
+,The Big Carrot,Cafe Solar medium,3.00
+,The Big Carrot,Sumatra,3.00
+,The Big Carrot,Xpresso Mild,3.00
+,The Canonball,Africa Arabia,3.00
+,Toronto Hydro (8th floor),Average Joe,3.00
+,The Chefs' House,Decaf Nation,2.00
+,Youngplace Coffee Pub,Decaf Nation,1.00
+,CSI Coffee Pub,Decaf Nation,1.00
+,Youngplace Coffee Pub,Rwanda,1.00
+,Cafe Fiorentina,Average Joe,1.00
+,Fresh on Bloor,Decaf Nation,0.50
+,Youngplace Coffee Pub,CSI Espresso,5.00
+,Youngplace Coffee Pub,Brazil,1.00
+,CSI Annex,CSI Medium Blend,30.00
+,CSI Regent Park,CSI Medium Blend,5.00
+,CSI Spadina,CSI Medium Blend,20.00
+,CSI Coffee Pub,CSI Espresso,5.00
+,CSI Coffee Pub,Brazil,2.00
+,"Raymond,  James",Espresso Y,3.00
+,Merchants of Green Coffee:Cafe Monday Order,Mexico,5.00
+,Parsons Brinckerhoff Halsall Inc-Richmond Hill,Joe Mild,3.00
+,Fresh on Bloor,The Fresh Blend,5.00
+,Fresh on Crawford,The Fresh Blend,5.00
+,Fresh on Spadina,The Fresh Blend,5.00
+,The Chefs' House,Chef's House Blend,5.00
+,CSI Annex,CSI Medium Blend,30.00
+,The Drake Devonshire Inn,La Nina,30.00
+,CSI Spadina,CSI Medium Blend,20.00
+,Gilead Bistro,Average Joe,10.00
+,Parsons Brinckerhoff Halsall Inc,El Salvador,10.00
+,Real Food for Real Kids,Blend X,6.00
+,Real Food for Real Kids,Blend X,5.00
+,Montgomery Sisam Architechs,Joe Bold,5.00
+,The Chefs' House,Chef's House Blend,5.00
+,Fresh on Bloor,The Fresh Blend,5.00
+,Parsons Brinckerhoff Halsall Inc,Sumatra,5.00
+,Fresh on Crawford,The Fresh Blend,5.00
+,Fresh on Spadina,The Fresh Blend,5.00
+,CSI Regent Park,CSI Medium Blend,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Blend X,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Guatemala,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Sumatra,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Cafe Solar medium,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Joe Bold,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Mexico,5.00
+,Merchants of Green Coffee:Cafe Monday Order,Blend X,5.00
+,The Big Carrot,Guatemala,5.00
+,The Big Carrot,Joe Bold,5.00
+,The Big Carrot,Average Joe,5.00
+,The Big Carrot,Decaf Nation,5.00
+,Youngplace Coffee Pub,CSI Espresso,5.00
+,CSI Coffee Pub,CSI Espresso,5.00
+,Parsons Brinckerhoff Halsall Inc-Richmond Hill,Joe Mild,3.00
+,"Raymond,  James",Espresso Y,3.00
+,Toronto Hydro (8th floor),Average Joe,3.00
+,Merchants of Green Coffee:Cafe Monday Order,Decaf Nation,3.00
+,Entro Communications Inc.,La Nina,3.00
+,Entro Communications Inc.,El Nino,3.00
+,The Canonball,Africa Arabia,3.00
+,The Big Carrot,Xpresso Mild,3.00
+,The Big Carrot,Cafe Solar medium,3.00
+,The Big Carrot,Sumatra,3.00
+,The Chefs' House,Decaf Nation,2.00
+,CSI Coffee Pub,Brazil,2.00
+,Cafe Fiorentina,Average Joe,1.00
+,CSI Coffee Pub,Decaf Nation,1.00
+,Youngplace Coffee Pub,Decaf Nation,1.00
+,Youngplace Coffee Pub,Rwanda,1.00
+,Youngplace Coffee Pub,Brazil,1.00
+,Fresh on Bloor,Decaf Nation,0.50
