@@ -112,7 +112,7 @@
 					</div>
 	    		</li>
 	    		<li class='list-group-item pull-right'>
-					Total: $total
+					Total: $total CAD
 	    		</li>
 			</fieldset>
     		</form>

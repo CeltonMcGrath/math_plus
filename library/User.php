@@ -12,17 +12,17 @@ class User {
    		$this->database = $db;
 		if (filter_var($input, FILTER_VALIDATE_EMAIL)) {
    			$this->email = $input;
-   			$query = "SELECT user_id, password, salt, listserv, status
+   			$query = "SELECT user_id, password, listserv, status
 	    		FROM users
 	    		WHERE email = :email";  			 
    			$query_params = array(':email' => $this->email);  			
    		}
    		else {
    			$this->user_id = $input;
-   			$query = "SELECT email, password, salt, listserv, status
+   			$query = "SELECT email, password, listserv, status
 	    		FROM users
 	    		WHERE user_id = :user_id";
-   			$query_params = array(':user_id' => $input);
+   			$query_params = array(':user_id' => $this->user_id);
    		}
    	
 	   	try {
@@ -42,35 +42,30 @@ class User {
 	   	}
 		
 	   	$this->hashedPassword = $row['password']; 
-	   	$this->salt = $row['salt'];
 	   	$this->listserv = $row['listserv']; 
 	   	$this->status = $row['status']; 
    }
-
+	
+   /* Returns True iff user is successfully added to the database 
+	* and activation email successfully sent.
+	*/
    public static function createUser($em, $pw, $list, $db) {
-   	    /*Returns True iff user is successfully added to the database 
-		 * and activation email successfully sent.*/
+   	    
 		
 		//Hash password
-		$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-		$password = hash('sha256', $pw . $salt);
-			// Hash password several more times
-			for($round = 0; $round < 65536; $round++) {
-				$password = hash('sha256', $password . $salt);
-			}
+		$password = password_hash($pw, PASSWORD_DEFAULT);
+		
 		// Generate activation key
 		$activation = hash('sha256', $em.time());
 
-		
 		$query = "INSERT INTO users 
-					(email, password, salt, activation, listserv) 
+					(email, password, activation, listserv) 
 				VALUES
-					(:email, :password, :salt, :activation, :listserv)";
+					(:email, :password, :activation, :listserv)";
 				
 		$query_params = array(
 			':email' => $em,
 			':password' => $password,
-			':salt' => $salt,
 			':activation' => $activation,
 			':listserv' => $list
 		);
@@ -89,20 +84,15 @@ class User {
 	
 	/* Updates users password */
 	public function updatePassword($newPassword) {
-		//Generate new salt and hashed password
-		$newSalt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-		$newHashedPassword = hash('sha256', $newPassword . $newSalt);
-			for($round = 0; $round < 65536; $round++) {
-				$newHashedPassword = hash('sha256', $newHashedPassword . $newSalt);
-			}
+		//Generate new hashed password
+		$password = password_hash($newPassword, PASSWORD_DEFAULT);
 			
 		// Initial query parameter values
 		$query = "UPDATE users
-				SET password = :password, salt = :salt
+				SET password = :password
 				WHERE user_id = :user_id";
 		$query_params = array(
-				':password' => $newHashedPassword,
-				':salt' => $newSalt,
+				':password' => $password,
 				':user_id' => $this->user_id
 		);
 		
@@ -163,37 +153,23 @@ class User {
 	
 	/* Returns true iff password is correct. */
 	public function correctPassword($testPassword) {
-		$testHashedPassword = hash('sha256', $testPassword.$this->salt);
-			for($round = 0; $round < 65536; $round++) {
-				$testHashedPassword =
-					hash('sha256', $testHashedPassword.$this->salt);
-			}
-		return $this->hashedPassword === $testHashedPassword;
+		return  password_verify($testPassword, $this->hashedPassword);
 	}
 	
 	/* Resets users password and sends temporary password email. */
 	public function resetPassword () {
 		$temp = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-	
-		$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-		$password = hash('sha256', $temp . $salt);
-			for($round = 0; $round < 65536; $round++) {
-				$password = hash('sha256', $password . $salt);
-			}
-		
-		$this->salt = $salt;
-		$this->hashedPassword = $password;
+
+		$this->hashedPassword = password_hash($temp, PASSWORD_DEFAULT);
 			
 		$query_params = array(
 				':password' => $this->hashedPassword,
-				':salt' => $this->salt,
 				':email' => $this->email
 		);	
 		$query = "
 			UPDATE users
-			SET password = :password, salt = :salt
-			WHERE email = :email
-		";
+			SET password = :password
+			WHERE email = :email";
 	
 		try {
 			$stmt = $this->database->prepare($query);
