@@ -1,8 +1,10 @@
 <?php  
-    require("../library/common.php");     
-    include '../library/config.php';
+    require("../library/common.php");  
+    
     include '../library/Form_Validator.php';
     include '../library/forms/html_Generator.php';
+    
+    include '../library/User.php';
     include '../library/Student.php';
    
     $error = '';
@@ -11,9 +13,11 @@
     $fg = new Form_Generator();
     $hg = new html_Generator();
     
+    $user = new User($_SESSION['user']['user_id'], $db);
+    
     // Check if form has been submitted
     if(!empty($_POST)) {
-	$form_validator = new Form_Validator();
+		$form_validator = new Form_Validator();
     	$result = $form_validator->validateStudentPost($_POST);
     	if ($result != -1) {
     		$error = $result;
@@ -26,10 +30,14 @@
     				$_SESSION['user']['user_id'], $data, $db);
     				$success = "Student successfully created.";
     		}
-    		else {
+    		elseif ($user->studentExists($data['student_id'], $db)) {
     			/* Update student contact */
     			Student::updateStudent($data['student_id'], $data, $db);
     				$success = "Student successfully updated.";
+    		}
+    		else {
+    			$error = "An error occured. Please try again or contact system
+    				administrator.";
     		}
     	}
     }

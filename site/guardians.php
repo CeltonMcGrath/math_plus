@@ -1,8 +1,11 @@
 <?php 
     require("../library/common.php"); 
+    
     include '../library/Form_Validator.php';
     include '../library/forms/html_Generator.php';
     include '../library/forms/Form_Generator.php';
+    
+    include '../library/User.php';
     include '../library/Guardian.php';
        
     $fg = new Form_Generator();
@@ -10,6 +13,9 @@
     
     $error = '';
     $success = '';
+    
+    $user = new User($_SESSION['user']['user_id'], $db);
+    
     // Check if form has been submitted
     if(!empty($_POST)) {
     	$form_validator = new Form_Validator();
@@ -27,7 +33,7 @@
     			$data['email'], $db);
     			$success = "Guardian successfully added.";
     		}
-    		else {
+    		elseif ($user->guardianExists($data['guardian_id'], $db)) {
     			/* Update or delete guardian contact */
     			if ($data['delete']) {
     				Guardian::deleteGuardian($data['guardian_id'], $db);
@@ -39,6 +45,10 @@
     					$db);
     				$success = "Guardian successfully updated.";
     			}
+    		}
+    		else {
+    			$error = "An error occured. Please try again or contact system
+    				administrator.";
     		}	
     	}    	
     }

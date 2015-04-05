@@ -229,6 +229,58 @@ class User {
 		}
 	}
 
+	public function studentExists($student_id, $db) {
+		$query = "SELECT 1 FROM students 
+			WHERE student_id = :student_id AND user_id = :user_id";
+		$query_params = array(
+			':student_id' => $student_id,
+			':user_id' => $this->user_id
+		);
+	
+		try {
+			$stmt = $db->prepare($query);
+			$result = $stmt->execute($query_params);
+		}
+		catch(PDOException $ex) {
+			error_log($ex->getMessage());
+		}
+	
+		$row = $stmt->fetch();
+	
+		if($row) {
+			return True;
+		}
+		else {
+			return False;
+		}
+	}
+	
+	public function guardianExists($guardian_id, $db) {
+		$query = "SELECT 1 FROM guardians 
+			WHERE guardian_id = :guardian_id AND user_id = :user_id";
+		$query_params = array(
+			':guardian_id' => $guardian_id,
+			':user_id' => $this->user_id
+		);
+	
+		try {
+			$stmt = $db->prepare($query);
+			$result = $stmt->execute($query_params);
+		}
+		catch(PDOException $ex) {
+			error_log($ex->getMessage());
+		}
+	
+		$row = $stmt->fetch();
+	
+		if($row) {
+			return True;
+		}
+		else {
+			return False;
+		}
+	}
+	
 	public function getId() {
 		return $this->user_id;
 	}
