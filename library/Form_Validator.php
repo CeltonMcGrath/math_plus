@@ -7,8 +7,8 @@ class Form_Validator {
 		'allergies', 'medical', 'cellphone', 'perm_photo', 'perm_lunch',
 			'perm_leave');
 	
-	private $student_non_empty = array('student_id', 'birthdate', 'grade', 'perm_photo', 'perm_lunch',
-			'perm_leave');
+	private $student_non_empty = array('student_id', 'birthdate', 'grade', 
+			'perm_photo', 'perm_lunch', 'perm_leave');
 	
 	private $guardian_whitelist = array('guardian_id', 'first_name', 
 			'last_name', 'email', 'phone_1', 'phone_2');

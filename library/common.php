@@ -1,7 +1,8 @@
 <?php 
 	include 'config.php'; 
         
-    $public_area = array("login", "forgot_password", "register", "registration_terms", "user_activation");
+    $public_area = array("login", "forgot_password", 
+    	"register", "registration_terms", "user_activation");
 
     // Communicate with the database via UTF-8 
     $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'); 
@@ -12,7 +13,6 @@
         	$username, $password, $options); 
     } 
     catch(PDOException $ex) { 
-        // TO DO : what to do with die statements? 
         die("Failed to connect to the database: " . $ex->getMessage()); 
     } 
      
@@ -23,11 +23,7 @@
     $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); 
      
     
-    // This block of code is used to undo magic quotes.  Magic quotes are a terrible 
-    // feature that was removed from PHP as of PHP 5.4.  However, older installations 
-    // of PHP may still have magic quotes enabled and this code is necessary to 
-    // prevent them from causing problems.  For more information on magic quotes: 
-    // http://php.net/manual/en/security.magicquotes.php 
+    // Remove magic quotes
     if(function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc())
     { 
         function undo_magic_quotes_gpc(&$array) 
@@ -50,23 +46,20 @@
         undo_magic_quotes_gpc($_COOKIE); 
     } 
     
-    // Initialize fields
-    
+    // Initialize fields   
     $query = "SELECT * FROM fields";
     
     try {
     	$stmt = $db->prepare($query);
     	$result = $stmt->execute();
     } catch ( PDOException $ex ) {
-    	echo("<script>console.log('PHP: ".$ex->getMessage()."')
-	   				</script>");
+    	error_log($ex->getMessage());
     }
     $rows = $stmt->fetchAll();
     $GLOBALS['text_field'] = array();
     foreach ($rows as $row):
     	$GLOBALS['text_field'][$row['name']] = $row['text'];
     endforeach;
-    
     
     header('Content-Type: text/html; charset=utf-8'); 
      

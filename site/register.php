@@ -1,5 +1,4 @@
 <?php
-    // First we execute our common code to connection to the database and start the session 
     require('../library/common.php');   
     include '../library/User.php';
     include '../library/Form_Validator.php';
@@ -40,11 +39,20 @@
 <html>
     <?php include '../library/site_template/head_public_area.php'; ?>
     <body>
-    	<div class="container">
-    		<?php 
-			echo $hg->errorMessage($error);	
-		    echo $fg->registrationForm($error, $success);
-		    ?>
-        </div>
-    </body>
+		<div class="public-area">
+			<div class="public-area-image-sigma">
+				<img class='img-responsive' src='../resources/sigma.png'/>
+			</div>
+			<div class="public-area-image-banner">
+				<img class='img-responsive' src='../public_html/math_webheader-1.png'/>
+			</div>
+			<div class="public-area-content">
+				<h2>Create an account</h2>
+				<?php 
+					echo $hg->errorMessage($error);
+					echo $fg->registrationForm($error, $success); 
+				?>
+			</div>	 
+    	</div>
+	</body>
 </html>

@@ -419,7 +419,6 @@ class Form_Generator {
 	public function registrationForm($error, $success) {
 		return "<form action='register.php' method='post' class='form-signin' 
 				id='register-form'>
-			<h2 class='form-signin-heading'>Create an account</h2>
 			<div class='control-group'>
 				<div class='controls'>
 					<input class='form-control' type='email' 
@@ -436,8 +435,6 @@ class Form_Generator {
 							placeholder='Re-enter email address' 
 							data-equalto='#email' />
 				</div>
-			</div>
-			<div class='control-group'>
 				<div class='controls'>
 					<input class='form-control' type='password' 
 							name='password' id='password' 
@@ -447,18 +444,20 @@ class Form_Generator {
 							placeholder='Password' />
 				</div>
 				<div class='controls'>
-					<p>Password must contain at 
-					least one number, one lowercase and one 
-					uppercase letter and be at least
-					at least six characters.</p>
-				</div>
-				<div class='controls'>
 					<input class='form-control' type='password' 
 							name='password2'
 							required
 							data-parsley-trigger='change' 
 							placeholder='Re-enter password'
 							data-equalto='#password' />
+				</div>
+				<div class='controls'>
+					<div class='well'>
+						Password must contain at 
+						least one number, one lowercase and one 
+						uppercase letter and be at least
+						at least six characters.
+					</div>
 				</div>
 				<div class='controls'>
 					<input type='checkbox' name='listserv' id='listserv' />
