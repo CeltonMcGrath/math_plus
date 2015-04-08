@@ -17,8 +17,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-              	<li><a href="students.php">Manage student information and programs</a></li>
                 <li><a href="guardians.php">Manage guardian information</a></li>
+              	<li><a href="students.php">Manage student information and programs</a></li>
                 <li><a href="edit_account.php">Manage account settings</a></li>                
               </ul>
             </li>
