@@ -1,6 +1,7 @@
 <?php 
     require("../library/common.php"); 
     include '../library/Cart.php';
+    include '../library/User.php';
     include '../library/forms/html_Generator.php';
     
     $hg = new html_Generator();
@@ -36,7 +37,16 @@
     	/* User was redirected from program selection for
     	 * some student. Add programs to cart. */
     	else {
-    		$cart->addPrograms($_POST['student_id'], $_POST['program_group']);
+    		//Check if student belongs to user
+				$user = new User($_SESSION['user']['user_id'], $db);
+				if (!($user->studentExists($_POST['student_id'], $db))) {
+					//Redirect to students.php
+					header("Location: students.php");
+					die("Redirecting to students page.");
+				}
+				else {
+					$cart->addPrograms($_POST['student_id'], $_POST['program_group']);
+				}
     	}  	
     }
 

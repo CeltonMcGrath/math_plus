@@ -1,5 +1,6 @@
 <?php  
-    require("../library/common.php");     
+    require("../library/common.php");
+    include '../library/User.php';     
     include '../library/Student.php';
     
     $text_field = $GLOBALS['text_field'];
@@ -10,7 +11,17 @@
     	die("Redirecting to students page.");
     }
     
-    $student = new Student($_POST['student_id'], $db);
+    //Check if student belongs to user
+    $user = new User($_SESSION['user']['user_id'], $db);
+    if (!($user->studentExists($_POST['student_id'], $db))) {
+    	//Redirect to students.php
+    	header("Location: students.php");
+    	die("Redirecting to students page.");
+    }
+    else {
+    	$student = new Student($_POST['student_id'], $db);
+    }
+    
 ?>
 
 <!DOCTYPE html>
